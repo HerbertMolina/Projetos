@@ -1,4 +1,4 @@
-⚠️ # Laboratórios concluídos anteriormente
+⚠️ Laboratórios concluídos anteriormente
 
 Antes da criação deste portfólio, diversos laboratórios foram realizados para estudo e prática.
 
