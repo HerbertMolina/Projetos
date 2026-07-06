@@ -11,6 +11,10 @@ navegação no sistema de arquivos e execução de diretivas básicas, fundament
 
 ## 🛠️ Processo
 - **Task 1: Introduction**
+
+O processo da tarefa pede para que usemos o interpretador do Windows (CLI) e conectemos com o serviço SSH.
+Utilizando as teclas **Win + R** e executando o comando **cmd.exe** e depois fazer login no **SSH**com as credenciais disponibilizadas pela atividade, Para se conectar a máquina. 
+
  - **Pergunta:** Qual é o interpretador de linha de comandos predefinido no ambiente Windows?
 
  - **Resposta:** `cmd.exe`
