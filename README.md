@@ -1,6 +1,6 @@
-# 🎯 TryHackMe Write-ups
+# 🎯 Atividades práticas
 
 Repositório dedicado aos meus write-ups das máquinas completadas no TryHackMe.  
 
-`#TryHackMe` `#Writeups` `#CyberSecurity` `#EthicalHacking`
+ `#Writeups` `#CyberSecurity` `#EthicalHacking` `Labs`
 
