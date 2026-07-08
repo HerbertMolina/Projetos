@@ -4,6 +4,7 @@
 - Dificuldade: Fácil
 - Categoria: Básico
 - Data: 06/07/2026
+- Link: `https://tryhackme.com/room/windowscommandline`  
 
 ## 🔍 Resumo
 Este laboratório atua como uma introdução prática ao prompt de comando do Windows. O foco é familiarizar o operador com o interpretador de comandos padrão, 
@@ -51,19 +52,59 @@ O foco desta tarefa é utilizar a linha de comando para verificar configuraçõe
   
 - **Pergunta:** Qual comando podemos usar para procurar o endereço físico do servidor (endereço MAC)?  
 **Resposta:** 'ipconfig /all'  
-***Nota: ***
+***Nota: O comando 'ipconfig/all mostra além dessa, outras informações de rede. *** 
 
 - **Pergunta:** Qual é o nome do serviço de escuta na porta 135?  
 **Resposta:** 'RpcSs'  
-***Nota: Conforme a saída do 'netstat -abon', o serviço é o 'RpcSs' rodando dentro do 'svchost.exe').***
+***Nota: Conforme a saída do 'netstat -abon', o serviço é o 'RpcSs' rodando dentro do 'svchost.exe').*** 
 
 - **Pergunta:** Qual é o nome do serviço de escuta na porta 3389?  
 **Resposta:** 'TermService'  
-***(Nota: A porta 3389 é a padrão do serviço de Área de Trabalho Remota no Windows).***
+***(Nota: A porta 3389 é a padrão do serviço de Área de Trabalho Remota no Windows).***  
 
-## 🚩 Flags
-- User: THM{...}
-- Root: THM{...}
+### 🔵 **Task 4: Gestão de arquivos e diretórios**  
 
-## 💡 Aprendizado
-[O que você aprendeu]
+O foco é navegar no sistema de arquivos, manipular diretórios e ler o conteúdo de arquivos para encontrar a flag oculta.  
+
+  Comandos explorados:  
+  **cd:** Navega entre diretórios.  
+  **dir:** Lista arquivos e pastas no diretório atual.  
+  **type:** Exibe o conteúdo de um arquivo de texto na tela.  
+
+- **Pergunta:** Quais são os conteúdos do arquivo em 'C:\Treasure\Hunt'?  
+**Resposta:** `THM{...}` *(Cole aqui a sua flag exata)*  
+***Nota: Para chegar à resposta, o processo foi navegar até o diretório alvo com 'cd C:\Treasure\Hunt', listar os arquivos com 'dir' para identificar o nome do arquivo e, por fim, usar 'type [nome_do_arquivo]' para ler seu conteúdo.***
+
+### 🔵 **Task 5: Gestão de tarefas e processos**  
+
+O foco é gerenciar processos em execução via linha de comando, similar ao Gerenciador de Tarefas do Windows.  
+
+  Comandos explorados:  
+  **tasklist:** Lista todos os processos em execução.  
+  **tasklist /FI "imagename eq [nome]":** Filtra processos pelo nome do executável.  
+  **taskkill /PID [pid]:** Encerra um processo específico pelo seu ID.  
+
+- **Pergunta:** Qual comando você usaria para encontrar os processos em execução relacionados ao `notepad.exe`?    
+**Resposta:** 'tasklist /FI "imagename eq notepad.exe"'    
+***Nota: Usa-se o parâmetro '/FI' (filter) com a condição 'imagename eq' para buscar processos com o nome exato do executável.***  
+
+- **Pergunta:** Qual comando você pode usar para matar o processo com o PID 1516?    
+**Resposta:** 'taskkill /PID 1516'  
+***Nota: O comando 'taskkill' com o parâmetro '/PID' encerra o processo identificado pelo seu Process ID.***
+
+### 🔵 **Task 6: Conclusão**  
+
+Consolidando o aprendizado, lembrando que a linha de comando possui diversas outras utilidades (como 'chkdsk', 'driverquery' e 'sfc /scannow') e reforçando o uso do parâmetro '/?' para consultar a ajuda de qualquer comando e do 'more' para paginar saídas longas.  
+
+  Comandos explorados:  
+  **shutdown /s:** Desliga o sistema.  
+  **shutdown /r:** Reinicia o sistema.  
+  **shutdown /a:** Aborta um desligamento ou reinicialização agendada.  
+
+- **Pergunta:** O comando 'shutdown /s' pode desligar um sistema. Qual é o comando que você pode usar para reiniciar um sistema?  
+**Resposta:** 'shutdown /r'  
+***Nota: A flag '/r' (restart) instrui o sistema a reiniciar após o encerramento dos processos.***  
+
+- **Pergunta:** Qual comando você pode usar para abortar um desligamento do sistema agendado?  
+**Resposta:** 'shutdown /a'  
+***Nota: A flag '/a' (abort) cancela qualquer sequência de desligamento ou reinicialização que esteja em contagem regressiva.***
