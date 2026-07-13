@@ -42,3 +42,47 @@ O foco desta tarefa é entender a teoria por trás dos motores de busca, explica
 **Resposta:** 'Keywords'  
 ***Nota: Conforme o texto ilustra, os crawlers extraem palavras-chave (como "Apple", "Banana", "Tomatoes") e URLs para compor o índice de busca.***
 
+### 🔵 **Task 3: Otimização de motor de busca (SEO)**
+
+O foco desta tarefa é compreender como os motores de busca priorizam e classificam os domínios (SEO) e como os administradores de sistemas podem restringir o acesso de crawlers a áreas sensíveis do site.
+
+  Conceitos e Ferramentas explorados:  
+  **SEO (Search Engine Optimization):** Conjunto de fatores (como responsividade, sitemaps e palavras-chave) que determinam a "pontuação" e a hierarquia de um site nos resultados de busca.  
+  
+  **robots.txt:** Arquivo de configuração na raiz do servidor web que dita quais diretórios, arquivos ou rotas os crawlers têm permissão para indexar (fundamental para ocultar páginas de login administrativo ou diretórios privados).  
+  **Ferramentas de Análise de SEO (ex: Google Lighthouse):** Utilizadas para auditar a pontuação de SEO, performance e acessibilidade de um domínio.  
+
+***Nota: Esta task é um exercício de observação. Ao observar a pontuação de SEO sites diferentes, fica evidente como a estrutura, responsividade e otimização de palavras-chave impactam diretamente a facilidade com que os crawlers indexam o conteúdo e a posição do site nos resultados de busca.***  
+
+### 🔵 **Task 4: Beepboop robots.txt**
+
+O foco desta tarefa é entender a função do arquivo 'robots.txt', como ele controla as permissões dos crawlers e como pode ser usado (ou abusado) para descobrir diretórios e arquivos ocultos.
+
+  Conceitos explorados:
+  **robots.txt:** Arquivo de texto localizado na raiz do domínio que define as regras de indexação para os crawlers.
+  **User-agent:** Especifica qual crawler (ex: Googlebot, Bingbot, ou `*` para todos) a regra se aplica.
+  **Allow / Disallow:** Diretivas que permitem ou bloqueiam a indexação de diretórios ou arquivos específicos.
+  **Sitemap:** Diretiva que fornece a localização do mapa do site para melhorar o SEO.
+
+- **Pergunta:** Onde o "robots.txt" estaria localizado no domínio "ablog.com"?    
+**Resposta:** 'ablog.com/robots.txt'  
+***Nota: O arquivo robots.txt deve ser servido obrigatoriamente no diretório raiz (root) do domínio.***  
+
+- **Pergunta:** Se um site tivesse um sitemap, onde ele estaria localizado?  
+**Resposta:** 'sitemap.xml'  
+***Nota: Assim como o robots.txt, o sitemap (geralmente sitemap.xml) é tipicamente colocado no diretório raiz e referenciado dentro do próprio robots.txt.***  
+
+- **Pergunta:** Como permitiríamos apenas o "Bingbot" de indexar o site?    
+**Resposta:** 'User-agent: Bingbot' (seguido de 'Allow: /')  
+***Nota: A diretiva User-agent define o alvo da regra, e o Allow: / concede permissão total de indexação para aquele crawler específico.***  
+
+- **Pergunta:** Como impediríamos um "Crawler" de indexar o diretório "/dont-index-me/"?  
+**Resposta:** 'Disallow: /dont-index-me/'  
+***Nota: A diretiva Disallow é usada para criar uma "lista negra" (blacklist) de caminhos que o crawler não deve acessar ou indexar.***  
+
+- **Pergunta:** Qual é a extensão de um arquivo de configuração de sistema Unix/Linux que poderíamos querer ocultar dos "Crawlers"?  
+**Resposta:** '.conf'  
+***Nota: O texto cita explicitamente arquivos .ini como exemplos de arquivos que contêm detalhes sensíveis de configuração e que, portanto, devem ser protegidos da indexação.***
+
+
+
