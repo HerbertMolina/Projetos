@@ -54,7 +54,7 @@ O foco desta tarefa é compreender como os motores de busca priorizam e classifi
 
 ***Nota: Esta task é um exercício de observação. Ao observar a pontuação de SEO sites diferentes, fica evidente como a estrutura, responsividade e otimização de palavras-chave impactam diretamente a facilidade com que os crawlers indexam o conteúdo e a posição do site nos resultados de busca.***  
 
-### 🔵 **Task 4: Beepboop robots.txt**
+### 🔵 **Task 4: robots.txt**
 
 O foco desta tarefa é entender a função do arquivo 'robots.txt', como ele controla as permissões dos crawlers e como pode ser usado (ou abusado) para descobrir diretórios e arquivos ocultos.
 
@@ -82,7 +82,50 @@ O foco desta tarefa é entender a função do arquivo 'robots.txt', como ele con
 
 - **Pergunta:** Qual é a extensão de um arquivo de configuração de sistema Unix/Linux que poderíamos querer ocultar dos "Crawlers"?  
 **Resposta:** '.conf'  
-***Nota: O texto cita explicitamente arquivos .ini como exemplos de arquivos que contêm detalhes sensíveis de configuração e que, portanto, devem ser protegidos da indexação.***
+***Nota: O texto cita explicitamente arquivos .ini como exemplos de arquivos que contêm detalhes sensíveis de configuração e que, portanto, devem ser protegidos da indexação.***  
+
+### 🔵 **Task 5: Sitemaps**  
+
+O foco desta tarefa é entender o que são Sitemaps, como eles facilitam o trabalho dos crawlers e por que são fundamentais para a otimização e indexação eficiente de um site.  
+
+  Conceitos explorados:  
+  **Sitemap:** Recurso que especifica as rotas e a estrutura de conteúdo de um site, funcionando como  um guia para os crawlers.  
+  **XML:** A estrutura de arquivo típica e padronizada utilizada na web para formatar sitemaps.  
+  **Eficiência de Crawling:** O uso de sitemaps elimina a necessidade de "adivinhação", permitindo que o crawler acesse diretamente as rotas fornecidas.  
+
+- **Pergunta:** Qual é a estrutura de arquivo típica de um "Sitemap"?   
+**Resposta:** 'XML'  
+***Nota: Embora o texto mencione apenas que são "formatados", o padrão universal da web para a estrutura de sitemaps é o formato XML (eXtensible Markup Language).***  
+
+- **Pergunta:** A qual exemplo da vida real os "Sitemaps" podem ser comparados?    
+**Resposta:** 'map'  
+***Nota: O texto faz uma analogia direta no primeiro parágrafo, comparando sitemaps a mapas geográficos do mundo real, mas aplicados à estrutura de navegação de um site.***  
+
+- **Pergunta:** Nomeie a palavra-chave para o caminho percorrido para o conteúdo em um site.   
+**Resposta:** 'Route'    
+***Nota: O texto descreve explicitamente que os sitemaps especificam as "rotas" (routes) necessárias para encontrar o conteúdo, representando diretórios ou páginas aninhadas.***
+
+### 🔵 **Task 6: Google Dorking**  
+
+O foco desta tarefa é entender como utilizar operadores avançados de busca para refinar consultas, encontrar arquivos específicos e descobrir informações públicas sensíveis.  
+
+  Conceitos e Operadores explorados:  
+  **site:[domínio]:** Restringe os resultados de busca exclusivamente a um domínio ou site específico.  
+  **filetype:[extensão]:** Filtra os resultados para mostrar apenas arquivos com a extensão especificada (ex: pdf, txt, ini, sql).  
+  **intitle:[frase]:** Exige que a frase especificada apareça exatamente no título da página HTML.  
+  **cache:[url]:** Exibe a versão em cache do site armazenada pelos servidores do Google.  
+
+- **Pergunta:** Qual seria o formato usado para consultar o site bbc.co.uk sobre defesas contra inundações?  
+**Resposta:** 'site:bbc.co.uk "flood defences"'  
+***Nota: Combina-se o operador 'site:' para limitar o escopo ao domínio e aspas para garantir a correspondência exata da frase na busca.***  
+
+- **Pergunta:** Qual termo você usaria para pesquisar por tipo de arquivo?  
+**Resposta:** 'filetype:'  
+***Nota: Operador essencial para encontrar extensões específicas que podem conter dados sensíveis ou configurações expostas inadvertidamente.***  
+
+- **Pergunta:** Qual termo podemos usar para procurar páginas de login?  
+**Resposta:** 'intitle:'  
+***Nota: Este operador é frequentemente combinado com palavras como "login" ou "admin" (ex: 'intitle:"login"') para encontrar páginas onde essa palavra-chave está presente no título do navegador/HTML.***
 
 
 
