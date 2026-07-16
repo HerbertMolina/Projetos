@@ -214,7 +214,35 @@ Resultado: HTTP/1.1 200 OK
 
 **Impacto:** Se uma vulnerabilidade for descoberta nessas versões específicas, o site se torna um alvo imediato até que a atualização seja aplicada.
 
-**Recomendação:** Manter todos os plugins e temas do WordPress rigorosamente atualizados. Remover plugins não utilizados.
+**Recomendação:** Manter todos os plugins e temas do WordPress rigorosamente atualizados. Remover plugins não utilizados.  
+
+### 🚨 ANÁLISE CRÍTICA:
+
+**Porta 21 (FTP):**
+
+- 🔴 **CRÍTICO** - Se credenciais forem fracas, atacante pode:
+    - Upload de webshells
+    - Download de backups
+    - Modificação de arquivos do site
+
+**Portas 25, 110, 143 (Email):**
+
+- 🟠 **ALTO** - Servidor de email COMPLETO exposto
+- Confirma que o cPanel está rodando email
+- Possível spam relay se mal configurado
+
+## ⚠️Vetores de ataque potenciais no robos.txt:
+disallow /wp-admin/
+allow /wp-admi/admin-ajax.php
+
+
+Isso pode causar 
+
+**Ataques de força bruta
+Exploração de vulnerabilidades em plugins que usam AJAX
+Enumeração de usuários (em algumas configurações)**
+
+**Não é uma vulnerabilidade por si só**, mas é uma **exposição desnecessária** que aumenta a superfície de ataque.
 
 ---
 
