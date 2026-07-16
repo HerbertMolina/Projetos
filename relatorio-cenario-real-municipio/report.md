@@ -1,27 +1,27 @@
-# RELATÓRIO DE INVESTIGAÇÃO EM SEGURANÇA DA INFORMAÇÃO
+# RELATÓRIO DE INVESTIGAÇÃO  
 ## Mapeamento de Superfície de Ataque via OSINT Passivo em Sistema de Gestão Pública Municipal
 
----
+---  
 
-**Autor:** Herbert Molina 
+**Autor:** Herbert Molina   
 **Data:** 02 de Julho de 2026  
 **Classificação:** Público (Dados Anonimizados)  
 **Versão:** 1.0 - Final  
-**Tipo de Investigação:** OSINT 100% Passivo (sem interação ativa com o alvo)
+**Tipo de Investigação:** OSINT 100% Passivo (sem interação ativa com o alvo)  
 
----
+---  
 
-## ⚖️ AVISO ÉTICO E LEGAL
+## ⚖️ AVISO ÉTICO E LEGAL  
 
-Este relatório foi elaborado **exclusivamente para fins educacionais** e demonstração de habilidades em segurança da informação e inteligência de fontes abertas (OSINT).
+Este relatório foi elaborado **exclusivamente para fins educacionais** e demonstração de habilidades em segurança da informação e inteligência de fontes abertas (OSINT).  
 
-A investigação foi conduzida utilizando **APENAS técnicas passivas**, sem qualquer interação direta, exploração, teste de intrusão ou acesso não autorizado aos sistemas investigados. Nenhuma ferramenta de varredura ativa (Nmap, Nessus, Nikto, etc.) foi utilizada contra o alvo.
+A investigação foi conduzida utilizando **APENAS técnicas passivas**, sem qualquer interação direta, exploração, teste de intrusão ou acesso não autorizado aos sistemas investigados. Nenhuma ferramenta de varredura ativa (Nmap, Nessus, Nikto, etc.) foi utilizada contra o alvo.  
 
-**Todos os dados sensíveis foram anonimizados** para proteger a identidade do alvo. Qualquer semelhança com sistemas reais é coincidência.
+**Todos os dados sensíveis foram anonimizados** para proteger a identidade do alvo. Qualquer semelhança com sistemas reais é coincidência.  
 
-Este material **não deve ser utilizado** para atividades ilegais ou não autorizadas. O autor não se responsabiliza pelo uso indevido das informações aqui contidas.
+Este material **não deve ser utilizado** para atividades ilegais ou não autorizadas. O autor não se responsabiliza pelo uso indevido das informações aqui contidas.  
 
-> **Para profissionais de segurança:** Sempre obtenha autorização por escrito (Regras de Engajamento) antes de realizar testes de intrusão em sistemas de terceiros. No Brasil, o acesso não autorizado a sistemas informáticos é tipificado como crime pela Lei 12.737/2012 (Art. 154-A do Código Penal).
+> **Para profissionais de segurança:** Sempre obtenha autorização por escrito (Regras de Engajamento) antes de realizar testes de intrusão em sistemas de terceiros. No Brasil, o acesso não autorizado a sistemas informáticos é tipificado como crime pela Lei 12.737/2012 (Art. 154-A do Código Penal).  
 
 ---
 
