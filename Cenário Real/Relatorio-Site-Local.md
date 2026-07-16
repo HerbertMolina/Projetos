@@ -139,8 +139,11 @@ Múltiplos domínios (incluindo sites de cidades vizinhas) compartilham o mesmo 
 
 **Descrição:**
 
-A aplicação está configurada com o modo de depuração (`WP_DEBUG`) ativo em ambiente de produção. Ao injetar caracteres especiais (como aspas simples `'`) nos parâmetros de busca, o servidor retorna HTTP 200 OK, mas exibe erros técnicos detalhados do banco de dados ou do PHP na interface do usuário.
+**Classificação Inicial:** Suspeita de Injeção de SQL (SQL Injection) baseada em erro (*Error-Based SQLi*). [**Evidência/Comportamento:** Ao inserir o caractere de controle de string (`'`) no parâmetro X (indique qual foi o campo ou URL testada), a aplicação falhou em sanitizar a entrada, resultando em um erro fatal do servidor (HTTP 500 / Erro Crítico do WordPress). 
 
+**Impacto Oculto:** O WordPress escondeu o erro técnico detalhado nesta tela genérica, mas o fato de a aplicação quebrar prova que o dado injetado interagiu diretamente com o interpretador de código. Um atacante pode usar ferramentas automáticas (como o `sqlmap`) ou técnicas de *Blind SQL Injection* (extração às cegas por tempo ou lógica booleana) para confirmar se é possível extrair dados confidenciais do banco. 
+
+**Recomendação de Correção:** Indicar aos desenvolvedores que ativem temporariamente o modo `WP_DEBUG` em um ambiente de testes para identificar exatamente qual plugin ou arquivo gerou a falha. O código vulnerável deve ser corrigido utilizando as funções nativas do WordPress para interagir com o banco de dados de forma segura, como a classe
 **Evidência:**
 Teste passivo no endpoint de busca padrão
 
@@ -148,13 +151,6 @@ curl -I "https://[DOMINIO]/?s=test'"
 
 Resultado: HTTP/1.1 200 OK (O site exibe erro de banco de dados/PHP no navegador)
 
-Teste passivo na API REST
-
-curl -I "https://[DOMINIO]/wp-json/wp/v2/posts?search=test'"
-
-Resultado: HTTP/1.1 200 OK
-
----
 
 ---
 
