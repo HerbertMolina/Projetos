@@ -126,6 +126,9 @@ Uma coleção de laboratórios práticos, cenários de simulação e desafios re
 * **Nome:** Red Team Fundamentals
     * **Nível:** Fácil
     * **Descrição:** Fundamentos de operações de Red Team, engajamento tático, simulação de adversários e diferenciação frente a testes de invasão convencionais.
+* **Nome:** Introducion to OWASP ZAP
+    * **Nível:** Fácil
+    * **Descrição:** Uma alternativa ao Burp Suit.
 
 </details>
 
