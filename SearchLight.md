@@ -149,3 +149,39 @@ Conceitos explorados:
 **Resposta:** 'sl{kjersti stensrud}'  
 ***Nota: O fotógrafo pode ser identificado através dos metadados da imagem (se disponíveis), créditos em sites onde a imagem foi indexada, ou informações de copyright em plataformas como Flickr, Wikimedia Commons ou sites de turismo que hospedam a mesma foto.***
 
+### 🔵 **Task 8: ...e Justiça para Todos**
+
+Desafio de dificuldade superior, exigindo que o analista revise sua abordagem e aplique técnicas avançadas de inteligência visual para identificar não apenas uma estátua, mas todo o seu contexto urbano circundante.
+
+Conceitos explorados:  
+**Inteligência Visual Avançada:** A capacidade de perceber detalhes que passam despercebidos, mudando a perspectiva de análise (conforme destacado na palestra TED de Amy Herman, "A lesson on looking").  
+**Geolocalização Contextual:** Identificar o entorno do objeto principal (como o prédio em frente) para validar a localização exata, indo além da simples identificação do monumento.  
+**Resolução Iterativa de Problemas:** A necessidade de abandonar abordagens iniciais que não funcionam (ex: busca reversa genérica que retorna milhares de estátuas similares) e refinar a busca com combinações específicas de pistas visuais.  
+**Análise de Ponto de Vista (POV):** Entender de onde a foto foi tirada para identificar o que está "opposto" (opposite) à estátua, utilizando mapas de rua (como Google Street View) para validar a linha de visão.
+
+- **Pergunta:** Qual é o nome da personagem que a estátua representa?  
+**Resposta:** 'sl{Lady Justice}'  
+***Nota: Identifique a estátua através de busca reversa ou análise de suas características únicas (roupas, objetos que segura, estilo). O título da task ("...and justice for all") pode ser uma pista temática forte sobre o personagem.***
+
+- **Pergunta:** Onde fica esta estátua?  
+**Resposta:** 'sl{Alexandria, Virginia}'  
+***Nota: Após identificar o nome da estátua, pesquise sua localização oficial (cidade, praça ou endereço específico). Valide se a aparência do local na imagem corresponde à localização encontrada.***
+
+- **Pergunta:** Qual é o nome do edifício que fica em frente a esta estátua?  
+**Resposta:** 'sl{The Westin Alexandria Old Town}'  
+***Nota: Esta é a parte mais desafiadora. Use o Google Street View na localização encontrada para simular o ângulo da foto e identificar qual edifício está diretamente em frente à estátua. Pesquise também o nome histórico ou oficial desse prédio.***
+
+### 🔵 **Task 9: A vista do meu quarto de hotelm**
+
+O foco desta tarefa é introduzir a geolocalização de vídeos, demonstrando que um vídeo é essencialmente uma sequência de imagens (frames) que podem ser extraídas, 
+analisadas individualmente e submetidas às mesmas técnicas de OSINT aplicadas em fotos estáticas.
+
+Conceitos explorados:  
+**Geolocalização de Vídeo:** Aplicação de metodologias de IMINT em arquivos de vídeo, aproveitando que um vídeo contém múltiplos frames (geralmente 24 imagens por segundo) que oferecem mais oportunidades de análise e extração de dados visuais.  
+**FFmpeg:** Ferramenta de linha de comando essencial para processamento de vídeo, usada para extrair frames-chave específicos que contenham informações geográficas relevantes (placas, marcos, paisagens).  
+**Extração de Frames:** Técnica de decompor um vídeo em imagens individuais para aplicar busca reversa, análise visual e Google dorking em momentos específicos onde informações importantes são visíveis.  
+**Análise Temporal:** Capacidade de revisar o vídeo múltiplas vezes e em diferentes velocidades para capturar detalhes que podem passar despercebidos na reprodução normal.
+
+- **Pergunta:** Qual é o nome do hotel onde o meu amigo ficou hospedado há alguns anos?  
+**Resposta:** 'sl{NOVOTEL SINGAPORE CLARKE QUAY}'  
+***Nota: Baixe o vídeo anexado e use o FFmpeg (conforme o guia do Nixintel) para extrair frames que mostrem vistas da janela, placas, logotipos ou marcos visíveis. Aplique busca reversa de imagem nos frames extraídos e use Google dorking para identificar o hotel específico com base nas pistas visuais encontradas no vídeo.***
