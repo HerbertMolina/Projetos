@@ -327,6 +327,12 @@ Vetor: Network/Low Complexity/No Authentication
 - Possibilidade de movimentação lateral para outros sistemas na mesma rede
 - Instalação de backdoors e persistência
 
+**Conformidade Afetada:**
+- 🇧🇷 **LGPD (Lei 13.709/2018):** Violação do Art. 46 (agentes de tratamento devem adotar medidas de segurança técnicas aptas a proteger os dados pessoais). Risco de notificação obrigatória à ANPD.
+- 🌐 **OWASP Top 10 (2021):** A03:2021 – Injection (falha de injeção de código).
+- 🏢 **ISO/IEC 27001:2022:** Controle A.8.8 (Gestão de vulnerabilidades técnicas) – não atendido.
+- 🏛️ **Decreto 10.046/2019 (Governo Digital):** Falha na disponibilidade e integridade de serviço público essencial.  
+
 **Recomendações:**
 
 **Imediato:**
@@ -385,6 +391,12 @@ Autenticação: Solicita usuário/senha
 - Possibilidade de desligar ou modificar qualquer VM
 - Acesso a dados sensíveis de todos os sistemas virtualizados
 - Movimento lateral para qualquer sistema conectado
+
+**Conformidade Afetada:**
+- 🇧🇷 **LGPD:** Violação dos princípios de segurança e prevenção (Art. 6º, VI e VII) – infraestrutura de virtualização exposta compromete todos os dados hospedados.
+- 🌐 **OWASP Top 10 (2021):** A01:2021 – Broken Access Control (controle de acesso ausente em painel crítico).
+- 🏢 **ISO/IEC 27001:2022:** Controle A.8.20 (Segurança de serviços de rede) e A.8.21 (Segurança de serviços na nuvem) – não atendidos.
+- 🛡️ **NIST CSF (Cybersecurity Framework):** Falha na função "Protect" (PR.AC-5 – integridade de rede) e "Detect" (DE.CM-1 – monitoramento de rede).  
 
 **Contexto de Risco:**
 
@@ -448,8 +460,14 @@ Result:
 - Múltiplos vetores de comprometimento disponíveis
 - Alta probabilidade de exploração bem-sucedida
 - Sistema de protocolo é crítico para operações municipais
-- Dados de documentos oficiais podem ser comprometidos
+- Dados de documentos oficiais podem ser comprometidos  
 
+**Conformidade Afetada:**
+- 🇧🇷 **LGPD:** Violação do Art. 48 (dever de comunicar incidente de segurança à ANPD e aos titulares) – alta probabilidade de incidente com dados pessoais de cidadãos.
+- 🌐 **OWASP Top 10 (2021):** A06:2021 – Vulnerable and Outdated Components (componentes desatualizados).
+- 🏢 **ISO/IEC 27001:2022:** Controle A.8.19 (Instalação de software em sistemas operacionais) e A.8.8 (Gestão de vulnerabilidades) – não atendidos.
+- 🏛️ **TCU (Tribunal de Contas da União):** Acórdão 2638/2021 – determina que órgãos públicos implementem gestão de vulnerabilidades e patches.  
+  
 **Recomendações:**
 
 **Imediato:**
@@ -504,6 +522,12 @@ Protocolo: HTTPS (válido)
 - Modificação ou deleção de dados críticos
 - Criação de novos usuários com privilégios administrativos
 - Violação massiva da LGPD
+
+**Conformidade Afetada:**
+- 🇧🇷 **LGPD:** Violação do Art. 46 – painel administrativo exposto é falha técnica grave na proteção de dados.
+- 🌐 **OWASP Top 10 (2021):** A07:2021 – Identification and Authentication Failures.
+-  **ISO/IEC 27001:2022:** Controle A.8.3 (Segregação de funções) e A.8.5 (Controle de acesso) – não atendidos.
+- ️ **CIS Controls v8:** Controle 4.4 (Estabelecer e manter processo de gestão de configuração segura) – não atendido.  
 
 **Recomendações:**
 
