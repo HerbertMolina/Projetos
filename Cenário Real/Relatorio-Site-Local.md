@@ -241,6 +241,16 @@ Enumeração de usuários (em algumas configurações)**
 **Não é uma vulnerabilidade por si só**, mas é uma **exposição desnecessária** que aumenta a superfície de ataque.
 
 ---
+🔗 Cenário de Ataque Hipotético:    
+
+    Enumeração: O atacante utiliza a API REST do WordPress (/wp-json/wp/v2/users) para listar todos os nomes de usuário (slugs) válidos do site, incluindo o administrador.    
+    
+    Ataque Direcionado: Com o nome de usuário correto, o atacante direciona um ataque de força bruta apenas para essa conta, ou envia um e-mail de phishing altamente personalizado (Spear Phishing) para o dono do site.    
+    
+    Comprometimento: Ao obter a senha, o atacante faz login no wp-admin.    
+    
+    Impacto Final: O atacante instala um plugin malicioso ou altera o arquivo functions.php, fazendo com que o site redirecione todos os visitantes para uma página de phishing ou exiba anúncios maliciosos, destruindo a reputação da marca.    
+---
 
 ## 📊 6. ANÁLISE DE RISCO E IMPACTO NOS NEGÓCIOS (BIA) - Contexto do Negócio
 
