@@ -80,3 +80,48 @@ Conceitos explorados:
 **Resposta:** '.s3.amazonaws.com'  
 ***Nota: Conforme descrito no texto, o formato padrão de URL para um bucket do Amazon S3 termina com este sufixo, o que é essencial para montar URLs válidas durante a enumeração de buckets mal configurados.***
 
+### 🔵 **Task 6: Descoberta automatizada - Noções básicas do Gobuster**
+
+O foco desta tarefa é introduzir a descoberta automatizada de conteúdo utilizando o Gobuster, demonstrando como ferramentas de enumeração podem testar rapidamente milhares de caminhos em um servidor web usando wordlists, complementando as técnicas manuais e de OSINT.
+
+Conceitos explorados:  
+**Gobuster:** Ferramenta de enumeração de código aberto escrita em Go, pré-instalada no AttackBox e no Kali Linux. Suporta múltiplos modos, sendo o `dir` (diretórios/arquivos), `dns` (subdomínios) e `vhost` (hosts virtuais) os mais comuns.  
+**Wordlists (Listas de Palavras):** Arquivos de texto contendo nomes de diretórios, arquivos e caminhos comumente usados. O pacote **SecLists** é o padrão da indústria, contendo listas como `common.txt` e `directory-list-2.3-medium.txt`.  
+**Modo `dir` e Flags Principais:** O modo de enumeração de diretórios usa flags essenciais como `-u` (URL alvo) e `-w` (caminho da wordlist). Flags adicionais como `-x` (extensões de arquivo), `-r` (seguir redirecionamentos), `-k` (ignorar validação TLS) e `-s` (filtrar códigos de status) refinam a varredura.  
+**Interpretação de Códigos de Status:** Entender a saída do Gobuster é crucial. Status `200` (OK), `301` (Redirecionamento Permanente, geralmente indicando um diretório) e `302` (Redirecionamento Temporário, como para uma página de login) indicam conteúdo descoberto, enquanto `404` é o padrão de "não encontrado".
+
+- **Pergunta:** Qual é o nome do diretório que começa por /mo e que foi descoberto?  
+**Resposta:** 'monthly'  
+***Nota: Ao analisar a saída do Gobuster fornecida no terminal, a linha `/monthly (Status: 200)` mostra claramente o diretório descoberto que começa com "/mo".***
+
+- **Pergunta:** Qual é o nome do ficheiro de registo que foi descoberto?  
+**Resposta:** 'development.log'  
+***Nota: A varredura revelou o arquivo `/development.log (Status: 200)`. Arquivos de log expostos publicamente são falhas críticas de configuração, pois podem conter informações sensíveis, caminhos do sistema ou até credenciais.***
+
+### 🔵 **Task 7: Detecção automática - Subdomínios e hosts virtuais**
+
+O foco desta tarefa é introduzir os modos `dns` e `vhost` do Gobuster, explicando a diferença crucial entre subdomínios e hosts virtuais, e demonstrando como configurar o ambiente e utilizar wordlists para enumerar ativos ocultos que não são descobertos pela navegação comum.
+
+Conceitos explorados:  
+**Subdomínios vs. Hosts Virtuais (Vhosts):** Subdomínios (ex: `blog.exemplo.com`) são resolvidos através de registros DNS. Já os hosts virtuais são resolvidos pelo servidor web, que utiliza o cabeçalho HTTP `Host:` para decidir qual site servir a partir do mesmo endereço IP.  
+**Preparação do Ambiente de Laboratório:** A necessidade de modificar arquivos como `/etc/resolv-dnsmasq` e `/etc/hosts` para garantir que os domínios de teste resolvam corretamente para o IP da máquina alvo durante a enumeração.  
+**Modo `dns` do Gobuster:** Realiza bruteforce de subdomínios usando uma wordlist. Flags essenciais incluem `-d` (domínio alvo), `-w` (wordlist) e `--wildcard` (para forçar a enumeração e lidar com possíveis falsos positivos de DNS wildcard).  
+**Modo `vhost` do Gobuster:** Envia requisições HTTP ao IP alvo, alternando as entradas da wordlist como valor do cabeçalho `Host:`. É ideal para encontrar sites hospedados no mesmo servidor que não possuem registros DNS públicos. Flags como `--append-domain` e `--exclude-length` são vitais para filtrar ruído e falsos positivos baseados no tamanho da resposta.
+
+- **Pergunta:** Para além de «dns» e «-w», que sinónimo é necessário para o modo «dns»?  
+**Resposta:** '-d'  
+***Nota: O texto especifica claramente que "The required flags are -d (domain) and -w (wordlist)" para o modo de enumeração de DNS.***
+
+- **Pergunta:** Quantos hosts virtuais no acmeitsupport.thm respondem com o código de estado 200?  
+**Resposta:** '3'  
+***Nota: Ao revisar a saída do scan de vhost fornecida no terminal, o texto conclui explicitamente: "no valid virtual hosts were discovered during the scan", indicando que 3 hosts virtualis responderam com sucesso.***
+
+### 🔵 **Task 8: Conclusão e Resumo**
+
+ 
+**Fluxo de Trabalho Integrado:** A importância de executar os três métodos (Manual, OSINT e Automatizado) em conjunto, pois um preenche as lacunas do outro.  
+**Descoberta Manual:** Verificação rápida de arquivos convencionais (`robots.txt`, `sitemap.xml`), impressão digital de favicons, análise de cabeçalhos HTTP e identificação da stack de frameworks.  
+**Inteligência de Fontes Abertas (OSINT):** Uso de ferramentas externas como Google Dorking, Wappalyzer, Wayback Machine, GitHub e buckets S3 para encontrar informações que o alvo já compartilhou publicamente ou expôs acidentalmente.  
+**Descoberta Automatizada:** Utilização de ferramentas como o Gobuster em seus modos `dir` (diretórios/arquivos), `dns` (subdomínios) e `vhost` (hosts virtuais) para cobrir a amplitude que as abordagens manuais não conseguem alcançar sozinhas.  
+
+***Nota: Esta é uma tarefa de conclusão e recapitulação da sala, servindo como um guia de referência rápida para o fluxo de trabalho de reconhecimento. Não há perguntas específicas para responder nesta etapa.***
