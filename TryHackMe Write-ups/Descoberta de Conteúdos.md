@@ -63,3 +63,20 @@ Conceitos explorados:
 **Resposta:** 'Wappalyzer'  
 ***Nota: Conforme descrito no texto, o Wappalyzer é a ferramenta e extensão padrão do setor para identificar rapidamente a stack tecnológica (frameworks, servidores, CDNs, etc.) de qualquer site visitado.***
 
+### 🔵 **Task 5: OSINT - Repositórios e Arquivos**
+
+Explorando recursos externos de armazenamento e versionamento (como arquivos históricos da web, repositórios de código e buckets de nuvem) que frequentemente expõem dados sensíveis, endpoints esquecidos ou configurações incorretas.
+
+Conceitos explorados:  
+**Wayback Machine:** Arquivo histórico da Internet que armazena snapshots de sites ao longo do tempo. É extremamente útil para encontrar páginas removidas do site ativo, como formulários de login antigos, endpoints esquecidos ou conteúdo publicado brevemente.  
+**GitHub:** Plataforma de controle de versão onde desenvolvedores podem, acidentalmente, cometer (commit) dados sensíveis como chaves de API, credenciais, arquivos de configuração e `.env`. A análise do histórico de commits (e não apenas dos arquivos atuais) é crucial, pois dados removidos em commits posteriores ainda permanecem no histórico.  
+**S3 Buckets (Amazon S3):** Serviço de armazenamento em nuvem frequentemente usado para hospedar arquivos e conteúdo estático. A URL padrão segue o formato `https://{nome}.s3.amazonaws.com`. Erros de configuração de permissão são comuns, podendo expor buckets publicamente. Padrões de nomenclatura como `{empresa}-assets`, `{empresa}-backup` ou `{empresa}-dev` são alvos frequentes de enumeração.
+
+- **Pergunta:** Qual é o endereço do site da Wayback Machine?  
+**Resposta:** 'https://web.archive.org/'  
+***Nota: O endereço principal do projeto de arquivo da Internet é archive.org (sendo web.archive.org o subdomínio específico para a ferramenta de busca de snapshots).***
+
+- **Pergunta:** Qual é o formato de URL com que terminam os buckets do Amazon S3? (A resposta começa por um .)  
+**Resposta:** '.s3.amazonaws.com'  
+***Nota: Conforme descrito no texto, o formato padrão de URL para um bucket do Amazon S3 termina com este sufixo, o que é essencial para montar URLs válidas durante a enumeração de buckets mal configurados.***
+
