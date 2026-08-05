@@ -94,3 +94,11 @@ Conceitos explorados:
 - **Pergunta:** Que técnica de pesquisa corresponde à seguinte expressão: «O Word.exe inicia o cmd.exe, que, por sua vez, inicia o powershell.exe, que se liga a um IP externo»?  
 **Resposta:** 'Behavioral Pattern Analysis'  
 ***Nota: Esta cadeia de processos é o exemplo clássico dado no "Method 3: Behavioral Pattern Analysis", sob a categoria de "Process chains". A técnica foca em sequências de eventos que, em conjunto, revelam atividade maliciosa, mesmo que eventos individuais pareçam normais.***
+
+### 🔵 **Task 6: Conclusão e Próximos Passos**
+
+O foco desta tarefa final é consolidar os conceitos fundamentais aprendidos ao longo da sala, reforçando a mentalidade proativa necessária para o Threat Hunting e destacando como cada caçada cria um ciclo de melhoria contínua para as capacidades de detecção da organização.
+
+Conceitos explorados:  
+**Mentalidade Proativa:** O threat hunting não espera por alertas; ele busca ativamente ameaças que os sistemas de detecção perderam, especialmente nos estágios iniciais de um ataque, antes que os objetivos do invasor sejam alcançados.  
+**Ciclo de Melhoria de Detecção:** Cada caçada tem um propósito duplo: encontrar ameaças ativas no ambiente e identificar lacunas de detecção (detection gaps) que a equipe de segurança pode fortalecer. Os aprendizados de cada hunt melhoram as capacidades de detecção futuras.  
