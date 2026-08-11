@@ -45,3 +45,45 @@ Conceitos explorados:
 **Resposta:** 'A'  
 ***Nota: Conforme destacado no texto, qualquer interação direta com uma pessoa afiliada ao alvo conta como reconhecimento ativo, mesmo que não envolva o envio de pacotes de rede, pois há um engajamento direto com a organização alvo.***
 
+### 🔵 **Task 3: WHOIS**
+
+O foco desta tarefa é introduzir o protocolo WHOIS e seu sucessor moderno, o RDAP, demonstrando como consultar detalhes de registro de domínios para coletar inteligência passiva valiosa sobre um alvo.
+
+Conceitos explorados:  
+**Protocolo WHOIS:** Protocolo de consulta/resposta (porta 43) que fornece detalhes de registro de nomes de domínio, mantidos pelo registrador. Informações típicas incluem: registrador, dados de contato do registrante (frequentemente ofuscados por serviços de privacidade), datas de criação/atualização/expiração, name servers e códigos de status (ex: `clientTransferProhibited`).  
+**RDAP (Registration Data Access Protocol):** O sucessor moderno e oficial do WHOIS para domínios gTLD. Utiliza HTTPS (seguro), retorna dados estruturados em JSON (legível por máquinas), suporta internacionalização e oferece melhores controles de privacidade, alinhando-se às regras atuais de proteção de dados.  
+**Análise de Dados WHOIS/RDAP:** Ataques focam em datas (para estimar a idade da empresa ou planejar phishing em períodos de renovação), no registrador (para padrões de phishing), nos name servers (potenciais pontos fracos) e em mudanças históricas de infraestrutura.  
+**Ferramentas:** Uso do cliente de linha de comando `whois` ou consultas via `curl` para endpoints RDAP (formatando a saída com `jq`), além de alternativas online como whois.icann.org ou whoxy.com para dados históricos.
+
+- **Pergunta:** Quando é que o TryHackMe.com foi registado?  
+**Resposta:** '20180705'  
+***Nota: A saída do comando `whois` ou da consulta RDAP exibe claramente o campo "Creation Date" (ou "registration" event) como 2018-07-05, indicando a data de registro inicial do domínio.***
+
+- **Pergunta:** Qual é o registrador do TryHackMe.com?  
+**Resposta:** 'NAMECHEAP.com'  
+***Nota: O campo "Registrar" na saída da consulta identifica a empresa responsável pelo registro do domínio, que neste caso é a NAMECHEAP INC.***
+
+- **Pergunta:** Que empresa é que o TryHackMe.com utiliza para os servidores de nomes?  
+**Resposta:** 'cloudflare.com'  
+***Nota: Ao analisar os registros de name servers (ou consultando o domínio via ferramentas como `dig` ou `whois`), verifica-se que a infraestrutura de DNS do TryHackMe é gerenciada pela Cloudflare.***
+
+### 🔵 **Task 4: nslookup & dig**
+
+Utilizando ferramentas como `nslookup` e `dig` para traduzir nomes de domínio em endereços IP, encontrar servidores de e-mail e revelar registros TXT, sem interagir diretamente com os servidores do alvo.
+
+Conceitos explorados:  
+**Consultas DNS Passivas:** As consultas são enviadas a resolvedores públicos ou abertos (como 1.1.1.1 ou 8.8.8.8), e não diretamente aos servidores autoritativos do alvo, mantendo a natureza passiva da operação.  
+**nslookup:** Ferramenta mais antiga, ainda útil para compatibilidade (especialmente em sistemas Windows), mas com saída menos detalhada. Sintaxe comum: `nslookup -type=TIPO DOMINIO [SERVIDOR]`.  
+**dig (Domain Information Groper):** A ferramenta moderna e preferida para consultas DNS. Fornece uma saída mais limpa, exibe valores de TTL (Time To Live) por padrão e é mais confiável para consultas complexas e scripts. Sintaxe: `dig [@SERVIDOR] DOMINIO [TIPO]`.  
+**Tipos Comuns de Registros DNS:**  
+- **A / AAAA:** Endereços IPv4 e IPv6.  
+- **CNAME:** Nome Canônico (alias que aponta um domínio para outro).  
+- **MX:** Servidores de e-mail (Mail Exchanger), onde valores menores indicam maior prioridade.  
+- **SOA:** Start of Authority (servidor de nomes primário, e-mail do admin e número de série da zona).  
+- **TXT:** Registros de texto, frequentemente usados para SPF, DKIM, DMARC, verificação de domínio ou, em CTFs, para esconder flags.  
+**Privacidade e Defesa:** O uso de resolvedores públicos que suportam DoH/DoT (como 1.1.1.1) ajuda a evitar que o ISP registre as consultas. Defensores devem monitorar mudanças inesperadas em registros DNS (novos MX ou TXT maliciosos), que podem indicar subdomain takeover ou erros de configuração.
+
+- **Pergunta:** Verifica os registos TXT do thmlabs.com. Qual é o indicador que lá aparece?  
+**Resposta:** 'THM{a5b83929888ed36acb0272971e438d78}'  
+***Nota: Ao executar o comando `dig txt thmlabs.com` (ou `nslookup -type=txt thmlabs.com`), o registro TXT retorna a string contendo a flag do desafio.***
+
