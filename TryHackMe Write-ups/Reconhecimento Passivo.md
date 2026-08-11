@@ -87,3 +87,20 @@ Conceitos explorados:
 **Resposta:** 'THM{a5b83929888ed36acb0272971e438d78}'  
 ***Nota: Ao executar o comando `dig txt thmlabs.com` (ou `nslookup -type=txt thmlabs.com`), o registro TXT retorna a string contendo a flag do desafio.***
 
+### 🔵 **Task 5: DNSDumpster & Certificados**
+
+Como descobrir subdomínios não anunciados de forma totalmente passiva, utilizando fontes de OSINT como o DNSDumpster e os logs de Transparência de Certificados (CT Logs), expandindo a superfície de ataque conhecida sem enviar tráfego direto ao alvo.
+
+Conceitos explorados:  
+**Importância dos Subdomínios:** Subdomínios (ex: `dev.internal.company.com`, `blog.tryhackme.com`) frequentemente expõem serviços esquecidos, vulneráveis ou mal configurados (shadow IT), aumentando a superfície de ataque com APIs ou portais administrativos expostos.  
+**DNSDumpster:** Ferramenta gratuita que agrega dados DNS públicos de caches de mecanismos de busca, bancos de dados de transferência de zona e registros de certificados. Ela não realiza enumeração por força bruta, mantendo a operação 100% passiva, e fornece mapas visuais das relações entre subdomínios, IPs e servidores de e-mail.  
+**Certificate Transparency (CT) Logs (crt.sh):** Atualmente o método mais eficaz de descoberta passiva de subdomínios. É um framework de registro público (obrigatório desde ~2015) que registra todos os certificados SSL/TLS emitidos. O campo *Subject Alternative Name* (SAN) lista os domínios e subdomínios cobertos, permitindo a descoberta em tempo real usando curingas (ex: `%.tryhackme.com`).  
+**Outras Ferramentas:** SecurityTrails (buscas limitadas gratuitas) e ferramentas de linha de comando como `Subfinder`, que agregam múltiplas fontes passivas.  
+**Perspectiva do Defensor:** Organizações devem monitorar logs de CT e listas de subdomínios para detectar registros órfãos (dangling records), que apresentam risco de *subdomain takeover*, ou subdomínios não autorizados.
+
+- **Pergunta:** Pesquise tryhackme.com no DNSDumpster. Na secção Serviços / Banners, qual deles tem o número mais elevado?  
+**Resposta:** 'cloudflare'  
+***Nota: Ao consultar o domínio no DNSDumpster, a seção "Services / Banners" agrega os provedores de serviços detectados. No caso do TryHackMe, a Cloudflare aparece com a maior contagem, refletindo seu uso extensivo como CDN e provedor de DNS/segurança para o domínio.***
+
+
+
