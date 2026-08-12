@@ -102,5 +102,43 @@ Conceitos explorados:
 **Resposta:** 'cloudflare'  
 ***Nota: Ao consultar o domínio no DNSDumpster, a seção "Services / Banners" agrega os provedores de serviços detectados. No caso do TryHackMe, a Cloudflare aparece com a maior contagem, refletindo seu uso extensivo como CDN e provedor de DNS/segurança para o domínio.***
 
+### 🔵 **Task 6: Shodan**
+
+Shodan.io, um motor de busca para dispositivos conectados à internet, para gathering de inteligência passiva sobre ativos expostos, sem enviar tráfego direto ao alvo.
+
+Conceitos explorados:  
+**Shodan.io:** Diferente do Google (que indexa páginas web), o Shodan varre continuamente a internet pública, coletando banners e respostas de portas e serviços abertos, indexando dispositivos como servidores, roteadores, câmeras e sistemas de controle industrial.  
+**Valor Defensivo:** Organizações monitoram o Shodan para identificar exposições não intencionais, como servidores desonestos (rogue), máquinas de teste esquecidas ou serviços vulneráveis.  
+**Navegação e Filtros:** A interface permite buscar por domínio, IP, ASN, provedor de hospedagem, localização geográfica, portas abertas e banners de serviço. Filtros de busca como `hostname:`, `org:`, `port:` e `http.component:` ajudam a refinar os resultados.  
+**Ferramentas Complementares:** O Censys.io é mencionado como uma alternativa útil para cruzar dados de hosts e certificados.
+
+- **Pergunta:** De acordo com o Shodan.io, qual é o país que ocupa o primeiro lugar a nível mundial em termos de número de servidores Apache acessíveis ao público?  
+**Resposta:** 'United States'  
+***Nota: Ao consultar as estatísticas globais do Shodan para servidores Apache, os Estados Unidos consistentemente aparecem como o país com o maior número de servidores expostos publicamente.***  
+
+- **Pergunta:** De acordo com o Shodan.io, qual é a terceira porta mais utilizada no Apache?  
+**Resposta:** '8080'  
+***Nota: Nas estatísticas de portas do Shodan para o serviço Apache, a porta 8080 (frequentemente usada como alternativa HTTP ou para proxies) figura como a terceira mais comum, atrás das portas padrão 80 e 443.***   
+
+- **Pergunta:** De acordo com o Shodan.io, qual é a porta mais comum utilizada pelo nginx?  
+**Resposta:** '80'  
+***Nota: A porta 80 (HTTP padrão) é, de longe, a porta mais comum e amplamente utilizada para servidores web Nginx expostos na internet, conforme refletido nas estatísticas do Shodan.***
+
+### 🔵 **Task 7: Conclusão**
+
+Consolidar os conceitos e ferramentas de reconhecimento passivo abordados aqui.
+
+Conceitos explorados:  
+**Revisão das Ferramentas:**  
+- **WHOIS:** Detalhes de registro de domínio (registrador, datas, name servers), com dados pessoais frequentemente ofuscados por privacidade.  
+- **Consultas DNS (`dig` / `nslookup`):** Registros A/AAAA (IPs), MX (servidores de e-mail), TXT (verificação/SPF), consultados via resolvedores públicos (ex: 1.1.1.1).  
+- **Enumeração de Subdomínios:** DNSDumpster (agregação e grafos DNS) e crt.sh (logs de Transparência de Certificados), sendo este último o método passivo mais eficaz.  
+- **Serviços Expostos:** Shodan.io para banners de dispositivos, portas abertas e informações de hospedagem.  
+**Valor Prático:** Esses métodos são 100% passivos, não geram alertas, possuem risco legal mínimo (quando usados eticamente) e frequentemente revelam subdomínios esquecidos, serviços desatualizados ou configurações incorretas.  
+**Melhores Práticas:**  
+- Usar resolvedores DoH/DoT (como 1.1.1.1) para manter suas próprias consultas privadas.  
+- Defensores devem monitorar sua própria pegada digital (alertas no Shodan/Censys, observação de logs de CT para novos certificados).  
+- Garantir que qualquer engajamento, mesmo passivo, esteja autorizado e dentro do escopo.  
+- Lembrar que os resultados mudam com o tempo (IPs anycast rotacionam, subdomínios aparecem/desaparecem).
 
 
