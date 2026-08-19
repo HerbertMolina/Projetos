@@ -56,8 +56,4 @@ Conceitos explorados:
 ***Nota: O texto destaca que os NIDS dependem do acesso a toda a comunicação entre os nós e, portanto, são afetados pela adoção generalizada de criptografia em trânsito. O protocolo TLS (Transport Layer Security) é o padrão amplamente implementado que criptografa esse tráfego,
 impedindo a inspeção profunda de pacotes pelo NIDS.***   
 
-- **Pergunta:** Experimente executar as ferramentas no alvo e analise os alertas resultantes. Existe alguma atividade inesperada?  
-**Resposta:** 'No'  
-  ***Nota: Esta é uma pergunta de verificação experimental.
-
 
