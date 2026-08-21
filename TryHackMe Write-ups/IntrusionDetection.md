@@ -56,4 +56,45 @@ Conceitos explorados:
 ***Nota: O texto destaca que os NIDS dependem do acesso a toda a comunicação entre os nós e, portanto, são afetados pela adoção generalizada de criptografia em trânsito. O protocolo TLS (Transport Layer Security) é o padrão amplamente implementado que criptografa esse tráfego,
 impedindo a inspeção profunda de pacotes pelo NIDS.***   
 
+### 🔵 **Task 4: Noções básicas de reconhecimento e evasão**
+
+O foco desta tarefa é aplicar técnicas básicas de evasão durante a fase de reconhecimento (Reconnaissance) da Cyber Kill Chain, demonstrando como modificar o comportamento de ferramentas como o Nmap para reduzir a geração de alertas em um NIDS (Suricata) e HIDS (Wazuh).
+
+Conceitos explorados:  
+**Detecção Padrão do Nmap:** Comandos como `nmap -sV` executam ações predefinidas (como solicitar caminhos longos para gerar erros 404 e obter versões de serviço) que são facilmente detectadas por IDS devido a assinaturas conhecidas, como o User-Agent padrão do Nmap.  
+**Evasão Parcial via User-Agent:** A alteração do User-Agent HTTP usando o argumento `--script-args http.useragent="<AGENT_AQUI>"` pode enganar regras básicas de assinatura, mas não impede a detecção baseada no comportamento agressivo da varredura.  
+**Trade-off entre Evasão e Informação:** Técnicas de evasão mais furtivas, como o SYN scan (`-sS`), evitam a detecção de versão de serviço e reduzem drasticamente a quantidade de informações coletadas. É um equilíbrio semelhante ao uso de sonar ativo vs. passivo em guerra naval.  
+**Contexto do Alvo:** A necessidade de evasão depende da posição do ativo. Ativos públicos podem estar sob ataque constante de botnets (enterrando seu tráfego no ruído), enquanto ativos internos críticos gerarão alarmes imediatos com um único alerta.  
+**Definição de Evasão:** Pode ser **completa** (nenhum alerta gerado) ou **parcial** (alerta gerado, mas com severidade reduzida, sendo menos provável de ser investigado). O sistema de pontuação da sala reflete isso, penalizando menos alertas de baixa severidade.
+
+- **Pergunta:** Que escala é utilizada para medir a gravidade dos alertas no Suricata? (*-*)  
+**Resposta:** '1-3'  
+***Nota: O Suricata utiliza uma escala de severidade de 1 a 3 para classificar a criticidade dos alertas gerados, onde 1 é baixa e 3 é alta.***
+  
+- **Pergunta:** Quantos serviços o nmap consegue identificar na totalidade quando se realiza a análise de serviços (-sV)?  
+**Resposta:** '3'  
+***Nota: Ao executar a varredura de versão de serviço (`-sV`) contra o alvo específico desta sala, o Nmap consegue identificar completamente 3 serviços rodando nas portas abertas.*** 
+
+### 🔵 **Task 5: Mais manobras de evasão e reconhecimento**
+
+O foco desta tarefa é explorar técnicas avançadas de evasão utilizando o scanner web Nikto, demonstrando como ajustar parâmetros de varredura (tuning) e opções de evasão para equilibrar a coleta de informações com a redução (ou, paradoxalmente, o aumento) de alertas no IDS.
+
+Conceitos explorados:  
+**Agressividade do Nikto:** O Nikto é inerentemente mais agressivo que o Nmap, gerando milhares de alertas (ex: ~7000) se executado com configurações padrão em múltiplas portas.  
+**Scan Tuning (-T):** A capacidade de refinar a varredura para categorias específicas (ex: `-T 1 2 3` para arquivos interessantes, má configuração e divulgação de informações), evitando testes contraproducentes em um CTF, como vetores de Negação de Serviço (DoS).  
+**Evasão no Nikto:** Alteração do User-Agent e uso de flags de evasão (`-e`), como codificação aleatória de URL e variação de caixa (casing).  
+**O Paradoxo da Evasão:** Técnicas de evasão avançadas (como modificar o espaçamento de requisições ou codificação aleatória) podem, na verdade, *aumentar* a detectabilidade, pois IDS modernos (como o Suricata) identificam cabeçalhos inválidos ou caracteres inesperados como anomalias, somando-se às assinaturas de exploit conhecidas.  
+**Evasão em Escala:** Estratégias teóricas de evasão incluem sobrecarregar o IDS com tráfego de botnets (DDoS no sensor), embora limitadores de throughput (rate-limiting) mitiguem isso na prática.
+
+- **Pergunta:** Nikto, Se for encontrada uma rota interessante quando for realizada a primeira análise, como é que isso se chama?  
+**Resposta:** '/login'  
+***Nota: Ao executar a varredura inicial do Nikto nas portas 80 e 3000, o scanner identifica o caminho `/login` como um arquivo/diretório de interesse, indicando a presença de uma aplicação web interativa na porta 3000.*** 
+
+- **Pergunta:** Que valor é utilizado para ativar ou desativar os vetores de negação de serviço quando se utiliza a opção de ajuste de varredura (-T) no Nikto?  
+**Resposta:** '6'  
+***Nota: Na documentação de tuning do Nikto, o valor `6` corresponde à categoria de testes de Negação de Serviço (DoS), que deve ser evitada em varreduras de CTF ou ambientes de produção para não causar indisponibilidade.*** 
+
+- **Pergunta:** Que opções são utilizadas para alterar o espaçamento dos pedidos no Nikto? Utilize vírgulas para separar as opções na sua resposta.  
+**Resposta:** '6,A,B'  
+***Nota: As flags `6`, `A` e `B` (ou `6,a,b` em minúsculas) são utilizadas no Nikto para modificar o espaçamento e o tempo entre as requisições, tentando contornar limitações de taxa ou detecção baseada em volume de tráfego.***  
 
