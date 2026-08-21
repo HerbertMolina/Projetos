@@ -159,3 +159,37 @@ Conceitos explorados:
 **Resposta:** 'web'  
 ***Nota: Ao analisar os alertas gerados pelo Wazuh durante varreduras que provocam erros HTTP (como o script `vuln` do Nmap), o HIDS classifica esses eventos de código 400 na categoria "web", pois são derivados dos logs de acesso/erro do servidor web monitorado.*** 
 
+### 🔵 **Task 9: Reconhecimento para escalada de privilégios**
+
+O foco desta tarefa é demonstrar como rastrear atividades de escalonamento de privilégios, que geralmente ocorrem localmente no host e são invisíveis para um NIDS, exigindo a dependência de um HIDS para detecção.
+
+Conceitos explorados:  
+**Limitações do NIDS no Pós-Exploração:** Tarefas como escalonamento de privilégios raramente envolvem comunicação externa, tornando-as difíceis ou impossíveis de detectar apenas com monitoramento de rede.  
+**Reconhecimento Local:** Verificação de permissões atuais usando comandos como `sudo -l`, `groups` e `cat /etc/group`. Essas ações não geram tráfego de rede, deixando o Suricata (NIDS) "cego" para elas.  
+**Uso de Scripts de Automação (linPEAS):** Ferramentas como o linPEAS realizam uma vasta quantidade de reconhecimento local. Embora possam ser detectadas por antivírus ou monitoramento de integridade de arquivos do HIDS, elas muitas vezes geram menos alertas de rede do que scanners ativos, dependendo de como são transferidas (ex: copy-paste vs. `wget`).  
+**Monitoramento de Integridade de Arquivos (FIM):** O HIDS (Wazuh) monitora a adição ou modificação de arquivos no sistema, podendo alertar sobre a presença de novos scripts de exploração, mesmo que o tráfego de download esteja criptografado (TLS).
+
+- **Pergunta:** Que ferramenta é que o linPEAS identifica como tendo um potencial vetor de escalada?  
+**Resposta:** 'docker'  
+***Nota: Ao executar o linPEAS no sistema alvo, a ferramenta identifica configurações ou permissões associadas ao Docker que podem ser abusadas para escalonar privilégios para root.***  
+
+- **Pergunta:** O Wazuh aciona um alerta quando o linPEAS é adicionado ao sistema? Em caso afirmativo, qual é o seu nível de gravidade?  
+**Resposta:** '5'  
+***Nota: O Wazuh (HIDS) detecta a adição do arquivo do script linPEAS ao sistema através de seu módulo de Monitoramento de Integridade de Arquivos (FIM), gerando um alerta classificado com severidade 5.***
+
+### 🔵 **Task 10: Performing Privilege Escalation**
+
+O foco desta tarefa é executar o escalonamento de privilégios na prática, explorando uma configuração comum do Docker que permite a usuários não-root executar contêineres, o que inadvertidamente concede privilégios efetivos de root no sistema host.
+
+Conceitos explorados:  
+**Vetor de Escalonamento via Docker:** Quando um usuário é adicionado ao grupo `docker`, ele pode executar contêineres sem `sudo`. Isso permite montar o sistema de arquivos do host (ex: `-v /:/mnt`) e modificar arquivos críticos do sistema a partir de dentro do contêiner.  
+**Modificação de Arquivos Críticos:**  
+- `/etc/group`: Adicionar o usuário ao grupo root.  
+- `/etc/sudoers`: Conceder privilégios de sudo sem senha (ex: `echo "grafana-admin ALL=(ALL) NOPASSWD: ALL" >> /mnt/etc/sudoers`).  
+- `/etc/passwd`: Criar um novo usuário com UID 0 (root).  
+**Detecção pelo HIDS:** Todas essas modificações em arquivos sensíveis do sistema são monitoradas pelo Wazuh (HIDS) através do Monitoramento de Integridade de Arquivos (FIM), gerando alertas de alta severidade, mesmo que o NIDS (Suricata) não veja nenhuma atividade de rede maliciosa.
+
+- **Pergunta:** Efetue a escalada de privilégios e obtenha o flag em /root/  
+**Resposta:** '{SNEAK_ATTACK_CRITICAL}'  
+***Nota: Após explorar a configuração do Docker para montar o sistema de arquivos do host e obter acesso root, a flag localizada no diretório `/root/` pode ser lida, confirmando o comprometimento total do sistema.***
+
