@@ -58,7 +58,7 @@ impedindo a inspeção profunda de pacotes pelo NIDS.***
 
 ### 🔵 **Task 4: Noções básicas de reconhecimento e evasão**
 
-O foco desta tarefa é aplicar técnicas básicas de evasão durante a fase de reconhecimento (Reconnaissance) da Cyber Kill Chain, demonstrando como modificar o comportamento de ferramentas como o Nmap para reduzir a geração de alertas em um NIDS (Suricata) e HIDS (Wazuh).
+O foco desta tarefa é aplicar técnicas básicas de evasão durante a fase de reconhecimento (Reconnaissance) da Cyber Kill Chain
 
 Conceitos explorados:  
 **Detecção Padrão do Nmap:** Comandos como `nmap -sV` executam ações predefinidas (como solicitar caminhos longos para gerar erros 404 e obter versões de serviço) que são facilmente detectadas por IDS devido a assinaturas conhecidas, como o User-Agent padrão do Nmap.  
@@ -77,7 +77,7 @@ Conceitos explorados:
 
 ### 🔵 **Task 5: Mais manobras de evasão e reconhecimento**
 
-O foco desta tarefa é explorar técnicas avançadas de evasão utilizando o scanner web Nikto, demonstrando como ajustar parâmetros de varredura (tuning) e opções de evasão para equilibrar a coleta de informações com a redução (ou, paradoxalmente, o aumento) de alertas no IDS.
+Explorando técnicas avançadas de evasão utilizando o scanner web Nikto, demonstrando como ajustar parâmetros de varredura (tuning) e opções de evasão para equilibrar a coleta de informações com a redução (ou, paradoxalmente, o aumento) de alertas no IDS.
 
 Conceitos explorados:  
 **Agressividade do Nikto:** O Nikto é inerentemente mais agressivo que o Nmap, gerando milhares de alertas (ex: ~7000) se executado com configurações padrão em múltiplas portas.  
@@ -97,4 +97,51 @@ Conceitos explorados:
 - **Pergunta:** Que opções são utilizadas para alterar o espaçamento dos pedidos no Nikto? Utilize vírgulas para separar as opções na sua resposta.  
 **Resposta:** '6,A,B'  
 ***Nota: As flags `6`, `A` e `B` (ou `6,a,b` em minúsculas) são utilizadas no Nikto para modificar o espaçamento e o tempo entre as requisições, tentando contornar limitações de taxa ou detecção baseada em volume de tráfego.***  
+
+### 🔵 **Task 6: Inteligência de fontes abertas**
+
+Demonstrar como a Inteligência de Fontes Abertas (OSINT) atua como um "sonar passivo", coletando informações valiosas sem enviar sondagens ativas que possam acionar alertas no IDS, explorando dados que o alvo ou terceiros já divulgaram publicamente.
+
+Conceitos explorados:  
+**OSINT como Evasão Passiva:** Diferente de scanners ativos (Nmap, Nikto), o OSINT é praticamente indetectável por IDS, pois depende de informações já expostas ou adquiridas de fontes desconectadas do alvo direto.  
+**Fontes de Terceiros:** Ferramentas como Shodan (para serviços ativos), mecanismos de busca com operadores avançados, scanners de subdomínios (recon-ng) e consultas WHOIS/ASN podem revelar infraestrutura sem tocar no alvo.  
+**Fontes do Próprio Alvo:** Páginas de erro, extensões de arquivo, páginas de debug, cabeçalhos de servidor (Server tag) e até listagens de vagas de emprego podem vazar detalhes sobre a stack tecnológica utilizada.  
+**Limitações do OSINT:** Depende da disposição do alvo em divulgar dados. Protocolos como WireGuard, que não respondem a consultas não autenticadas, são invisíveis a scanners de terceiros como o Shodan.
+
+- **Pergunta:** Que versão do Grafana está a ser executada no servidor?  
+**Resposta:** '8.2.5'  
+***Nota: Ao inspecionar o site público ou utilizar técnicas de OSINT (como verificar o cabeçalho do servidor ou páginas de erro), é possível identificar que a instância do Grafana em execução está na versão 8.2.5.*** 
+
+- **Pergunta:** Qual é o ID da vulnerabilidade CVE grave que afeta esta versão do Grafana?  
+**Resposta:** 'CVE-2021-43798'  
+***Nota: A versão 8.2.5 do Grafana é vulnerável à falha crítica de divulgação de arquivos (Directory Traversal) identificada como CVE-2021-43798, também conhecida como "Grafana 8.x Authentication Bypass".***  
+
+- **Pergunta:** Se este servidor estivesse disponível ao público, que site poderia já ter informações sobre os seus serviços?  
+**Resposta:** 'shodan'  
+***Nota: O Shodan é o motor de busca especializado em dispositivos conectados à internet, sendo a principal fonte de informação passiva sobre serviços, portas e banners expostos publicamente antes mesmo de qualquer varredura direta.*** [[14]]
+
+- **Pergunta:** Como poderíamos procurar ficheiros PDF no site «example.com», utilizando os parâmetros de pesquisa avançada do Google?  
+**Resposta:** 'site:example.com filetype:pdf'  
+***Nota: A combinação dos operadores de busca avançada `site:` (para restringir ao domínio) e `filetype:` (para filtrar pela extensão do arquivo) é a técnica padrão de Google Dorking para este cenário.***
+
+### 🔵 **Task 7: Conjuntos de regras**
+
+Importância e as limitações dos conjuntos de regras (rulesets) em IDS baseados em assinatura, explorando uma vulnerabilidade crítica conhecida (CVE-2021-43798 no Grafana) para observar se o IDS consegue detectá-la ou se a evasão é bem-sucedida devido a lacunas na cobertura das regras.
+
+Conceitos explorados:  
+**Qualidade do Ruleset:** A eficácia de um IDS baseado em assinatura depende totalmente da qualidade, atualização e precisão de suas regras. Regras imprecisas geram falsos positivos ou falsos negativos, comprometendo a segurança.  
+**Exploração de Vulnerabilidade Conhecida:** Uso de um script de exploit público (ex: `GrafanaDirInclusion`) para abusar de uma falha de inclusão de diretório, permitindo a leitura de arquivos do sistema com os privilégios do usuário que executa o serviço.  
+**Análise de Detecção:** Após a exploração, a verificação do histórico de alertas do IDS revela se a ação foi detectada. Em alguns casos, como a leitura de arquivos sensíveis (`/etc/shadow`), o NIDS (Suricata) pode gerar um alerta, enquanto em outros cenários a exploração pode passar despercebida, destacando a necessidade de defesa em camadas (como um HIDS).
+
+- **Pergunta:** Qual é a palavra-passe da conta grafana-admin?  
+**Resposta:** 'GraphingTheWorld32'  
+***Nota: Ao explorar a vulnerabilidade de inclusão de diretório no Grafana, é possível ler arquivos de configuração ou banco de dados que revelam a senha do administrador, que neste cenário é "GraphingTheWorld32".*** 
+
+- **Pergunta:** É possível obter acesso direto ao servidor agora que se sabe a palavra-passe do grafana-admin? (sim/não)  
+**Resposta:** 'yay'  
+***Nota: Com as credenciais de administrador do Grafana comprometidas, é possível obter acesso direto e interativo ao painel de controle do servidor, escalando o nível de comprometimento.*** 
+
+- **Pergunta:** Algum dos IDS em anexo é capaz de detetar o ataque caso o ficheiro /etc/shadow seja solicitado através da exploração? Se sim, qual dos IDS o detetou?  
+**Resposta:** 'suricata'  
+***Nota: Ao solicitar um arquivo altamente sensível como `/etc/shadow` através do exploit, o NIDS Suricata é capaz de detectar a assinatura da tentativa de acesso ou o padrão de tráfego malicioso, gerando um alerta, enquanto o HIDS (Wazuh) pode ou não capturar dependendo da configuração específica da regra de integridade de arquivos.***
 
