@@ -118,7 +118,7 @@ Conceitos explorados:
 
 - **Pergunta:** Se este servidor estivesse disponível ao público, que site poderia já ter informações sobre os seus serviços?  
 **Resposta:** 'shodan'  
-***Nota: O Shodan é o motor de busca especializado em dispositivos conectados à internet, sendo a principal fonte de informação passiva sobre serviços, portas e banners expostos publicamente antes mesmo de qualquer varredura direta.*** [[14]]
+***Nota: O Shodan é o motor de busca especializado em dispositivos conectados à internet, sendo a principal fonte de informação passiva sobre serviços, portas e banners expostos publicamente antes mesmo de qualquer varredura direta.*** 
 
 - **Pergunta:** Como poderíamos procurar ficheiros PDF no site «example.com», utilizando os parâmetros de pesquisa avançada do Google?  
 **Resposta:** 'site:example.com filetype:pdf'  
@@ -144,4 +144,18 @@ Conceitos explorados:
 - **Pergunta:** Algum dos IDS em anexo é capaz de detetar o ataque caso o ficheiro /etc/shadow seja solicitado através da exploração? Se sim, qual dos IDS o detetou?  
 **Resposta:** 'suricata'  
 ***Nota: Ao solicitar um arquivo altamente sensível como `/etc/shadow` através do exploit, o NIDS Suricata é capaz de detectar a assinatura da tentativa de acesso ou o padrão de tráfego malicioso, gerando um alerta, enquanto o HIDS (Wazuh) pode ou não capturar dependendo da configuração específica da regra de integridade de arquivos.***
+
+### 🔵 **Task 8: IDS baseado em hosts (HIDS)**
+
+O foco desta tarefa é introduzir os Sistemas de Detecção de Intrusão Baseados em Host (HIDS), explicando como eles complementam os NIDS ao monitorar atividades internas do sistema que não geram tráfego de rede detectável, como execução de malware, alterações de configuração e escalonamento de privilégios.
+
+Conceitos explorados:  
+**Limitações do NIDS:** Ameaças como ransomware entregue por e-mail podem ser executadas localmente e só seriam detectadas pelo NIDS ao "ligar para casa" (call home), o que pode ser tarde demais.  
+**Funcionamento do HIDS:** Requer a instalação de um agente em cada host monitorado. Esse agente coleta dados de fontes locais (logs de aplicação/sistema, registro do Windows, métricas de desempenho, estado do próprio agente) e os encaminha para um nó central de processamento, onde as regras são aplicadas.  
+**Complexidade de Deployment:** Gerenciar agentes HIDS em grande escala exige automação (ex: Ansible) e configuração personalizada, especialmente em ambientes containerizados, para garantir que os logs corretos sejam monitorados.  
+**Diferenças de Detecção (HIDS vs. NIDS):** O HIDS não vê o tráfego de rede bruto. Por exemplo, ao rodar `nmap -sV`, o Wazuh (HIDS) pode detectar tentativas de conexão SSH inseguras nos logs, mas ignorará o tráfego HTTP, que o Suricata (NIDS) captura. Porém, ao rodar `nmap --script=vuln`, o Wazuh gera milhares de alertas ao detectar os códigos de erro 400 registrados nos logs de erro do servidor web.
+
+- **Pergunta:** Em que categoria é que o Wazuh classifica os códigos de erro HTTP 400?  
+**Resposta:** 'web'  
+***Nota: Ao analisar os alertas gerados pelo Wazuh durante varreduras que provocam erros HTTP (como o script `vuln` do Nmap), o HIDS classifica esses eventos de código 400 na categoria "web", pois são derivados dos logs de acesso/erro do servidor web monitorado.*** 
 
