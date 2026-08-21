@@ -177,7 +177,7 @@ Conceitos explorados:
 **Resposta:** '5'  
 ***Nota: O Wazuh (HIDS) detecta a adição do arquivo do script linPEAS ao sistema através de seu módulo de Monitoramento de Integridade de Arquivos (FIM), gerando um alerta classificado com severidade 5.***
 
-### 🔵 **Task 10: Performing Privilege Escalation**
+### 🔵 **Task 10: Realizar a escalada de privilégios**
 
 O foco desta tarefa é executar o escalonamento de privilégios na prática, explorando uma configuração comum do Docker que permite a usuários não-root executar contêineres, o que inadvertidamente concede privilégios efetivos de root no sistema host.
 
@@ -193,3 +193,14 @@ Conceitos explorados:
 **Resposta:** '{SNEAK_ATTACK_CRITICAL}'  
 ***Nota: Após explorar a configuração do Docker para montar o sistema de arquivos do host e obter acesso root, a flag localizada no diretório `/root/` pode ser lida, confirmando o comprometimento total do sistema.***
 
+### 🔵 **Task 11: Estabelecer a persistência**
+
+O foco desta tarefa é explorar métodos de persistência pós-exploração que contornem o Monitoramento de Integridade de Arquivos (FIM) do HIDS, utilizando o Docker como vetor para estabelecer um backdoor resiliente sem depender de credenciais de usuário ou serviços vulneráveis tradicionais.
+
+Conceitos explorados:  
+**Persistência Tradicional vs. Detecção:** Adicionar uma chave SSH pública a `/root/.ssh/authorized_keys` é simples, mas altamente detectável pelo FIM do Wazuh, que gera alertas de alta severidade ao detectar modificações nesse diretório, além de alertar a cada nova conexão SSH.  
+**Análise de Configuração do HIDS:** Inspeção do arquivo `/var/ossec/etc/ossec.conf` para entender quais fontes de dados são monitoradas (monitoramento de sistema de arquivos, coleta de logs, inventário do sistema).  
+**Docker como Vetor de Persistência:** Como o monitoramento de contêineres pode não estar habilitado ou configurado de forma abrangente, o Docker oferece opções de evasão:  
+1. **Hijacking da Cadeia de Suprimentos:** Instalar um backdoor em contêineres existentes (requer acesso ao registro ou credenciais).  
+2. **Modificação do `docker-compose`:** Incluir um contêiner privilegiado com montagem do sistema de arquivos do host.  
+3. **Abuso do `entrypoint` para Reverse Shell:** A opção mais eficaz neste cenário. Cria um serviço que reinicia automaticamente (`restart: always`), usa uma imagem já presente no sistema e executa um script Python no `entrypoint` para estabelecer uma reverse shell, invertendo o modelo cliente-servidor e evitando a necessidade de abrir novas portas no host.  
