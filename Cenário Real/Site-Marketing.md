@@ -280,7 +280,7 @@ Um atacante pode enviar uma requisição maliciosa que força o Next.js a cachea
 
 **Descrição:**
 
-Foram identificados múltiplos subdomínios com a terminação `.qa` (Quality Assurance) e nomes de projetos específicos (ex: `elanco`, `syngenta`, `cronoupper`) acessíveis publicamente na internet. Alguns respondem com páginas padrão do Microsoft IIS.
+Foram identificados múltiplos subdomínios com a terminação `.qa` (Quality Assurance) e nomes de projetos específicos (ex: `elanco`, `syngenta`, `crono`) acessíveis publicamente na internet. Alguns respondem com páginas padrão do Microsoft IIS.
 
 **Impacto:**
 
