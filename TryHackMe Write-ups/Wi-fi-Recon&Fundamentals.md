@@ -23,7 +23,7 @@ Conceitos explorados:
 
 ### 🔵 **Task 2: Como funciona o Wi-Fi**
 
-O foco desta tarefa é estabelecer os fundamentos teóricos do padrão IEEE 802.11, explicando como as redes sem fio operam, como os dispositivos se identificam e como o espectro de radiofrequência é organizado, 
+Estabelecendo os fundamentos teóricos do padrão IEEE 802.11, explicando como as redes sem fio operam, como os dispositivos se identificam e como o espectro de radiofrequência é organizado, 
 o que é essencial para entender as vulnerabilidades exploradas nos ataques subsequentes.
 
 Conceitos explorados:  
@@ -45,7 +45,7 @@ Qual é a opção do wpa_supplicant que faz com que o cliente procure uma rede p
 
 ### 🔵 **Task 3: 802.11 Quadros**
 
-O foco desta tarefa é detalhar os tipos de frames (quadros) do padrão IEEE 802.11, explicando como diferenciá-los transforma uma captura de tráfego bruto em um relato legível da atividade da rede.
+Detalhando os tipos de frames (quadros) do padrão IEEE 802.11, explicando como diferenciá-los transforma uma captura de tráfego bruto em um relato legível da atividade da rede.
 
 Conceitos explorados:  
 **As Três Classes de Frames:**  
@@ -66,7 +66,7 @@ Conceitos explorados:
 
 ### 🔵 **Task 4: Modo Monitor**
 
-O foco desta tarefa é explicar como reconfigurar uma interface sem fio para observar redes às quais ela não está conectada, detalhando a diferença entre os modos de operação e o processo para habilitar o modo de monitoração (monitor mode) usando a suite `aircrack-ng`.
+Explicando como reconfigurar uma interface sem fio para observar redes às quais ela não está conectada, detalhando a diferença entre os modos de operação e o processo para habilitar o modo de monitoração (monitor mode) usando a suite `aircrack-ng`.
 
 Conceitos explorados:  
 **Managed Mode vs. Monitor Mode:** No modo gerenciado (padrão), o rádio age como um cliente comum, descartando frames não endereçados a ele. O modo monitor remove esse filtro, capturando passivamente todos os frames 802.11 no canal atual, essencial para reconhecimento e ataques.  
@@ -134,7 +134,7 @@ Conceitos explorados:
 
 ### 🔵 **Task 7: Organizar o seu reconhecimento**
 
-O foco desta tarefa é explicar como salvar e organizar os dados coletados durante o reconhecimento sem fio, garantindo que as informações possam ser utilizadas em ataques subsequentes, já que a saída padrão do terminal é descartada ao fechar a janela.
+Explicando como salvar e organizar os dados coletados durante o reconhecimento sem fio, garantindo que as informações possam ser utilizadas em ataques subsequentes, já que a saída padrão do terminal é descartada ao fechar a janela.
 
 Conceitos explorados:  
 **Salvamento de Capturas (`-w`):** O uso da flag `-w` (write) no `airodump-ng` para salvar todo o tráfego capturado em um conjunto de arquivos com um prefixo definido. É recomendado travar o rádio em um canal específico (`-c`) e, idealmente, em um BSSID específico (`--bssid`) para manter o arquivo pequeno e focado no alvo.  
@@ -150,3 +150,15 @@ Conceitos explorados:
 **Resposta:** '-w'  
 ***Nota: O texto afirma explicitamente: "The -w flag instructs airodump-ng to write everything it receives to a set of files named after a given prefix."***
 
+### 🔵 **Task 8: Conclusão**
+Consolidando todo o fluxo de trabalho de reconhecimento sem fio realizado na sala, resumindo as etapas desde a preparação da interface até a descoberta de redes ocultas, e introduzindo os tópicos que serão abordados nas próximas salas do módulo de Wi-Fi Hacking.
+
+Conceitos explorados:  
+**Resumo do Fluxo de Trabalho:**  
+1. **Preparação da Interface:** Uso de `airmon-ng check kill` e `airmon-ng start` para habilitar o modo monitor (`wlan0mon`), confirmado via `iw dev`.  
+2. **Varredura das Bandas:** Uso do `airodump-ng` para mapear redes em 2.4 GHz (`--band bg`) e, separadamente, em 5 GHz (`--band a -c 44`) para alcançar redes corporativas.  
+3. **Classificação de Redes:** Análise das colunas `ENC`, `CIPHER` e `AUTH` para identificar configurações como OPN (Aberta), WEP, WPA2-PSK, WPA3-SAE, MGT (Enterprise) e OWE.  
+4. **Análise de Estações:** Identificação de clientes associados e, crucialmente, clientes não associados (`not associated`) sondando redes que não estão sendo transmitidas ativamente no ambiente.  
+5. **Revelação de SSID Oculto:** Uso do `mdk4` para sondar ativamente uma rede oculta (cujo comprimento era conhecido) até que ela respondesse, seguido pela conexão via `wpa_supplicant` com a diretiva `scan_ssid=1`.  
+**Propriedades do 802.11 Exploradas:** O reconhecimento passivo é altamente eficaz porque os APs anunciam sua presença continuamente via beacons, e os frames de gerenciamento trafegam em texto claro sem autenticação, permitindo que até redes que tentam se esconder sejam desmascaradas.  
+**Próximos Passos:** As salas futuras do módulo abordarão ataques práticos contra essas configurações, como captura e quebra de handshakes WPA2, ataques de downgrade em WPA3, Evil Twin (Rogue AP), ataques a redes Enterprise (MGT) e a exploração de protocolos legados (WEP) ou OWE.
