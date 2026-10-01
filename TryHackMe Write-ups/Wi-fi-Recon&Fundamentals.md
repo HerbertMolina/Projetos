@@ -37,7 +37,7 @@ Conceitos explorados:
 
 - **Pergunta:** Qual é o termo utilizado para designar o endereço MAC que identifica de forma única um único ponto de acesso?  
 **Resposta:** 'BSSID'  
-***Nota: Conforme a tabela de termos, o BSSID é o endereço MAC do rádio do AP, servindo como o identificador único de hardware para aquele ponto de acesso específico.***
+Qual é a opção do wpa_supplicant que faz com que o cliente procure uma rede pelo nome, em vez de aguardar os seus sinais de beacon?***Nota: Conforme a tabela de termos, o BSSID é o endereço MAC do rádio do AP, servindo como o identificador único de hardware para aquele ponto de acesso específico.***
 
 - **Pergunta:** Que termo descreve o nome legível por pessoas de uma rede sem fios?  
 **Resposta:** 'ESSID'  
@@ -100,4 +100,53 @@ Conceitos explorados:
 - **Pergunta:** Quantos pontos de acesso estão a transmitir o ESSID CorpNet?  
 **Resposta:** '2'  
 ***Nota: A saída do scan de 5 GHz lista dois BSSIDs distintos (`F0:9F:C2:71:22:15` e `F0:9F:C2:71:22:1A`) que compartilham o mesmo ESSID `CorpNet`, ilustrando a distinção entre BSSID e ESSID mencionada na Task 2.***
+
+### 🔵 **Task 6: Descobrir redes ocultas**
+
+O foco desta tarefa é demonstrar como contornar a técnica de "ocultação de SSID" (SSID cloaking), provando que esconder o nome da rede não é uma medida de segurança eficaz, e como se conectar a essa rede para acessar recursos internos.
+
+Conceitos explorados:  
+**SSID Cloaking (Ocultação de SSID):** Administradores podem configurar o AP para omitir o ESSID nos frames de beacon. No entanto, o nome ainda é transmitido em texto claro quando um cliente legítimo se conecta (em frames de probe request ou association request).  
+**Identificação no airodump-ng:** Uma rede oculta aparece com o campo ESSID vazio, mas o `airodump-ng` ainda consegue ler o comprimento real do nome, exibindo algo como `<length: 9>`.  
+**Revelação Ativa com mdk4:** Quando não há clientes conectados para forçar uma reconexão (abordagem passiva), pode-se usar o `mdk4` no modo de probing (`p`) para enviar um dicionário de nomes candidatos. O AP só responde com um "Probe Response" se o nome enviado corresponder exatamente ao seu ESSID real e ao comprimento correto.  
+**Conexão com wpa_supplicant:** Para que um cliente se conecte a uma rede oculta, ele deve ser configurado para procurar ativamente pelo nome, usando a diretiva `scan_ssid=1` no arquivo de configuração, em vez de apenas ouvir beacons.  
+**Acesso ao Gateway:** Após obter o IP via `dhclient`, é possível acessar o painel de administração do roteador (geralmente no `.1` da sub-rede) usando credenciais padrão para recuperar a flag.
+
+- **Pergunta:** Qual é o SSID da rede oculta que descobriu?  
+**Resposta:** 'Staff-Net'  
+***Nota: O `mdk4` recebe uma resposta de probe do AP alvo apenas quando o nome candidato "Staff-Net" é enviado, confirmando que este é o ESSID real da rede oculta.***
+
+- **Pergunta:** Em que canal funciona a rede oculta?  
+**Resposta:** '11'  
+***Nota: A saída do `airodump-ng` mostra claramente que o BSSID da rede oculta (`F0:9F:C2:6A:88:26`) está operando no canal 11 da banda de 2.4 GHz.***
+
+- **Pergunta:** No airodump-ng, o campo ESSID de uma rede oculta apresenta um nome em branco e um comprimento na forma <comprimento: N>. O que significa N neste caso?  
+**Resposta:** '9'  
+***Nota: O texto destaca que, mesmo com o nome oculto, o comprimento do SSID é vazado no frame de beacon. No caso de "Staff-Net", o comprimento é 9 caracteres, exibido como `<length: 9>`.***
+
+- **Pergunta:** Qual é a opção do wpa_supplicant que faz com que o cliente procure uma rede pelo nome, em vez de aguardar os seus sinais de beacon?  
+**Resposta:** 'scan_ssid=1'  
+***Nota: A diretiva `scan_ssid=1` no arquivo de configuração do `wpa_supplicant` instrui o cliente a enviar probe requests direcionados com o nome da rede, contornando a falta de beacons da rede oculta.***
+
+- **Pergunta:** Ligue-se à rede que descobriu e leia o painel no seu gateway. Que flag é que este devolve?  
+**Resposta:** 'THM{0e6521916c3adf08e5b6830f6675351e4eebec92}'  
+***Nota: Após se conectar à rede "Staff-Net" e obter um IP via DHCP, o acesso ao painel do gateway (192.168.16.1) com as credenciais padrão (admin/admin) revela a flag na página inicial.***
+
+### 🔵 **Task 7: Organizar o seu reconhecimento**
+
+O foco desta tarefa é explicar como salvar e organizar os dados coletados durante o reconhecimento sem fio, garantindo que as informações possam ser utilizadas em ataques subsequentes, já que a saída padrão do terminal é descartada ao fechar a janela.
+
+Conceitos explorados:  
+**Salvamento de Capturas (`-w`):** O uso da flag `-w` (write) no `airodump-ng` para salvar todo o tráfego capturado em um conjunto de arquivos com um prefixo definido. É recomendado travar o rádio em um canal específico (`-c`) e, idealmente, em um BSSID específico (`--bssid`) para manter o arquivo pequeno e focado no alvo.  
+**Formatos de Arquivo Gerados:** Uma captura com `-w` gera múltiplos arquivos numerados (ex: `-01`):  
+- **`.cap`**: A captura bruta de pacotes. É o arquivo mais importante, contendo todos os frames (beacons, handshakes, etc.) e é o arquivo passado para ferramentas como `aircrack-ng`.  
+- **`.csv`**: Um resumo em texto puro de todos os APs e clientes observados, fácil de filtrar com `grep`.  
+- **`.kismet.csv` / `.kismet.netxml`**: Resumos nos formatos CSV e XML do Kismet, para compatibilidade com outras ferramentas.  
+- **`.log.csv`**: Um log contínuo de atividade, incluindo dados de GPS se um receptor estiver conectado.  
+**Otimização de Saída:** A flag `--output-format csv` pode ser usada para gerar *apenas* o arquivo de resumo `.csv`, evitando a criação dos arquivos de captura de pacotes e logs do Kismet quando apenas o inventário é necessário.  
+**Inventário de Alvos:** A importância de manter um registro separado dos alvos valiosos, incluindo ESSID, BSSID, canal, banda, configuração de segurança e clientes associados (crucial para ataques que exigem a presença de um cliente, como a captura de handshake WPA2).
+
+- **Pergunta:** Qual é a opção do airodump-ng que grava os dados capturados em ficheiros?  
+**Resposta:** '-w'  
+***Nota: O texto afirma explicitamente: "The -w flag instructs airodump-ng to write everything it receives to a set of files named after a given prefix."***
 
