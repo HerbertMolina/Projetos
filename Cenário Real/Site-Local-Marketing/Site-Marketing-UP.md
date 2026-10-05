@@ -28,7 +28,7 @@ Para profissionais de segurança: Sempre obtenha autorização por escrito (Regr
 
 ---
 
-## 📊 SUMÁRIO EXECUTIVO
+## SUMÁRIO EXECUTIVO
 
 ### Contexto
 
@@ -71,9 +71,9 @@ Embora o site principal tenha natureza predominantemente informativa, nossa aná
 
 ---
 
-## 🎯 1. OBJETIVOS E ESCOPO
+## OBJETIVOS E ESCOPO
 
-### 1.1 Objetivos da Investigação
+### Objetivos da Investigação
 
 - Mapear a superfície de ataque exposta publicamente.
 - Identificar a pilha tecnológica (frontend, backend, banco de dados, CDN).
@@ -81,7 +81,7 @@ Embora o site principal tenha natureza predominantemente informativa, nossa aná
 - Identificar subdomínios esquecidos ou mal configurados (Shadow IT).
 - Avaliar a postura de segurança de serviços de terceiros integrados (ex: Supabase).
 
-### 1.2 Escopo da Investigação
+### Escopo da Investigação
 
 **Incluído:**
 
@@ -96,16 +96,16 @@ Embora o site principal tenha natureza predominantemente informativa, nossa aná
 - Acesso não autorizado a sistemas ou tentativa de autenticação.
 - Engenharia social ou varredura ativa de portas.
 
-### 1.3 Restrições Éticas
+### Restrições Éticas
 
 - Investigação 100% passiva (sem envio de pacotes maliciosos).
 - Anonimização completa de dados sensíveis e nomes de clientes/projetos.
 
 ---
 
-## 🛠️ 2. METODOLOGIA
+## METODOLOGIA
 
-### 2.1 Abordagem
+### Abordagem
 
 A investigação seguiu o framework PTES (Penetration Testing Execution Standard) adaptado para OSINT passivo:
 
@@ -115,7 +115,7 @@ A investigação seguiu o framework PTES (Penetration Testing Execution Standard
 4. **Análise de Risco:** Avaliação de impacto e probabilidade.
 5. **Documentação:** Elaboração de relatório técnico.
 
-### 2.2 Ferramentas Utilizadas
+### Ferramentas Utilizadas
 
 | Ferramenta | Categoria | Uso Específico |
 | --- | --- | --- |
@@ -126,7 +126,7 @@ A investigação seguiu o framework PTES (Penetration Testing Execution Standard
 | curl | Análise de Headers | Verificação de respostas HTTP e códigos de status |
 | NVD (NIST) | Base de Vulnerabilidades | Correlação de versões do Next.js com CVEs |
 
-### 2.3 Processo de Anonimização
+### Processo de Anonimização
 
 | Dado Original | Substituição |
 | --- | --- |
@@ -136,16 +136,16 @@ A investigação seguiu o framework PTES (Penetration Testing Execution Standard
 
 ---
 
-## 🏗️ 3. MAPEAMENTO DE INFRAESTRUTURA
+## MAPEAMENTO DE INFRAESTRUTURA
 
-### 3.1 Informações de Registro e DNS
+### Informações de Registro e DNS
 
 - **Provedor de DNS:** Amazon Route 53 (identificado pelos nameservers da AWS).
 - **Provedor de Hospedagem:** Lokaweb (identificado via WHOIS do domínio).
 - **Infraestrutura de Borda:** Cloudflare (identificado via cabeçalhos HTTP e roteamento).
 - **Balanceamento de Carga:** AWS Elastic Load Balancer (ELB) v2.0.
 
-### 3.2 Subdomínios Identificados
+### Subdomínios Identificados
 
 A investigação revelou uma forte presença de ambientes de Quality Assurance (QA) e desenvolvimento publicamente acessíveis:
 
@@ -161,7 +161,7 @@ A investigação revelou uma forte presença de ambientes de Quality Assurance (
 | `zoetis.qa.dominio.net` | Ambiente de testes (Cliente/Projeto) | Ativo (IIS) | 🟠 Alto |
 | `.qa.dominio.net` | Sistema específico de projeto | Ativo | 🟠 Alto |
 
-### 3.3 Tecnologias Identificadas
+### Tecnologias Identificadas
 
 Via Análise de Cabeçalhos HTTP e Wappalyzer:
 
@@ -176,9 +176,9 @@ Via Análise de Cabeçalhos HTTP e Wappalyzer:
 
 ---
 
-## ⚠️ 4. VULNERABILIDADES E ACHADOS IDENTIFICADOS
+## VULNERABILIDADES E ACHADOS IDENTIFICADOS
 
-### 4.1 🔴 [CRÍTICO] CVE-2025-29927 - Bypass de Autorização em Middleware (Next.js)
+### 🔴 [CRÍTICO] CVE-2025-29927 - Bypass de Autorização em Middleware (Next.js)
 
 **Classificação:** 🔴 CRÍTICO | **CVSS Score:** 9.1
 
@@ -209,7 +209,7 @@ Via Análise de Cabeçalhos HTTP e Wappalyzer:
 
 ---
 
-### 4.2 🟠 [ALTO] CVE-2024-34351 - SSRF em Server Actions (Next.js)
+### 🟠 [ALTO] CVE-2024-34351 - SSRF em Server Actions (Next.js)
 
 **Classificação:** 🟠 ALTO | **CVSS Score:** 7.5
 
@@ -240,7 +240,7 @@ Vulnerabilidade de SSRF nas Server Actions do Next.js em modo self-hosted. Se a 
 
 ---
 
-### 4.3 🟠 [ALTO] CVE-2024-46982 - Cache Poisoning em Rotas SSR
+### 🟠 [ALTO] CVE-2024-46982 - Cache Poisoning em Rotas SSR
 
 **Classificação:** 🟠 ALTO | **CVSS Score:** 7.5
 
@@ -270,7 +270,7 @@ Um atacante pode enviar uma requisição maliciosa que força o Next.js a cachea
 
 ---
 
-### 4.4 🟠 [ALTO] Exposição Pública de Ambientes de QA e Desenvolvimento
+### 🟠 [ALTO] Exposição Pública de Ambientes de QA e Desenvolvimento
 
 **Classificação:** 🟠 ALTO | **CVSS Score:** 7.0
 
@@ -305,7 +305,7 @@ Ambientes de QA frequentemente possuem:
 
 ---
 
-### 4.5 🟡 [MÉDIO] Endpoint de Backend-as-a-Service (Supabase) Identificado
+### 🟡 [MÉDIO] Endpoint de Backend-as-a-Service (Supabase) Identificado
 
 **Classificação:** 🟡 MÉDIO (Informativo / Postura de Segurança)
 
@@ -336,7 +336,7 @@ Embora configurado corretamente agora, o Supabase é um ponto crítico. A docume
 
 ---
 
-### 4.6 🟡 [MÉDIO] Indisponibilidade ou Bloqueio via AWS ELB (HTTP 503)
+### 🟡 [MÉDIO] Indisponibilidade ou Bloqueio via AWS ELB (HTTP 503)
 
 **Classificação:** 🟡 MÉDIO (Disponibilidade / Operacional)
 
@@ -369,9 +369,9 @@ Ao consultar o endereço IP principal da aplicação via Shodan na porta 80, a r
 
 ---
 
-## 📊 5. ANÁLISE DE RISCO
+## ANÁLISE DE RISCO
 
-### 5.1 Matriz de Risco
+### Matriz de Risco
 
 | Vulnerabilidade / Achado | Probabilidade | Impacto | Nível de Risco |
 | --- | --- | --- | --- |
@@ -382,7 +382,7 @@ Ao consultar o endereço IP principal da aplicação via Shodan na porta 80, a r
 | Endpoint Supabase Identificado | Baixa | Médio | 🟡 Médio |
 | Indisponibilidade AWS ELB (503) | Média | Médio | 🟡 Médio |
 
-### 5.2 Análise de Causa Raiz
+### Análise de Causa Raiz
 
 - **Técnicos:** Uso de versões de framework (Next.js) sem aplicação de patches de segurança; falta de isolamento de rede para ambientes de desenvolvimento (.qa).
 - **Processuais:** Ausência de um processo de "Decommissioning" ou restrição de acesso para ambientes de teste após o fim do desenvolvimento.
@@ -390,7 +390,7 @@ Ao consultar o endereço IP principal da aplicação via Shodan na porta 80, a r
 
 ---
 
-## 🛡️ 6. RECOMENDAÇÕES
+## RECOMENDAÇÕES
 
 ### 6.1 Prioridade Imediata (0-7 dias)
 
@@ -398,26 +398,26 @@ Ao consultar o endereço IP principal da aplicação via Shodan na porta 80, a r
 2. **Isolamento de Ambientes QA:** Configurar regras de firewall ou autenticação básica (HTTP Auth) para bloquear o acesso público a todos os subdomínios `.qa.dominio.net`.
 3. **Verificação de Saúde do ELB:** Investigar a causa do erro 503 no AWS Elastic Load Balancer para garantir a disponibilidade do serviço e a correta configuração do WAF.
 
-### 6.2 Prioridade Curto Prazo (7-30 dias)
+### Prioridade Curto Prazo (7-30 dias)
 
 1. **Auditoria do Supabase:** Revisar todas as políticas de Row Level Security (RLS) e garantir que nenhuma chave de API privilegiada (`service_role`) esteja presente no código frontend.
 2. **Revisão de Subdomínios:** Mapear e desativar a resolução DNS de subdomínios de projetos antigos ou não utilizados (Shadow IT).
 3. **Headers de Segurança:** Implementar cabeçalhos de segurança (CSP, HSTS, X-Frame-Options) via configuração do Next.js ou no Cloudflare.
 
-### 6.3 Prioridade Médio/Longo Prazo (30+ dias)
+### Prioridade Médio/Longo Prazo (30+ dias)
 
 1. **Pipeline de Segurança (DevSecOps):** Integrar ferramentas de SCA (Software Composition Analysis) no CI/CD para bloquear automaticamente o deploy de versões de bibliotecas com CVEs conhecidas.
 2. **Política de Ambientes:** Estabelecer uma política formal de que ambientes de desenvolvimento e QA nunca devem ter resolução DNS pública, sendo acessíveis apenas via VPN corporativa.
 
 ---
 
-## 📚 7. LIÇÕES APRENDIDAS
+## LIÇÕES APRENDIDAS
 
 *A combinação de tecnologias modernas (Next.js, React, Supabase) muitas vezes gera um 'falso sentimento de segurança' nas equipes de desenvolvimento, levando à crença de que a segurança é 'automática'. No entanto, a presença da versão 14.0.1 do Next.js (com CVEs críticas de bypass de autenticação e SSRF) e a exposição de ambientes `.qa` provam que a segurança deve ser configurada e gerenciada ativamente, não apenas herdada do framework.*
 
 ---
 
-## 🎯 8. CONCLUSÃO
+## CONCLUSÃO
 
 Esta investigação demonstrou que, mesmo em aplicações web informativas com stacks tecnológicas modernas, a superfície de ataque permanece significativa. A combinação de um framework desatualizado (Next.js 14.0.1) com vulnerabilidades críticas de lógica e autorização, somada à exposição pública de ambientes de teste (.qa), cria um cenário de risco elevado.
 
@@ -427,7 +427,7 @@ Recomenda-se ação imediata na atualização do framework e no isolamento dos a
 
 ---
 
-## 📎 9. APÊNDICES
+## APÊNDICES
 
 ### Apêndice A: Glossário de Termos Técnicos
 
