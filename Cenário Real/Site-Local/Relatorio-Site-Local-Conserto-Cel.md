@@ -14,7 +14,7 @@
 
 ---
 
-## ⚖️ AVISO ÉTICO E LEGAL
+## AVISO ÉTICO E LEGAL
 
 Este relatório foi elaborado exclusivamente para fins educacionais e demonstração de habilidades em segurança da informação e inteligência de fontes abertas (OSINT).
 
@@ -24,13 +24,13 @@ Todos os dados sensíveis (domínios, IPs, nomes) foram anonimizados para proteg
 
 ---
 
-## 📊 1. SUMÁRIO EXECUTIVO
+## SUMÁRIO EXECUTIVO
 
-### 1.1 Contexto
+### Contexto
 
 Foi realizada uma investigação de segurança passiva em um website privado com o objetivo de mapear sua superfície de ataque, identificar a pilha tecnológica e avaliar a postura de segurança da infraestrutura de hospedagem, utilizando exclusivamente fontes abertas.
 
-### 1.2 Principais Achados
+### Principais Achados
 
 A investigação revelou um ambiente de **hospedagem compartilhada** com múltiplas configurações inseguras e serviços expostos desnecessariamente. Foram identificadas **6 vulnerabilidades principais**, sendo **2 classificadas como Críticas**.
 
@@ -41,22 +41,22 @@ A investigação revelou um ambiente de **hospedagem compartilhada** com múltip
 | 🟡 Médio | 1 | Ausência de Headers de Segurança HTTP e configuração de e-mail. |
 | 🟢 Baixo | 1 | Exposição de metadados e versões de plugins (JetEngine/Elementor). |
 
-### 1.3 Nível de Risco Geral
+### Nível de Risco Geral
 
 🔴 **CRÍTICO** — A combinação de um banco de dados acessível externamente com a enumeração pública de usuários e painéis administrativos expostos cria um cenário de alto risco para comprometimento total do sistema e vazamento de dados (LGPD).
 
 ---
 
-## 🎯 2. OBJETIVOS E ESCOPO
+## OBJETIVOS E ESCOPO
 
-### 2.1 Objetivos
+### Objetivos
 
 - Mapear a pilha tecnológica (stack) do website.
 - Identificar o provedor de hospedagem e o modelo de infraestrutura (compartilhada vs. dedicada).
 - Detectar serviços, portas e painéis administrativos expostos publicamente.
 - Avaliar configurações de segurança do WordPress e do servidor web.
 
-### 2.2 Escopo
+### Escopo
 
 - Domínio alvo: `[DOMINIO_ALVO.com.br]`
 - Endereço IP do servidor: `[XX.XX.XX.XX]`
@@ -64,7 +64,7 @@ A investigação revelou um ambiente de **hospedagem compartilhada** com múltip
 
 ---
 
-## 🛠️ 3. METODOLOGIA E FERRAMENTAS
+## METODOLOGIA E FERRAMENTAS
 
 A investigação seguiu o framework de Reconhecimento Passivo, utilizando:
 
@@ -76,29 +76,29 @@ A investigação seguiu o framework de Reconhecimento Passivo, utilizando:
 
 ---
 
-## 🏗️ 4. MAPEAMENTO DE INFRAESTRUTURA
+## MAPEAMENTO DE INFRAESTRUTURA
 
 ### 4.1 Pilha Tecnológica Identificada
 
 | Componente | Tecnologia | Versão | Status |
 | --- | --- | --- | --- |
-| **CMS** | WordPress | Não exposta | ⚠️ Alvo comum de exploits |
-| **Page Builder** | Elementor | 3.21 | ⚠️ Verificar CVEs específicas |
-| **Plugin Adicional** | JetEngine | Não exposta | ⚠️ Lida com dados dinâmicos e formulários |
-| **Linguagem Backend** | PHP | 8.3 | ✅ Versão recente e suportada |
-| **Servidor Web** | Apache | Oculta | ⚠️ Necessário identificar via Shodan |
-| **Banco de Dados** | MariaDB | 10.6.27 | 🔴 **Exposto na porta 3306** |
+| **CMS** | WordPress | Não exposta | Alvo comum de exploits |
+| **Page Builder** | Elementor | 3.21 | Verificar CVEs específicas |
+| **Plugin Adicional** | JetEngine | Não exposta | Lida com dados dinâmicos e formulários |
+| **Linguagem Backend** | PHP | 8.3 | Versão recente e suportada |
+| **Servidor Web** | Apache | Oculta | Necessário identificar via Shodan |
+| **Banco de Dados** | MariaDB | 10.6.27 | Exposto na porta 3306 |
 
-### 4.2 Modelo de Hospedagem
+### Modelo de Hospedagem
 
 A análise do WHOIS do IP e do DNS Reverso (`rDNS: server.servidordohost.net.br`) confirma que o alvo está em um ambiente de **Hospedagem Compartilhada** (provavelmente utilizando cPanel).
 Múltiplos domínios (incluindo sites de cidades vizinhas) compartilham o mesmo endereço IP e infraestrutura física, introduzindo o risco de "contaminação cruzada" (noisy neighbor).
 
 ---
 
-## ⚠️ 5. VULNERABILIDADES IDENTIFICADAS
+## VULNERABILIDADES IDENTIFICADAS
 
-### 5.1 🔴 [CRÍTICO] Banco de Dados MariaDB Exposto na Internet
+### 🔴 [CRÍTICO] Banco de Dados MariaDB Exposto na Internet
 
 - **Classificação:** Crítico
 - **CVSS Estimado:** 9.1
@@ -125,7 +125,7 @@ Múltiplos domínios (incluindo sites de cidades vizinhas) compartilham o mesmo 
 
 ---
 
-### 5.1.2 🔴 [CRÍTICO] Divulgação de Erros de Banco de Dados (WP_DEBUG Ativo)
+### 🔴 [CRÍTICO] Divulgação de Erros de Banco de Dados (WP_DEBUG Ativo)
 
 **Classificação:** 🔴 CRÍTICO
 
@@ -154,7 +154,7 @@ Resultado: HTTP/1.1 200 OK (O site exibe erro de banco de dados/PHP no navegador
 
 ---
 
-### 5.2 🔴 [CRÍTICO] Enumeração de Usuários via API REST do WordPress
+### 🔴 [CRÍTICO] Enumeração de Usuários via API REST do WordPress
 
 - **Classificação:** Crítico
 - **CVSS Estimado:** 7.5
@@ -169,7 +169,7 @@ Resultado: HTTP/1.1 200 OK (O site exibe erro de banco de dados/PHP no navegador
 
 ---
 
-### 5.3 🟠 [ALTO] Painéis Administrativos Padrão Expostos (cPanel)
+### 🟠 [ALTO] Painéis Administrativos Padrão Expostos (cPanel)
 
 - **Classificação:** Alto
 - **CVSS Estimado:** 7.0
@@ -187,7 +187,7 @@ Resultado: HTTP/1.1 200 OK (O site exibe erro de banco de dados/PHP no navegador
 
 ---
 
-### 5.4 🟡 [MÉDIO] Ausência de Headers de Segurança HTTP
+### 🟡 [MÉDIO] Ausência de Headers de Segurança HTTP
 
 - **Classificação:** Médio
 - **CVSS Estimado:** 5.3
@@ -201,7 +201,7 @@ Resultado: HTTP/1.1 200 OK (O site exibe erro de banco de dados/PHP no navegador
 
 ---
 
-### 5.5 🟢 [BAIXO] Exposição de Metadados de Plugins
+### 🟢 [BAIXO] Exposição de Metadados de Plugins
 
 - **Classificação:** Baixo
 - **CVSS Estimado:** 3.7
@@ -212,7 +212,7 @@ Resultado: HTTP/1.1 200 OK (O site exibe erro de banco de dados/PHP no navegador
 
 **Recomendação:** Manter todos os plugins e temas do WordPress rigorosamente atualizados. Remover plugins não utilizados.  
 
-### 🚨 ANÁLISE CRÍTICA:
+### ANÁLISE CRÍTICA:
 
 **Porta 21 (FTP):**
 
@@ -227,7 +227,7 @@ Resultado: HTTP/1.1 200 OK (O site exibe erro de banco de dados/PHP no navegador
 - Confirma que o cPanel está rodando email
 - Possível spam relay se mal configurado
 
-## ⚠️Vetores de ataque potenciais no robos.txt:
+## Vetores de ataque potenciais no robos.txt:
 disallow /wp-admin/
 allow /wp-admi/admin-ajax.php
 
@@ -241,7 +241,7 @@ Enumeração de usuários (em algumas configurações)**
 **Não é uma vulnerabilidade por si só**, mas é uma **exposição desnecessária** que aumenta a superfície de ataque.
 
 ---
-🔗 Cenário de Ataque Hipotético:    
+Cenário de Ataque Hipotético:    
 
     Enumeração: O atacante utiliza a API REST do WordPress (/wp-json/wp/v2/users) para listar todos os nomes de usuário (slugs) válidos do site, incluindo o administrador.    
     
@@ -252,17 +252,17 @@ Enumeração de usuários (em algumas configurações)**
     Impacto Final: O atacante instala um plugin malicioso ou altera o arquivo functions.php, fazendo com que o site redirecione todos os visitantes para uma página de phishing ou exiba anúncios maliciosos, destruindo a reputação da marca.    
 ---
 
-## 📊 6. ANÁLISE DE RISCO E IMPACTO NOS NEGÓCIOS (BIA) - Contexto do Negócio
+## ANÁLISE DE RISCO E IMPACTO NOS NEGÓCIOS (BIA) - Contexto do Negócio
 
 Diferente de grandes corporações, o impacto de um incidente de segurança em um comércio local de assistência técnica está diretamente ligado à **continuidade operacional** e à **reputação local**. A perda de confiança dos clientes e a indisponibilidade do canal de vendas/agendamento são os maiores riscos.
 
 ---
 
-## 🛡️ 7. RECOMENDAÇÕES E ROADMAP DE CORREÇÃO
+## RECOMENDAÇÕES E ROADMAP DE CORREÇÃO
 
 Para um comércio de pequeno/médio porte, as recomendações focam em **baixo custo de implementação e alto impacto na mitigação de riscos**.
 
-### 7.1 Fase 1: Estancamento Imediato
+### Fase 1: Estancamento Imediato
 
 *Foco: Eliminar as vulnerabilidades críticas que permitem acesso remoto fácil.*
 
@@ -271,7 +271,7 @@ Para um comércio de pequeno/médio porte, as recomendações focam em **baixo c
 - [ ]  **Higienização de Acessos:** Alterar todas as senhas do cPanel, WordPress e e-mails para senhas fortes (16+ caracteres, geradas por gerenciador de senhas).
 - [ ]  **Ativar MFA (2FA):** Habilitar autenticação de dois fatores no login do cPanel e do WordPress.
 
-### 7.2 Fase 2: Fortalecimento e Resiliência
+### Fase 2: Fortalecimento e Resiliência
 
 *Foco: Prevenir incidentes e garantir recuperação em caso de falha.*
 
@@ -279,7 +279,7 @@ Para um comércio de pequeno/médio porte, as recomendações focam em **baixo c
 - [ ]  **Atualização Controlada:** Atualizar o core do WordPress, o tema e os plugins (Elementor, JetEngine) para as versões mais recentes, preferencialmente em um ambiente de teste (staging) antes da produção.
 - [ ]  **Ocultar Painéis Padrão:** Alterar a URL de login do WordPress (ex: de `/wp-admin` para `/portal-interno`) usando plugins de segurança, reduzindo ruído de ataques automatizados.
 
-### 7.3 Fase 3: Maturidade e Conformidade
+### Fase 3: Maturidade e Conformidade
 
 *Foco: Cultura de segurança e conformidade básica.*
 
@@ -289,7 +289,7 @@ Para um comércio de pequeno/médio porte, as recomendações focam em **baixo c
 
 ---
 
-## 📊 8. ANÁLISE DE RISCO E CAUSA RAIZ
+## ANÁLISE DE RISCO E CAUSA RAIZ
 
 As vulnerabilidades identificadas não são falhas complexas de "zero-day", mas sim falhas de configuração e arquitetura:
 
@@ -299,7 +299,7 @@ As vulnerabilidades identificadas não são falhas complexas de "zero-day", mas 
 
 ---
 
-## 🎯 9. CONCLUSÃO
+## CONCLUSÃO
 
 A investigação passiva demonstrou que, embora o site utilize tecnologias modernas (PHP 8.3, Elementor), a infraestrutura subjacente apresenta falhas críticas de configuração. A exposição direta do banco de dados MariaDB à internet, combinada com a facilidade de enumeração de usuários, cria um vetor de ataque direto e de alta probabilidade de sucesso.
 
