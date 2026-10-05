@@ -197,9 +197,9 @@ Via Análise de Cabeçalhos HTTP e Wappalyzer:
 
 **Conformidade Afetada:**
 
-- 🇧🇷 **LGPD:** Violação do Art. 46 – falha de controle de acesso que permite acesso não autorizado a dados pessoais de usuários.
-- 🌐 **OWASP Top 10 (2021):** A01:2021 – Broken Access Control (bypass de autorização no middleware).
-- 🏢 **ISO/IEC 27001:2022:** Controle A.8.5 (Controle de acesso lógico) e A.8.29 (Testes de segurança no desenvolvimento) – não atendidos.
+-  **LGPD:** Violação do Art. 46 – falha de controle de acesso que permite acesso não autorizado a dados pessoais de usuários.
+-  **OWASP Top 10 (2021):** A01:2021 – Broken Access Control (bypass de autorização no middleware).
+-  **ISO/IEC 27001:2022:** Controle A.8.5 (Controle de acesso lógico) e A.8.29 (Testes de segurança no desenvolvimento) – não atendidos.
 - ️ **SOC 2 Type II:** Critério CC6.1 (Controles lógicos de acesso) – falha de implementação.
 
 **Recomendações:**
@@ -228,10 +228,10 @@ Vulnerabilidade de SSRF nas Server Actions do Next.js em modo self-hosted. Se a 
 
 **Conformidade Afetada:**
 
-- 🇧🇷 **LGPD:** Violação do Art. 46 – SSRF permite movimentação lateral e acesso a metadados de instâncias cloud (ex: AWS IMDSv1), expondo credenciais IAM.
-- 🌐 **OWASP Top 10 (2021):** A10:2021 – Server-Side Request Forgery (SSRF).
-- 🏢 **ISO/IEC 27001:2022:** Controle A.8.20 (Segurança de serviços de rede) – não atendido.
-- ☁️ **AWS Well-Architected Framework:** Falha no pilar de Segurança (SEC03-BP01 – proteger a rede).
+-  **LGPD:** Violação do Art. 46 – SSRF permite movimentação lateral e acesso a metadados de instâncias cloud (ex: AWS IMDSv1), expondo credenciais IAM.
+-  **OWASP Top 10 (2021):** A10:2021 – Server-Side Request Forgery (SSRF).
+-  **ISO/IEC 27001:2022:** Controle A.8.20 (Segurança de serviços de rede) – não atendido.
+-  **AWS Well-Architected Framework:** Falha no pilar de Segurança (SEC03-BP01 – proteger a rede).
 
 **Recomendações:**
 
@@ -259,9 +259,9 @@ Um atacante pode enviar uma requisição maliciosa que força o Next.js a cachea
 
 **Conformidade Afetada:**
 
-- 🇷 **LGPD:** Violação do princípio da integridade (Art. 6º, VI) – conteúdo envenenado pode ser servido a usuários legítimos, comprometendo a confiança.
-- 🌐 **OWASP Top 10 (2021):** A05:2021 – Security Misconfiguration (cache mal configurado em rotas SSR).
-- 🏢 **ISO/IEC 27001:2022:** Controle A.8.10 (Gestão de capacidade) e A.8.13 (Redundância de processamento de informação) – não atendidos.
+-  **LGPD:** Violação do princípio da integridade (Art. 6º, VI) – conteúdo envenenado pode ser servido a usuários legítimos, comprometendo a confiança.
+-  **OWASP Top 10 (2021):** A05:2021 – Security Misconfiguration (cache mal configurado em rotas SSR).
+-  **ISO/IEC 27001:2022:** Controle A.8.10 (Gestão de capacidade) e A.8.13 (Redundância de processamento de informação) – não atendidos.
 
 **Recomendações:**
 
@@ -292,10 +292,10 @@ Ambientes de QA frequentemente possuem:
 
 **Conformidade Afetada:**
 
-- 🇧🇷 **LGPD:** Violação do Art. 46 e Art. 48 – ambientes de teste com dados reais (ou credenciais reutilizadas) expostos publicamente configuram falha técnica e risco de incidente.
-- 🌐 **OWASP Top 10 (2021):** A01:2021 – Broken Access Control e A05:2021 – Security Misconfiguration.
-- 🏢 **ISO/IEC 27001:2022:** Controle A.8.31 (Segregação de ambientes de desenvolvimento, teste e produção) – **não atendido** (ambiente QA acessível publicamente).
-- 🛡️ **CIS Controls v8:** Controle 3.2 (Estabelecer e manter inventário de ativos de software) – subdomínios QA não inventariados nem protegidos.
+-  **LGPD:** Violação do Art. 46 e Art. 48 – ambientes de teste com dados reais (ou credenciais reutilizadas) expostos publicamente configuram falha técnica e risco de incidente.
+-  **OWASP Top 10 (2021):** A01:2021 – Broken Access Control e A05:2021 – Security Misconfiguration.
+-  **ISO/IEC 27001:2022:** Controle A.8.31 (Segregação de ambientes de desenvolvimento, teste e produção) – **não atendido** (ambiente QA acessível publicamente).
+-  **CIS Controls v8:** Controle 3.2 (Estabelecer e manter inventário de ativos de software) – subdomínios QA não inventariados nem protegidos.
 - ️ **Boas Práticas de DevSecOps:** Violação do princípio de "Shift-Left Security" – ambientes de teste devem ser isolados por VPN ou allowlist de IPs.
 
 **Recomendações:**
@@ -360,7 +360,7 @@ Ao consultar o endereço IP principal da aplicação via Shodan na porta 80, a r
 
 ---
 
-**🔗 Cenário de Ataque Hipotético:**
+** Cenário de Ataque Hipotético:**
 
 1. **Descoberta:** O atacante mapeia o subdomínio `subdominio.qa.dominio.net` e encontra um painel de login com proteção fraca (ou credenciais padrão de desenvolvimento, como `admin/admin`).
 2. **Pivô (Password Reuse):** Dentro do ambiente QA, o atacante encontra um arquivo de configuração ou um comentário no código-fonte que contém uma chave de API ou senha que é **reutilizada** no ambiente de produção.
@@ -392,7 +392,7 @@ Ao consultar o endereço IP principal da aplicação via Shodan na porta 80, a r
 
 ## RECOMENDAÇÕES
 
-### 6.1 Prioridade Imediata (0-7 dias)
+### Prioridade Imediata (0-7 dias)
 
 1. **Atualização Crítica do Next.js:** Atualizar a aplicação para a versão 14.2.25 ou superior para mitigar as CVEs de Middleware Bypass, SSRF e Cache Poisoning.
 2. **Isolamento de Ambientes QA:** Configurar regras de firewall ou autenticação básica (HTTP Auth) para bloquear o acesso público a todos os subdomínios `.qa.dominio.net`.
