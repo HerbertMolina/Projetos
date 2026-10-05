@@ -53,6 +53,3 @@ As responsabilidades descritas para o Analista de SOC possuem paralelos diretos 
 *   **Identificação de Comando e Controle (C2):** A lógica de encontrar o "cérebro" por trás de um malware é a mesma usada para identificar a fonte real ou os beneficiários ocultos por trás de uma rede de perfis falsos ou empresas de fachada.
 
 ---
-
-do a ponte com seus objetivos de OSINT e investigação.
-*   Você salva no seu portfólio.
