@@ -17,7 +17,7 @@ A execução não autorizada configura crime previsto no Art. 154-A do Código P
 
 ---
 
-##  1. O QUE ESTÁ FALTANDO? (Lacunas de Inteligência)
+## QUE ESTÁ FALTANDO? (Lacunas de Inteligência)
 
 Com base nos dados coletados até agora sobre a infraestrutura municipal, um atacante experiente (especialmente um *APT* focado em setor público) buscaria ativamente as seguintes peças adicionais:
 
@@ -33,11 +33,11 @@ Com base nos dados coletados até agora sobre a infraestrutura municipal, um ata
 
 ---
 
-##  2. COMO UM ATACANTE EXPLORARIA CADA VULNERABILIDADE
+## COMO UM ATACANTE EXPLORARIA CADA VULNERABILIDADE
 
 Abaixo está a lógica passo a passo de como os dados já coletados seriam *weaponizados* (transformados em armas) contra uma infraestrutura pública.
 
-### 2.1 RCE no Conam (CVE-2026-44631) - CRÍTICO
+### RCE no Conam (CVE-2026-44631) - CRÍTICO
 **O Dado:** Sistema Conam (usado para NFS-e e protocolo) com vulnerabilidade de Execução Remota de Código.
 
 *   **Como o atacante pensa:** "O Conam é o coração administrativo do município. Ele emite NFS-e, gerencia protocolo e provavelmente tem acesso a dados fiscais. Se eu conseguir RCE aqui, tenho o controle da operação financeira."
@@ -51,7 +51,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     *   **Acesso a dados fiscais:** Alíquotas, valores de ISS, informações de contribuintes.
     *   **Ponto de entrada para a rede interna:** A web shell permite escanear a rede municipal a partir de dentro.
 
-### 2.2 vCenter Exposto Publicamente - CRÍTICO
+### vCenter Exposto Publicamente - CRÍTICO
 **O Dado:** VMware vCenter acessível via internet sem MFA.
 
 *   **Como o atacante pensa:** "O vCenter gerencia TODAS as máquinas virtuais do município. Se eu entrar aqui, não preciso hackear cada sistema individualmente - eu controlo o hypervisor."
@@ -68,7 +68,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     *   **Sequestro de dados:** Copia bancos de dados de saúde (SUS), educação, assistência social.
     *   **Tempo de recuperação:** Sem backup offline, a prefeitura pode ficar semanas sem sistemas.
 
-### 2.3 phpMyAdmin Exposto - CRÍTICO
+### phpMyAdmin Exposto - CRÍTICO
 **O Dado:** Painel de banco de dados acessível publicamente.
 
 *   **Como o atacante pensa:** "phpMyAdmin é a porta dos fundos para todos os dados do município. Se eu entrar, tenho acesso direto aos bancos do Conam, GLPI, site, etc."
@@ -92,7 +92,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     *   **Manipulação de dados:** Alterar valores de notas fiscais, zerar dívidas ativas.
     *   **Destruição de dados:** `DROP DATABASE` em todos os bancos.
 
-### 2.4 cPanel Exposto (4 painéis) - ALTO
+### cPanel Exposto (4 painéis) - ALTO
 **O Dado:** cPanel, Webmail, WebDisk, CPCalendars acessíveis publicamente.
 
 *   **Como o atacante pensa:** "O cPanel dá controle total sobre a hospedagem. Posso interceptar e-mails do prefeito, modificar o site, criar backdoors."
@@ -109,7 +109,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     *   **Defacement do site:** Pichação do site da prefeitura com mensagens políticas.
     *   **Espionagem:** Interceptação de e-mails de licitações e contratos.
 
-### 2.5 GLPI Exposto (Sistema de TI) - ALTO
+### GLPI Exposto (Sistema de TI) - ALTO
 **O Dado:** GLPI (sistema de helpdesk/inventário de TI) acessível.
 
 *   **Como o atacante pensa:** "O GLPI tem o inventário completo da TI do município: IPs internos, nomes de servidores, usuários, senhas em chamados, topologia de rede."
@@ -125,7 +125,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     *   **Credenciais expostas:** Senhas de sistemas críticos em chamados de TI.
     *   **Engenharia social aprimorada:** Sabe nomes, cargos e ramais de todos os funcionários de TI.
 
-### 2.6 75 Emails Corporativos + Padrão de Nomenclatura - ALTO
+### 75 Emails Corporativos + Padrão de Nomenclatura - ALTO
 **O Dado:** Hunter.io revelou 75 emails com padrão `nome.sobrenome@municipio.gov.br`.
 
 *   **Como o atacante pensa:** "Com 75 emails válidos, posso fazer phishing direcionado (Spear Phishing) contra funcionários específicos, especialmente os de TI e gabinete."
@@ -143,7 +143,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
 
 ---
 
-##  3. CADEIA DE ATAQUE HIPOTÉTICA (KILL CHAIN)
+## CADEIA DE ATAQUE HIPOTÉTICA (KILL CHAIN)
 
 Como um atacante sofisticado (ex: grupo de ransomware focado em setor público) combinaria essas falhas para um comprometimento total da prefeitura:
 
@@ -213,9 +213,9 @@ OPÇÃO 3 - VAZAMENTO DE DADOS (hacktivismo):
 
 ---
 
-##  4. IMPACTO REAL NO MUNICÍPIO (SETOR PÚBLICO)
+## IMPACTO REAL NO MUNICÍPIO (SETOR PÚBLICO)
 
-### 4.1 Impacto Social e Operacional
+### Impacto Social e Operacional
 
 | Cenário | Consequência para o Cidadão |
 | :--- | :--- |
@@ -225,7 +225,7 @@ OPÇÃO 3 - VAZAMENTO DE DADOS (hacktivismo):
 | **Site da prefeitura defaced** | População perde acesso a informações oficiais, boatos se espalham |
 | **E-mails interceptados** | Licitações fraudadas, contratos direcionados, prejuízo ao erário |
 
-### 4.2 Impacto Financeiro e Legal
+### Impacto Financeiro e Legal
 
 | Tipo de Impacto | Estimativa |
 | :--- | :--- |
@@ -236,7 +236,7 @@ OPÇÃO 3 - VAZAMENTO DE DADOS (hacktivismo):
 | **Ações judiciais de cidadãos** | Indenizações por vazamento de dados pessoais |
 | **Perda de repasse federal** | Convênios suspensos por irregularidades |
 
-### 4.3 Impacto Político e Reputacional
+### Impacto Político e Reputacional
 
 - **Manchetes nacionais:** "Prefeitura de [cidade] tem dados de 100.000 cidadãos vazados"
 - **Perda de confiança:** População não acredita mais em serviços digitais do município
@@ -245,7 +245,7 @@ OPÇÃO 3 - VAZAMENTO DE DADOS (hacktivismo):
 
 ---
 
-##  5. COMO SE PROTEGER (Resposta Defensiva para Setor Público)
+## COMO SE PROTEGER (Resposta Defensiva para Setor Público)
 
 ### Prioridade Imediata (0-24 horas) - "Estancar o Sangramento"
 
@@ -318,7 +318,7 @@ OPÇÃO 3 - VAZAMENTO DE DADOS (hacktivismo):
 
 ---
 
-##  6. MATRIZ DE PROBABILIDADE VS IMPACTO (Setor Público)
+## MATRIZ DE PROBABILIDADE VS IMPACTO (Setor Público)
 
 | Vetor de Ataque | Probabilidade | Impacto | Prioridade |
 | :--- | :--- | :--- | :--- |
@@ -331,7 +331,7 @@ OPÇÃO 3 - VAZAMENTO DE DADOS (hacktivismo):
 
 ---
 
-##  7. Perspectiva do Atacante
+## Perspectiva do Atacante
 
 ### O Que um Atacante Real Faria Contra Este Município
 
@@ -364,7 +364,7 @@ Um grupo de ransomware focado em setor público **não precisaria de sofisticaç
 
 ---
 
-##  8. RECURSOS PARA DEFENSORES (Setor Público)
+## RECURSOS PARA DEFENSORES (Setor Público)
 
 ### Para Gestores Públicos:
 - **Cartilha de Segurança para Órgãos Públicos:** https://www.gov.br/gsi/pt-br/assuntos/noticias/cartilha-de-seguranca
