@@ -167,12 +167,12 @@ Via Análise de Cabeçalhos HTTP e Wappalyzer:
 
 | Componente | Tecnologia | Versão | Status de Segurança |
 | --- | --- | --- | --- |
-| Framework Web | Next.js | 14.0.1 | 🔴 Desatualizado (CVEs Críticas) |
-| UI Library | React | 18.3.1 | ✅ Atualizado |
-| Backend / BaaS | Supabase | N/A | 🟡 Requer monitoramento de configuração |
-| Servidor Web (QA) | Microsoft IIS | N/A | ⚠️ Expõe ambientes de teste |
-| CDN / WAF | Cloudflare | N/A | ✅ Ativo |
-| Protocolo | HTTP/2 | N/A | ✅ Moderno |
+| Framework Web | Next.js | 14.0.1 | Desatualizado (CVEs Críticas) |
+| UI Library | React | 18.3.1 | Atualizado |
+| Backend / BaaS | Supabase | N/A | Requer monitoramento de configuração |
+| Servidor Web (QA) | Microsoft IIS | N/A | Expõe ambientes de teste |
+| CDN / WAF | Cloudflare | N/A | Ativo |
+| Protocolo | HTTP/2 | N/A | Moderno |
 
 ---
 
