@@ -14,7 +14,7 @@
 
 ---
 
-## ⚖️ AVISO ÉTICO E LEGAL
+## AVISO ÉTICO E LEGAL
 
 Este relatório foi elaborado exclusivamente para fins educacionais e demonstração de habilidades em segurança da informação e inteligência de fontes abertas (OSINT).
 
