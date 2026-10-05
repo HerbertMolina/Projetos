@@ -11,7 +11,7 @@
 
 ---  
 
-## ⚖️ AVISO ÉTICO E LEGAL  
+## AVISO ÉTICO E LEGAL  
 
 Este relatório foi elaborado **exclusivamente para fins educacionais** e demonstração de habilidades em segurança da informação e inteligência de fontes abertas (OSINT).  
 
@@ -25,7 +25,7 @@ Este material **não deve ser utilizado** para atividades ilegais ou não autori
 
 ---
 
-## 📊 SUMÁRIO EXECUTIVO
+## SUMÁRIO EXECUTIVO
 
 ### Contexto
 
@@ -74,9 +74,9 @@ As vulnerabilidades identificadas, se exploradas, poderiam resultar em:
 
 ---
 
-## 🎯 1. OBJETIVOS E ESCOPO
+## OBJETIVOS E ESCOPO
 
-### 1.1 Objetivos da Investigação
+### Objetivos da Investigação
 
 - Mapear a superfície de ataque exposta publicamente
 - Identificar tecnologias e serviços em execução
@@ -85,7 +85,7 @@ As vulnerabilidades identificadas, se exploradas, poderiam resultar em:
 - Demonstrar capacidades de OSINT e reconhecimento passivo
 - Correlacionar descobertas para identificar padrões de risco
 
-### 1.2 Escopo da Investigação
+### Escopo da Investigação
 
 **Incluído:**
 
@@ -107,7 +107,7 @@ As vulnerabilidades identificadas, se exploradas, poderiam resultar em:
 - Varredura ativa de portas ou serviços
 - Qualquer atividade que viole a confidencialidade, integridade ou disponibilidade dos sistemas
 
-### 1.3 Restrições Éticas
+### Restrições Éticas
 
 - Investigação 100% passiva (sem envio de pacotes maliciosos)
 - Nenhuma tentativa de autenticação ou acesso
@@ -117,9 +117,9 @@ As vulnerabilidades identificadas, se exploradas, poderiam resultar em:
 
 ---
 
-## 🛠️ 2. METODOLOGIA
+## METODOLOGIA
 
-### 2.1 Abordagem
+### Abordagem
 
 A investigação seguiu o framework **PTES (Penetration Testing Execution Standard)** adaptado para OSINT passivo, com foco nas fases de:
 
@@ -129,7 +129,7 @@ A investigação seguiu o framework **PTES (Penetration Testing Execution Standa
 4. **Análise de Risco:** Avaliação de impacto e probabilidade
 5. **Documentação:** Elaboração de relatório técnico
 
-### 2.2 Ferramentas Utilizadas
+### Ferramentas Utilizadas
 
 | Ferramenta | Categoria | Uso Específico |
 |---|---|---|
@@ -146,7 +146,7 @@ A investigação seguiu o framework **PTES (Penetration Testing Execution Standa
 | **curl** | Análise de Headers | Verificação de headers de segurança HTTP |
 | **dig/nslookup** | Consultas DNS | Verificação de registros específicos |
 
-### 2.3 Fontes de Inteligência
+### Fontes de Inteligência
 
 **Fontes Primárias:**
 
@@ -163,7 +163,7 @@ A investigação seguiu o framework **PTES (Penetration Testing Execution Standa
 - Wayback Machine (arquivos históricos)
 - Bases de vazamento de credenciais (Hunter.io)
 
-### 2.4 Processo de Anonimização
+### Processo de Anonimização
 
 Para proteger a identidade do alvo, todos os dados sensíveis foram substituídos por valores genéricos:
 
@@ -179,9 +179,9 @@ Para proteger a identidade do alvo, todos os dados sensíveis foram substituído
 
 ---
 
-## 🏗️ 3. MAPEAMENTO DE INFRAESTRUTURA
+## MAPEAMENTO DE INFRAESTRUTURA
 
-### 3.1 Informações de Registro (RDAP/WHOIS)
+### Informações de Registro (RDAP/WHOIS)
 
 **Domínio:** municipio.gov.br  
 **Status:** Publicado  
@@ -194,7 +194,7 @@ Para proteger a identidade do alvo, todos os dados sensíveis foram substituído
 
 **Observação:** Os nameservers utilizam o mesmo domínio principal (Glue Record), indicando que estão hospedados na mesma infraestrutura do site principal.
 
-### 3.2 Arquitetura de Rede Identificada
+### Arquitetura de Rede Identificada
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -237,7 +237,7 @@ Para proteger a identidade do alvo, todos os dados sensíveis foram substituído
 └─────────────────────────────────────────────────────────┘
 ```
 
-### 3.3 Subdomínios Identificados
+### Subdomínios Identificados
 
 | Subdomínio | Função | Status | Risco |
 |---|---|---|---|
@@ -256,7 +256,7 @@ Para proteger a identidade do alvo, todos os dados sensíveis foram substituído
 | `protocolo.municipio.gov.br` | Sistema de Protocolo | Ativo | Crítico |
 **Total:** 15 subdomínios identificados
 
-### 3.4 Tecnologias Identificadas
+### Tecnologias Identificadas
 
 **Via Análise de Cabeçalhos HTTP e Wappalyzer:**
 
@@ -274,7 +274,7 @@ Para proteger a identidade do alvo, todos os dados sensíveis foram substituído
 | CDN/Proxy | Cloudflare | - | Ativo |
 | Certificado SSL | Let's Encrypt | - | Válido |
 
-### 3.5 Infraestrutura Híbrida Identificada
+### Infraestrutura Híbrida Identificada
 
 A investigação revelou uma infraestrutura **híbrida** distribuída entre:
 
@@ -290,9 +290,9 @@ Esta distribuição indica:
 
 ---
 
-## ⚠️ 4. VULNERABILIDADES IDENTIFICADAS
+## VULNERABILIDADES IDENTIFICADAS
 
-### 4.1 [CRÍTICO] CVE-2026-44631 - Execução Remota de Código (RCE)
+### [CRÍTICO] CVE-2026-44631 - Execução Remota de Código (RCE)
 
 **Classificação:** 🔴 CRÍTICO  
 **CVSS Score:** 9.8 (Crítico)  
@@ -328,10 +328,10 @@ Vetor: Network/Low Complexity/No Authentication
 - Instalação de backdoors e persistência
 
 **Conformidade Afetada:**
-- 🇧🇷 **LGPD (Lei 13.709/2018):** Violação do Art. 46 (agentes de tratamento devem adotar medidas de segurança técnicas aptas a proteger os dados pessoais). Risco de notificação obrigatória à ANPD.
-- 🌐 **OWASP Top 10 (2021):** A03:2021 – Injection (falha de injeção de código).
-- 🏢 **ISO/IEC 27001:2022:** Controle A.8.8 (Gestão de vulnerabilidades técnicas) – não atendido.
-- 🏛️ **Decreto 10.046/2019 (Governo Digital):** Falha na disponibilidade e integridade de serviço público essencial.  
+-  **LGPD (Lei 13.709/2018):** Violação do Art. 46 (agentes de tratamento devem adotar medidas de segurança técnicas aptas a proteger os dados pessoais). Risco de notificação obrigatória à ANPD.
+-  **OWASP Top 10 (2021):** A03:2021 – Injection (falha de injeção de código).
+-  **ISO/IEC 27001:2022:** Controle A.8.8 (Gestão de vulnerabilidades técnicas) – não atendido.
+-  **Decreto 10.046/2019 (Governo Digital):** Falha na disponibilidade e integridade de serviço público essencial.  
 
 **Recomendações:**
 
@@ -356,7 +356,7 @@ Vetor: Network/Low Complexity/No Authentication
 
 ---
 
-### 4.2 [CRÍTICO] VMware vCenter Exposto na Internet
+### [CRÍTICO] VMware vCenter Exposto na Internet
 
 **Classificação:** 🔴 CRÍTICO  
 **CVSS Score:** 9.8 (Crítico)  
@@ -393,10 +393,10 @@ Autenticação: Solicita usuário/senha
 - Movimento lateral para qualquer sistema conectado
 
 **Conformidade Afetada:**
-- 🇧🇷 **LGPD:** Violação dos princípios de segurança e prevenção (Art. 6º, VI e VII) – infraestrutura de virtualização exposta compromete todos os dados hospedados.
-- 🌐 **OWASP Top 10 (2021):** A01:2021 – Broken Access Control (controle de acesso ausente em painel crítico).
-- 🏢 **ISO/IEC 27001:2022:** Controle A.8.20 (Segurança de serviços de rede) e A.8.21 (Segurança de serviços na nuvem) – não atendidos.
-- 🛡️ **NIST CSF (Cybersecurity Framework):** Falha na função "Protect" (PR.AC-5 – integridade de rede) e "Detect" (DE.CM-1 – monitoramento de rede).  
+-  **LGPD:** Violação dos princípios de segurança e prevenção (Art. 6º, VI e VII) – infraestrutura de virtualização exposta compromete todos os dados hospedados.
+-  **OWASP Top 10 (2021):** A01:2021 – Broken Access Control (controle de acesso ausente em painel crítico).
+-  **ISO/IEC 27001:2022:** Controle A.8.20 (Segurança de serviços de rede) e A.8.21 (Segurança de serviços na nuvem) – não atendidos.
+-  **NIST CSF (Cybersecurity Framework):** Falha na função "Protect" (PR.AC-5 – integridade de rede) e "Detect" (DE.CM-1 – monitoramento de rede).  
 
 **Contexto de Risco:**
 
@@ -428,7 +428,7 @@ VMware vCenter teve **CVEs gravíssimas nos últimos anos**, incluindo:
 
 ---
 
-### 4.3 [CRÍTICO] Sistema de Protocolo com Múltiplas Vulnerabilidades Críticas
+### [CRÍTICO] Sistema de Protocolo com Múltiplas Vulnerabilidades Críticas
 
 **Classificação:** 🔴 CRÍTICO  
 **CVSS Score:** 9.1 (Crítico - múltiplas CVEs)  
@@ -463,10 +463,10 @@ Result:
 - Dados de documentos oficiais podem ser comprometidos  
 
 **Conformidade Afetada:**
-- 🇧🇷 **LGPD:** Violação do Art. 48 (dever de comunicar incidente de segurança à ANPD e aos titulares) – alta probabilidade de incidente com dados pessoais de cidadãos.
-- 🌐 **OWASP Top 10 (2021):** A06:2021 – Vulnerable and Outdated Components (componentes desatualizados).
-- 🏢 **ISO/IEC 27001:2022:** Controle A.8.19 (Instalação de software em sistemas operacionais) e A.8.8 (Gestão de vulnerabilidades) – não atendidos.
-- 🏛️ **TCU (Tribunal de Contas da União):** Acórdão 2638/2021 – determina que órgãos públicos implementem gestão de vulnerabilidades e patches.  
+-  **LGPD:** Violação do Art. 48 (dever de comunicar incidente de segurança à ANPD e aos titulares) – alta probabilidade de incidente com dados pessoais de cidadãos.
+-  **OWASP Top 10 (2021):** A06:2021 – Vulnerable and Outdated Components (componentes desatualizados).
+-  **ISO/IEC 27001:2022:** Controle A.8.19 (Instalação de software em sistemas operacionais) e A.8.8 (Gestão de vulnerabilidades) – não atendidos.
+-  **TCU (Tribunal de Contas da União):** Acórdão 2638/2021 – determina que órgãos públicos implementem gestão de vulnerabilidades e patches.  
   
 **Recomendações:**
 
@@ -487,7 +487,7 @@ Result:
 
 ---
 
-### 4.4 [CRÍTICO] Painel de Administração de Banco de Dados Exposto
+### [CRÍTICO] Painel de Administração de Banco de Dados Exposto
 
 **Classificação:** 🔴 CRÍTICO  
 **CVSS Score:** 9.1 (Crítico)  
@@ -524,8 +524,8 @@ Protocolo: HTTPS (válido)
 - Violação massiva da LGPD
 
 **Conformidade Afetada:**
-- 🇧🇷 **LGPD:** Violação do Art. 46 – painel administrativo exposto é falha técnica grave na proteção de dados.
-- 🌐 **OWASP Top 10 (2021):** A07:2021 – Identification and Authentication Failures.
+-  **LGPD:** Violação do Art. 46 – painel administrativo exposto é falha técnica grave na proteção de dados.
+-  **OWASP Top 10 (2021):** A07:2021 – Identification and Authentication Failures.
 -  **ISO/IEC 27001:2022:** Controle A.8.3 (Segregação de funções) e A.8.5 (Controle de acesso) – não atendidos.
 - ️ **CIS Controls v8:** Controle 4.4 (Estabelecer e manter processo de gestão de configuração segura) – não atendido.  
 
@@ -547,7 +547,7 @@ Protocolo: HTTPS (válido)
 
 ---
 
-### 4.5 [CRÍTICO] cPanel Exposto sem Restrições
+### [CRÍTICO] cPanel Exposto sem Restrições
 
 **Classificação:** 🔴 CRÍTICO  
 **CVSS Score:** 9.0 (Crítico)  
@@ -604,7 +604,7 @@ Restrição de IP: Não identificada
 
 ---
 
-### 4.6 [ALTO] GLPI (Sistema de ITSM) Exposto
+### [ALTO] GLPI (Sistema de ITSM) Exposto
 
 **Classificação:** 🟠 ALTO  
 **CVSS Score:** 8.1 (Alto)  
@@ -661,7 +661,7 @@ GLPI teve múltiplas CVEs críticas nos últimos anos, incluindo:
 
 ---
 
-### 4.7 [ALTO] Ausência de Headers de Segurança HTTP
+### [ALTO] Ausência de Headers de Segurança HTTP
 
 **Classificação:** 🟠 ALTO  
 **CVSS Score:** 7.5 (Alto)  
@@ -684,12 +684,12 @@ Comando: curl -I https://municipio.gov.br
 Resultado: Headers de segurança ausentes
 
 Headers verificados:
-- Strict-Transport-Security (HSTS): ❌ AUSENTE
-- Content-Security-Policy (CSP): ❌ AUSENTE
-- X-Frame-Options: ❌ AUSENTE
-- X-Content-Type-Options: ❌ AUSENTE
-- X-XSS-Protection: ❌ AUSENTE
-- Referrer-Policy: ❌ AUSENTE
+- Strict-Transport-Security (HSTS): AUSENTE
+- Content-Security-Policy (CSP): AUSENTE
+- X-Frame-Options: AUSENTE
+- X-Content-Type-Options: AUSENTE
+- X-XSS-Protection: AUSENTE
+- Referrer-Policy: AUSENTE
 ```
 
 **Impacto:**
@@ -722,7 +722,7 @@ Header always set Permissions-Policy "geolocation=(), microphone=()"
 
 ---
 
-### 4.8 [ALTO] Ausência de Segmentação de Rede
+### [ALTO] Ausência de Segmentação de Rede
 
 **Classificação:** 🟠 ALTO  
 **CVSS Score:** 7.0 (Alto)  
@@ -759,7 +759,7 @@ Análise de IPs via Shodan e consultas DNS revelou que todos os serviços estão
 
 ---
 
-### 4.9 [ALTO] Vazamento de Emails Corporativos
+### [ALTO] Vazamento de Emails Corporativos
 
 **Classificação:** 🟠 ALTO  
 **CVSS Score:** 7.5 (Alto)  
@@ -808,7 +808,7 @@ Categorias identificadas:
 
 ---
 
-### 4.10 [ALTO] Centralização de Serviços (Ponto Único de Falha)
+### [ALTO] Centralização de Serviços (Ponto Único de Falha)
 
 **Classificação:** 🟠 ALTO  
 **CVSS Score:** 7.0 (Alto)  
@@ -835,7 +835,7 @@ O servidor principal hospeda simultaneamente o site, nameservers, servidor de em
 
 ---
 
-### 4.11 [MÉDIO] Possível Exposição de Arquivo de Configuração (.env)
+### [MÉDIO] Possível Exposição de Arquivo de Configuração (.env)
 
 **Classificação:** 🟡 MÉDIO  
 **CVSS Score:** 5.3 (Médio)  
@@ -892,7 +892,7 @@ Se o arquivo .env existe, pode conter:
 
 ---
 
-### 4.12 [MÉDIO] Ausência de DNSSEC
+### [MÉDIO] Ausência de DNSSEC
 
 **Classificação:** 🟡 MÉDIO  
 **CVSS Score:** 5.3 (Médio)  
@@ -931,7 +931,7 @@ DNSSEC Analyzer: Falha na validação
 
 ---
 
-### 4.13 [BAIXO] Subdomínios Órfãos e Mal Configurados
+### [BAIXO] Subdomínios Órfãos e Mal Configurados
 
 **Classificação:** 🟢 BAIXO  
 **CVSS Score:** 3.7 (Baixo)  
@@ -961,7 +961,7 @@ Subdomínio `mail.municipio.gov.br` redireciona para `www.municipio.gov.br`, sug
 
 ---
 
-### 4.14 [BAIXO] Ausência de Configurações de Email (SPF/DKIM/DMARC)
+### [BAIXO] Ausência de Configurações de Email (SPF/DKIM/DMARC)
 
 **Classificação:** 🟢 BAIXO  
 **CVSS Score:** 3.7 (Baixo)  
@@ -994,7 +994,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
 - Google Postmaster Guidelines
 
 ---
-🔗 Cenário de Ataque Hipotético:  
+Cenário de Ataque Hipotético:  
 
     Reconhecimento: O atacante identifica o painel phpmyadmin.municipio.gov.br acessível publicamente.  
     
@@ -1007,28 +1007,28 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
 
 ---
 
-## 📊 5. ANÁLISE DE RISCO
+## ANÁLISE DE RISCO
 
-### 5.1 Matriz de Risco
+### Matriz de Risco
 
 | Vulnerabilidade | Probabilidade | Impacto | Nível de Risco |
 |---|---|---|---|
-| CVE-2026-44631 (RCE) | Alta | Crítico | 🔴 Crítico |
-| vCenter Exposto | Alta | Crítico | 🔴 Crítico |
-| Protocolo com 214 CVEs | Alta | Crítico | 🔴 Crítico |
-| phpMyAdmin Exposto | Alta | Crítico | 🔴 Crítico |
-| cPanel Exposto | Alta | Crítico | 🔴 Crítico |
-| GLPI Exposto | Média | Alto | 🟠 Alto |
-| Ausência de Headers | Alta | Alto | 🟠 Alto |
-| Ausência de Segmentação | Alta | Alto | 🟠 Alto |
-| Vazamento de Emails | Alta | Alto | 🟠 Alto |
-| Centralização de Serviços | Média | Alto | 🟠 Alto |
-| Possível .env Exposto | Média | Médio | 🟡 Médio |
-| Ausência de DNSSEC | Baixa | Médio | 🟡 Médio |
-| Subdomínios Órfãos | Baixa | Baixo | 🟢 Baixo |
-| Ausência de SPF/DKIM/DMARC | Baixa | Baixo | 🟢 Baixo |
+| CVE-2026-44631 (RCE) | Alta | Crítico | Crítico |
+| vCenter Exposto | Alta | Crítico | Crítico |
+| Protocolo com 214 CVEs | Alta | Crítico | Crítico |
+| phpMyAdmin Exposto | Alta | Crítico | Crítico |
+| cPanel Exposto | Alta | Crítico | Crítico |
+| GLPI Exposto | Média | Alto | Alto |
+| Ausência de Headers | Alta | Alto | Alto |
+| Ausência de Segmentação | Alta | Alto | Alto |
+| Vazamento de Emails | Alta | Alto | Alto |
+| Centralização de Serviços | Média | Alto | Alto |
+| Possível .env Exposto | Média | Médio | Médio |
+| Ausência de DNSSEC | Baixa | Médio | Médio |
+| Subdomínios Órfãos | Baixa | Baixo | Baixo |
+| Ausência de SPF/DKIM/DMARC | Baixa | Baixo | Baixo |
 
-### 5.2 Distribuição por Severidade
+### Distribuição por Severidade
 
 ```
 🔴 Crítico:  5 vulnerabilidades (33%)
@@ -1037,7 +1037,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
 🟢 Baixo:    2 vulnerabilidades (14%)
 ```
 
-### 5.3 Análise de Causa Raiz
+### Análise de Causa Raiz
 
 **Fatores Técnicos:**
 
@@ -1072,9 +1072,9 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
 
 ---
 
-## 🛡️ 6. RECOMENDAÇÕES
+## RECOMENDAÇÕES
 
-### 6.1 Prioridade Imediata (0-7 dias)
+### Prioridade Imediata (0-7 dias)
 
 1. **REMOVER vCenter DA INTERNET**
    - Restringir acesso apenas à rede interna
@@ -1103,7 +1103,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
    - cPanel, banco de dados, email, painéis administrativos
    - Utilizar senhas fortes e únicas
 
-### 6.2 Prioridade Curto Prazo (7-30 dias)
+### Prioridade Curto Prazo (7-30 dias)
 
 1. **Implementar MFA em todos os painéis**
    - Webmail, cPanel, admin, banco de dados, GLPI, vCenter
@@ -1130,7 +1130,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
    - Aplicar patches de segurança
    - Revisar plugins instalados
 
-### 6.3 Prioridade Médio Prazo (30-90 dias)
+### Prioridade Médio Prazo (30-90 dias)
 
 1. **Migrar para hospedagem gerenciada**
    - Contratar provedor com SLA de segurança
@@ -1158,7 +1158,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
    - Padronizar configurações entre AWS e hospedagem tradicional
    - Implementar ferramentas de gestão centralizada
 
-### 6.4 Prioridade Longo Prazo (90+ dias)
+### Prioridade Longo Prazo (90+ dias)
 
 1. **Implementar SOC ou monitoramento 24/7**
    - Detecção e resposta a incidentes
@@ -1184,9 +1184,9 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
 
 ---
 
-## 📚 7. LIÇÕES APRENDIDAS
+## LIÇÕES APRENDIDAS
 
-### 7.1 Para Profissionais de Segurança
+### Para Profissionais de Segurança
 
 1. **OSINT é subutilizado na defesa**
    - Se um atacante pode achar essas falhas passivamente, a defesa também pode
@@ -1212,7 +1212,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
    - Mesmo com conhecimento técnico, respeite limites legais
    - Sempre obtenha autorização antes de testar
 
-### 7.2 Para Gestores Públicos
+### Para Gestores Públicos
 
 1. **Segurança é investimento, não custo**
    - O barato sai caro em segurança
@@ -1230,7 +1230,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
    - vCenter, banco de dados, sistemas de protocolo são alvos prioritários
    - Isolamento e segmentação são obrigatórios
 
-### 7.3 Para a Comunidade
+### Para a Comunidade
 
 1. **Sistemas municipais são alvos frequentes**
    - Muitas vezes negligenciados por serem "pequenos"
@@ -1246,7 +1246,7 @@ Consultas DNS realizadas utilizando `dig TXT` para verificar os registros SPF, D
 
 ---
 
-## 📎 8. APÊNDICES
+## APÊNDICES
 
 ### Apêndice A: Glossário de Termos Técnicos
 
