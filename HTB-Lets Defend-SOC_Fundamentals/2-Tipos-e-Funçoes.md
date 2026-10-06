@@ -1,11 +1,11 @@
 # Relatório de Aprendizado: SOC Types and Roles
 
-> **Curso:** SOC Fundamentals — Let's Defend / Hack The Box
-> **Módulo:** SOC Types and Roles
-> **Data:** Outubro de 2026
-> **Nível:** Fundacional
-> **Status:** Concluído
-
+> **Curso:** SOC Fundamentals — Let's Defend / Hack The Box  
+> **Módulo:** SOC Types and Roles  
+> **Data:** Outubro de 2026  
+> **Nível:** Fundacional  
+> **Status:** Concluído  
+  
 ---
 
 ## Objetivo de Aprendizado
