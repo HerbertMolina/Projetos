@@ -1,10 +1,10 @@
 # Relatório de Aprendizado: Analista de SOC e suas Responsabilidades
 
-> **Curso:** SOC Fundamentals — Let's Defend / Hack The Box
-> **Módulo:** SOC Analyst and Their Responsibilities
-> **Data:** Outubro de 2026
-> **Nível:** Fundacional
-> **Status:** Concluído
+> **Curso:** SOC Fundamentals — Let's Defend / Hack The Box  
+> **Módulo:** SOC Analyst and Their Responsibilities  
+> **Data:** Outubro de 2026  
+> **Nível:** Fundacional  
+> **Status:** Concluído  
 
 ---
 
