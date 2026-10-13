@@ -185,3 +185,32 @@ O foco desta tarefa é explorar o DOM-Based XSS, uma variante de Cross-Site Scri
 **Resposta:** 'encodeURIComponent()'  
 ***Nota: No exemplo de código corrigido, a função `encodeURIComponent()` é utilizada para codificar a entrada do usuário, convertendo caracteres especiais em suas representações seguras antes de inseri-los no DOM via `textContent`.***
 
+### 🔵 **Task 9: Contexto e evasão**
+
+O foco desta tarefa é entender a importância do contexto em que o payload XSS é injetado e aprender técnicas de evasão para contornar filtros de segurança e restrições de comprimento.
+
+Conceitos explorados:  
+**Contexto de Injeção:** O sucesso de um payload XSS depende de onde ele é inserido:  
+- **Entre tags HTML:** Permite a injeção direta de tags `<script>`.  
+- **Dentro de tags HTML:** Requer o fechamento da tag atual (ex: `>` ou `">`) antes de injetar o script.  
+- **Dentro de JavaScript:** Requer o fechamento da string e do bloco de script (ex: `'; alert(1); //`) para executar o código malicioso e comentar o restante da linha original.  
+**Técnicas de Evasão:** Quando filtros bloqueiam payloads padrão, atacantes utilizam truques para quebrar a detecção:  
+- **Restrições de Comprimento:** Uso de payloads minúsculos (Tiny XSS Payloads).  
+- **Quebra de Blocklists:** Inserção de caracteres de espaço em branco não convencionais, como tabulação horizontal, nova linha ou retorno de carro, representados em hexadecimal (ex: `&#x09`, `&#x0A`, `&#x0D`), para dividir palavras-chave como `javascript` e enganar os mecanismos de detecção.
+
+- **Pergunta:** Que carácter representa o &#x09?  
+**Resposta:** 'TAB'   
+***Nota: Conforme explicado no texto e na XSS Filter Evasion Cheat Sheet, o código hexadecimal `&#x09` representa uma tabulação horizontal (TAB), que pode ser usada para separar palavras-chave e contornar filtros de segurança básicos.***
+
+### 🔵 **Task 10: Conclusão**
+
+Recapitulando os principais conceitos abordados na sala, reforçando a importância de entender o funcionamento interno dos scripts XSS para explorar vulnerabilidades existentes e adaptar payloads às necessidades do teste.
+
+
+**Revisão Geral:** A sala cobriu as causas raiz do XSS (falhas de validação, sanitização e codificação) e as principais formas de mitigação.  
+**Aplicação Prática:** Foi demonstrado como diferentes contextos de injeção (HTML, atributos, JavaScript) exigem payloads específicos e como técnicas de evasão (como o uso de caracteres hexadecimais) podem contornar filtros de segurança.  
+**Tipos de XSS:** Foram detalhados os três principais vetores: Reflected (Refletido), Stored (Armazenado) e DOM-based (Baseado no DOM), cada um com seus cenários de exploração e correção.
+
+- **Pergunta:** Nesta sala, foi utilizado um site estático fictício para demonstrar uma das vulnerabilidades XSS. De que tipo de XSS se tratava??  
+**Resposta:** 'DOM-based XSS'  
+***Nota: Conforme demonstrado na Task 8, um site estático fictício foi utilizado para ilustrar como o XSS pode ocorrer inteiramente no lado do cliente, manipulando o Document Object Model (DOM) sem qualquer interação ou reflexão por parte do servidor.*** 
