@@ -19,20 +19,22 @@ O objetivo é explorar em profundidade os diferentes tipos de XSS (Cross-Site Sc
 **Contexto Histórico e Atual:** Reconhecida desde 1999 (CERT advisory CA-2000-02), a XSS continua sendo uma ameaça comum. No OWASP Top 10 de 2017, estava em 7º lugar, e em 2021 foi agrupada com outros ataques de injeção, subindo para a 3ª posição.  
 
 **Pré-requisitos:** Conhecimento básico de HTTP, funcionamento de websites e, idealmente, ter completado a sala "Intro to Cross-site Scripting". A sala utiliza trechos de código em PHP, JavaScript, Python e C#, mas o foco está na lógica da vulnerabilidade e nas soluções, não na sintaxe das linguagens.  
+
 **Objetivos de Aprendizado:** Compreender em profundidade os tipos Reflected XSS, Stored XSS, DOM-based XSS e como se proteger contra eles.
 é uma tarefa de confirmação e introdução. Não há uma resposta técnica a ser submetida, servindo apenas para garantir que o aluno revisou os conceitos básicos antes de prosseguir.*** 
 
 ### 🔵 **Task 2: Tipos e Terminologia**
 
 Fundamentos do Cross-Site Scripting (XSS), explicando como ele contorna as políticas de segurança do navegador e classificando os três principais tipos de vulnerabilidade, além de revisar funções básicas de JavaScript essenciais para a exploração.
-
-Conceitos explorados:  
+  
 **Same-Origin Policy (SOP):** Mecanismo de segurança dos navegadores que impede que um script malicioso de uma origem (protocolo, hostname e porta) acesse dados de outra. O XSS contorna a SOP porque o script malicioso é executado a partir da *mesma* origem do site legítimo, ganhando a confiança do navegador.  
+
 **JavaScript para XSS:** Conhecimento básico de JS é crucial. Funções comuns usadas em PoCs (Provas de Conceito) incluem:  
 - `alert()`: Exibe uma caixa de diálogo (ex: `alert(1)` ou `alert('XSS')`).  
 - `console.log()`: Registra valores no console do desenvolvedor.  
 - `btoa()` / `atob()`: Codifica e decodifica strings em Base64, útil para ofuscar payloads e contornar filtros básicos.  
 - `document.cookie`: Acessa os cookies da sessão do usuário no domínio atual.  
+
 **Tipos de XSS:**  
 **Reflected XSS (Refletido):** O script malicioso é refletido imediatamente de volta ao usuário a partir de uma entrada controlada por ele (ex: parâmetros de busca na URL). Não é salvo no servidor.  
 **Stored XSS (Armazenado):** O script malicioso é salvo permanentemente no banco de dados do site (ex: comentários, reviews de produtos) e é executado no navegador de qualquer usuário que visualize a página afetada.  
@@ -53,9 +55,9 @@ Conceitos explorados:
 ### 🔵 **Task 3: Causas e implicações**
 
 Detalhando as causas raiz que tornam o Cross-Site Scripting (XSS) possível em aplicações web e explorar as graves implicações de segurança que resultam de uma exploração bem-sucedida.
-
-Conceitos explorados:  
+ 
 **Causas do XSS:**  
+
 **Validação e sanitização insuficientes de entrada:** Aplicações que aceitam dados do usuário (via formulários, URLs) e os utilizam na geração dinâmica de HTML sem limpá-los adequadamente.  
 **Falta de codificação de saída (Output Encoding):** Falha em converter caracteres especiais (como `<`, `>`, `"`, `'`, `&`) em suas entidades HTML seguras antes de renderizá-los no navegador.  
 **Uso inadequado de cabeçalhos de segurança:** Configurações fracas de Content Security Policy (CSP), como o uso de `unsafe-inline` ou `unsafe-eval`, que facilitam a execução de scripts maliciosos.  
@@ -80,8 +82,7 @@ Conceitos explorados:
 ### 🔵 **Task 4: Reflected XSS (xss refletido)**
 
 Explorando o Reflected XSS (XSS Refletido), entendendo como ele ocorre quando a entrada do usuário é imediatamente refletida na resposta do servidor sem a devida sanitização, e como corrigir essa vulnerabilidade em diferentes linguagens e frameworks.
-
-Conceitos explorados:  
+  
 **Mecanismo do Reflected XSS:** Ocorre quando um script malicioso é injetado em uma URL ou formulário e "refletido" de volta na página de resultados. O navegador da vítima executa o script porque confia na origem da página.  
 **Exemplos de Código Vulnerável e Corrigido:**  
 **PHP:** Vulnerável ao usar `$_GET['q']` diretamente no `echo`. Corrigido usando `htmlspecialchars()` para converter caracteres especiais em entidades HTML.  
@@ -125,9 +126,9 @@ Aplicando o conhecimento teórico em um cenário prático, explorando uma vulner
 ### 🔵 **Task 6: Stored XSS (armazenado)**
 
 O foco desta tarefa é explorar o Stored XSS (XSS Armazenado ou Persistente), uma vulnerabilidade que ocorre quando a aplicação salva a entrada maliciosa do usuário em um banco de dados e a exibe posteriormente para outros usuários sem a devida sanitização ou codificação.
-
-Conceitos explorados:  
+  
 **Mecanismo do Stored XSS:** O atacante injeta um script em um campo de entrada (como comentários de blog, reviews de produtos ou perfis de usuário). O script é salvo no banco de dados e executado automaticamente no navegador de qualquer vítima que visualize a página afetada, tornando-o muito mais perigoso e escalável que o Reflected XSS.  
+
 **Boas Práticas de Prevenção:**  
 - **Validação e Sanitização de Entrada:** Aplicar regras estritas sobre o que é aceito (ex: apenas caracteres alfanuméricos em nomes de usuário).  
 - **Codificação de Saída (Output Escaping):** Converter caracteres especiais HTML (`<`, `>`, `&`) em suas entidades seguras antes de renderizá-los.  
@@ -153,7 +154,9 @@ Conceitos explorados:
 O foco desta tarefa é aplicar o conhecimento sobre Stored XSS em um cenário prático, explorando uma vulnerabilidade conhecida (CVE-2021-38757) em um sistema de gerenciamento hospitalar desatualizado.
 
 **Exploração Prática de Stored XSS:** A vulnerabilidade reside no formulário de "Contato" da aplicação, onde a mensagem enviada pelo usuário é salva diretamente no banco de dados sem nenhuma sanitização.  
+
 **Impacto no Administrador/Recepcionista:** Quando um usuário com privilégios (como o Recepcionista) faz login e visualiza as mensagens recebidas, o script malicioso injetado no campo de mensagem é executado no navegador dele.  
+
 **Roubo de Sessão:** Ao injetar `<script>alert(document.cookie)</script>`, o atacante pode visualizar os cookies de sessão da vítima, demonstrando como um ataque de Stored XSS pode levar ao sequestro de conta (Session Hijacking).
 
 - **Pergunta:** Qual tipo de vulnerabilidade é essa?   
@@ -169,8 +172,10 @@ O foco desta tarefa é aplicar o conhecimento sobre Stored XSS em um cenário pr
 O foco desta tarefa é explorar o DOM-Based XSS, uma variante de Cross-Site Scripting que ocorre inteiramente no lado do cliente (navegador), sem que o payload malicioso precise ser refletido ou armazenado pelo servidor.
  
 **O que é o DOM (Document Object Model):** Uma interface de programação que representa um documento web como uma árvore de nós, permitindo que o JavaScript acesse e manipule dinamicamente a estrutura, o estilo e o conteúdo da página.  
+
 **Mecanismo do DOM-Based XSS:** A vulnerabilidade surge quando o JavaScript do lado do cliente pega dados controlados pelo usuário (como parâmetros da URL via `window.location.search`) e os insere de forma insegura no DOM (ex: usando `document.write()`), permitindo a execução de scripts.  
 **Diferença Fundamental:** Ao contrário do Reflected e Stored XSS, o servidor não tem participação direta na entrega do payload explorável; a falha está inteiramente na lógica do script executado no navegador da vítima.  
+
 **Correção:** Evitar a inserção direta de entrada do usuário usando métodos perigosos como `document.write()`. Em vez disso, deve-se usar propriedades seguras como `textContent` e aplicar funções de codificação, como `encodeURIComponent()`, para neutralizar caracteres especiais antes da renderização.
 
 - **Pergunta:** O XSS baseado em DOM é refletido através do servidor. (Yea/Nay)  
@@ -194,6 +199,7 @@ Conceitos explorados:
 - **Entre tags HTML:** Permite a injeção direta de tags `<script>`.  
 - **Dentro de tags HTML:** Requer o fechamento da tag atual (ex: `>` ou `">`) antes de injetar o script.  
 - **Dentro de JavaScript:** Requer o fechamento da string e do bloco de script (ex: `'; alert(1); //`) para executar o código malicioso e comentar o restante da linha original.  
+
 **Técnicas de Evasão:** Quando filtros bloqueiam payloads padrão, atacantes utilizam truques para quebrar a detecção:  
 - **Restrições de Comprimento:** Uso de payloads minúsculos (Tiny XSS Payloads).  
 - **Quebra de Blocklists:** Inserção de caracteres de espaço em branco não convencionais, como tabulação horizontal, nova linha ou retorno de carro, representados em hexadecimal (ex: `&#x09`, `&#x0A`, `&#x0D`), para dividir palavras-chave como `javascript` e enganar os mecanismos de detecção.
@@ -208,7 +214,9 @@ Recapitulando os principais conceitos abordados na sala, reforçando a importân
 
 
 **Revisão Geral:** A sala cobriu as causas raiz do XSS (falhas de validação, sanitização e codificação) e as principais formas de mitigação.  
+
 **Aplicação Prática:** Foi demonstrado como diferentes contextos de injeção (HTML, atributos, JavaScript) exigem payloads específicos e como técnicas de evasão (como o uso de caracteres hexadecimais) podem contornar filtros de segurança.  
+
 **Tipos de XSS:** Foram detalhados os três principais vetores: Reflected (Refletido), Stored (Armazenado) e DOM-based (Baseado no DOM), cada um com seus cenários de exploração e correção.
 
 - **Pergunta:** Nesta sala, foi utilizado um site estático fictício para demonstrar uma das vulnerabilidades XSS. De que tipo de XSS se tratava??  
