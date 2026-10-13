@@ -106,7 +106,7 @@ Conceitos explorados:
 **Resposta:** 'htmlspecialchars()'  
 ***Nota: O texto demonstra explicitamente o uso da função nativa do PHP `htmlspecialchars()` para converter caracteres especiais em suas entidades HTML seguras, prevenindo a execução de scripts injetados.***
 
-### 🔵 **Task 5: Vulnerable Web Application 1**
+### 🔵 **Task 5: Aplicação Web Vulnerável 1**
 
 Aplicando o conhecimento teórico em um cenário prático, explorando uma vulnerabilidade de Reflected XSS em uma versão vulnerável da aplicação `copyparty` (CVE-2023-38501) rodando em uma máquina virtual fornecida pela sala.
   
@@ -121,4 +121,67 @@ Aplicando o conhecimento teórico em um cenário prático, explorando uma vulner
 - **Pergunta:** Utiliza a vulnerabilidade acima indicada na máquina virtual em anexo. O que vês na segunda linha, a seguir a «go to»?  
 **Resposta:** '/?h#cc'  
 ***Nota: Ao aplicar o exploit na máquina virtual e observar a página de resultados ou o comportamento do redirecionamento/exibição, a segunda linha após "go to" exibe especificamente a string "/?h#cc", confirmando a interação com o payload injetado.***
+
+### 🔵 **Task 6: Stored XSS (armazenado)**
+
+O foco desta tarefa é explorar o Stored XSS (XSS Armazenado ou Persistente), uma vulnerabilidade que ocorre quando a aplicação salva a entrada maliciosa do usuário em um banco de dados e a exibe posteriormente para outros usuários sem a devida sanitização ou codificação.
+
+Conceitos explorados:  
+**Mecanismo do Stored XSS:** O atacante injeta um script em um campo de entrada (como comentários de blog, reviews de produtos ou perfis de usuário). O script é salvo no banco de dados e executado automaticamente no navegador de qualquer vítima que visualize a página afetada, tornando-o muito mais perigoso e escalável que o Reflected XSS.  
+**Boas Práticas de Prevenção:**  
+- **Validação e Sanitização de Entrada:** Aplicar regras estritas sobre o que é aceito (ex: apenas caracteres alfanuméricos em nomes de usuário).  
+- **Codificação de Saída (Output Escaping):** Converter caracteres especiais HTML (`<`, `>`, `&`) em suas entidades seguras antes de renderizá-los.  
+- **Codificação Específica de Contexto:** Usar codificação adequada para o contexto onde os dados serão inseridos (ex: codificação JavaScript para blocos de script, URL-encoding para links).  
+- **Defesa em Profundidade:** Não confiar apenas na validação do lado do cliente; implementar validação e sanitização robustas no lado do servidor.  
+
+**Exemplos de Código Vulnerável e Corrigido:**  
+- **PHP:** O código vulnerável exibe o comentário diretamente com `echo`. A correção aplica `htmlspecialchars()` na saída.  
+- **JavaScript (Node.js):** O código vulnerável concatena o comentário diretamente no HTML. A correção utiliza a biblioteca `sanitize-html` e a função `sanitizeHtml()` para remover elementos perigosos como `<script>`.  
+- **Python (Flask):** O código vulnerável renderiza o conteúdo do banco de dados sem tratamento. A correção aplica a função `escape()` (do módulo `markupsafe` ou `html`) em cada comentário antes da renderização.  
+- **C# (ASP.NET):** O código vulnerável usa `Response.Write` direto do banco de dados. A correção aplica o método `HttpUtility.HtmlEncode()` para garantir que a saída seja segura.
+
+- **Pergunta:** Qual é o nome da função JavaScript que utilizámos para sanitizar os dados introduzidos pelo utilizador antes de os guardar?  
+**Resposta:** 'sanitizeHtml()'  
+***Nota: No exemplo de correção para Node.js, a função `sanitizeHtml()` da biblioteca `sanitize-html` é utilizada para remover elementos e atributos inseguros (como tags `<script>`) antes de exibir o comentário.***
+
+- **Pergunta:** Que método utilizámos no ASP.Net C# para sanitizar os dados introduzidos pelo utilizador?  
+**Resposta:** 'HttpUtility.HtmlEncode()'  
+***Nota: O texto demonstra explicitamente que a vulnerabilidade de Stored XSS no ASP.NET C# é corrigida aplicando o método `HttpUtility.HtmlEncode()` na variável do comentário antes de enviá-la para o `Response.Write`.***
+
+### 🔵 **Task 7: Aplicação Web Vulnerável 2**
+
+O foco desta tarefa é aplicar o conhecimento sobre Stored XSS em um cenário prático, explorando uma vulnerabilidade conhecida (CVE-2021-38757) em um sistema de gerenciamento hospitalar desatualizado.
+
+**Exploração Prática de Stored XSS:** A vulnerabilidade reside no formulário de "Contato" da aplicação, onde a mensagem enviada pelo usuário é salva diretamente no banco de dados sem nenhuma sanitização.  
+**Impacto no Administrador/Recepcionista:** Quando um usuário com privilégios (como o Recepcionista) faz login e visualiza as mensagens recebidas, o script malicioso injetado no campo de mensagem é executado no navegador dele.  
+**Roubo de Sessão:** Ao injetar `<script>alert(document.cookie)</script>`, o atacante pode visualizar os cookies de sessão da vítima, demonstrando como um ataque de Stored XSS pode levar ao sequestro de conta (Session Hijacking).
+
+- **Pergunta:** Qual tipo de vulnerabilidade é essa?   
+**Resposta:** 'Stored XSS'  
+***Nota: O texto da tarefa descreve explicitamente que a mensagem do usuário é salva não sanitizada no banco de dados e exibida posteriormente, o que é a definição clássica de Cross-Site Scripting Armazenado (Persistente).*** 
+
+- **Pergunta:** Aceda à página de contacto e envie a seguinte mensagem: `<script>alert(document.cookie)</script>`. Em seguida, inicie sessão como Recepcionista. Qual é o nome da chave do par chave-valor apresentado?  
+**Resposta:** 'PHPSESSID'  
+***Nota: Ao fazer login como recepcionista (admin/admin123) e visualizar a mensagem, o navegador executa o script e exibe um alerta com os cookies. O cookie de sessão padrão do PHP, que mantém o usuário autenticado, é identificado pela chave `PHPSESSID`.***
+
+### 🔵 **Task 8: DOM-Based XSS**
+
+O foco desta tarefa é explorar o DOM-Based XSS, uma variante de Cross-Site Scripting que ocorre inteiramente no lado do cliente (navegador), sem que o payload malicioso precise ser refletido ou armazenado pelo servidor.
+ 
+**O que é o DOM (Document Object Model):** Uma interface de programação que representa um documento web como uma árvore de nós, permitindo que o JavaScript acesse e manipule dinamicamente a estrutura, o estilo e o conteúdo da página.  
+**Mecanismo do DOM-Based XSS:** A vulnerabilidade surge quando o JavaScript do lado do cliente pega dados controlados pelo usuário (como parâmetros da URL via `window.location.search`) e os insere de forma insegura no DOM (ex: usando `document.write()`), permitindo a execução de scripts.  
+**Diferença Fundamental:** Ao contrário do Reflected e Stored XSS, o servidor não tem participação direta na entrega do payload explorável; a falha está inteiramente na lógica do script executado no navegador da vítima.  
+**Correção:** Evitar a inserção direta de entrada do usuário usando métodos perigosos como `document.write()`. Em vez disso, deve-se usar propriedades seguras como `textContent` e aplicar funções de codificação, como `encodeURIComponent()`, para neutralizar caracteres especiais antes da renderização.
+
+- **Pergunta:** O XSS baseado em DOM é refletido através do servidor. (Yea/Nay)  
+**Resposta:** 'Nay'  
+***Nota: O DOM-Based XSS ocorre inteiramente no navegador do cliente. O servidor apenas entrega a página estática; ele não reflete nem processa o payload malicioso de volta para o usuário.*** [[9]]
+
+- **Pergunta:** O XSS baseado em DOM ocorre apenas no lado do cliente. (Yea/Nay)  
+**Resposta:** 'Yea'  
+***Nota: Como o nome sugere, a vulnerabilidade e a exploração do DOM-Based XSS residem exclusivamente no código JavaScript executado no lado do cliente (navegador).*** [[19]]
+
+- **Pergunta:** Que método JavaScript foi utilizado para codificar a entrada do utilizador?  
+**Resposta:** 'encodeURIComponent()'  
+***Nota: No exemplo de código corrigido, a função `encodeURIComponent()` é utilizada para codificar a entrada do usuário, convertendo caracteres especiais em suas representações seguras antes de inseri-los no DOM via `textContent`.***
 
