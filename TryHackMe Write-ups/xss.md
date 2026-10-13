@@ -106,3 +106,19 @@ Conceitos explorados:
 **Resposta:** 'htmlspecialchars()'  
 ***Nota: O texto demonstra explicitamente o uso da função nativa do PHP `htmlspecialchars()` para converter caracteres especiais em suas entidades HTML seguras, prevenindo a execução de scripts injetados.***
 
+### 🔵 **Task 5: Vulnerable Web Application 1**
+
+Aplicando o conhecimento teórico em um cenário prático, explorando uma vulnerabilidade de Reflected XSS em uma versão vulnerável da aplicação `copyparty` (CVE-2023-38501) rodando em uma máquina virtual fornecida pela sala.
+  
+**Exploração Prática de Reflected XSS:** A vulnerabilidade é acionada através de parâmetros de URL maliciosamente construídos. O payload fornecido (`?k304=y%0D%0A%0D%0A%3Cimg+src%3Dcopyparty+onerror%3Dalert(1)%3E`) utiliza URL encoding para injetar uma tag `<img>` com um manipulador de erro `onerror`, que executa a função `alert(1)` quando a imagem falha ao carregar.  
+**Quebra de Linha e Injeção:** Os caracteres `%0D%0A` representam quebras de linha (CRLF), que podem ser usadas para "quebrar" a estrutura HTML esperada e inserir o payload malicioso em um contexto onde ele será executado pelo navegador.  
+**Identificação e Validação:** Ao acessar a URL vulnerável na máquina alvo, o atacante pode observar o comportamento do aplicativo e confirmar a execução do código JavaScript, validando a presença da falha de segurança.
+
+- **Pergunta:** Que tipo de vulnerabilidade é esta?  
+**Resposta:** 'Reflected XSS'  
+***Nota: O texto da tarefa e o contexto da sala identificam explicitamente a falha (CVE-2023-38501) como uma vulnerabilidade de Cross-Site Scripting Refletido, onde o payload é entregue via URL e executado imediatamente.*** 
+
+- **Pergunta:** Utiliza a vulnerabilidade acima indicada na máquina virtual em anexo. O que vês na segunda linha, a seguir a «go to»?  
+**Resposta:** '/?h#cc'  
+***Nota: Ao aplicar o exploit na máquina virtual e observar a página de resultados ou o comportamento do redirecionamento/exibição, a segunda linha após "go to" exibe especificamente a string "/?h#cc", confirmando a interação com o payload injetado.***
+
