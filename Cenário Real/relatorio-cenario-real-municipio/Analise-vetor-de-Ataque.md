@@ -1,8 +1,7 @@
 # RELATÓRIO DE ANÁLISE DE VETORES DE ATAQUE (THREAT MODELING)
 ## Perspectiva Ofensiva: Como um Atacante Exploraria a Infraestrutura do Município
 
-**Autor:** Herbert Molina  
-**Data:** 05 de Julho de 2026  
+**Autor:** Herbert Molina    
 **Classificação:** CONFIDENCIAL (Apenas para fins educacionais e de defesa)  
 **Alvo:** Prefeitura Municipal (Cenário 1 - Sistema Conam/vCenter/GLPI)  
 **Tipo de Documento:** Simulação de Cadeia de Ataque (Kill Chain) e Análise de Impacto no Setor Público
