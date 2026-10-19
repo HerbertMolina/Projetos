@@ -4,8 +4,6 @@
 
 **Autor:** Herbert Molina
 
-**Data:** 05 de Julho de 2026
-
 **Classificação:** CONFIDENCIAL (Apenas para fins educacionais e de defesa)
 
 **Alvo:** Comércio/Serviços Local (Cenário 2 - WordPress, Elementor, cPanel)
