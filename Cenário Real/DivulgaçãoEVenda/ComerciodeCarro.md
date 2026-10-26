@@ -9,12 +9,12 @@
 
 ---
 
-## 📄 Controle do Documento
+## Controle do Documento
 
 | Versão | Data | Autor | Descrição da Alteração | Aprovado por |
 |---|---|---|---|---|
-| 0.1 | 25/08/2026 | Herbert Molina | Reconhecimento inicial, Wappalyzer e identificação de stack | N/A |
-| 0.5 | 26/08/2026 | Herbert Molina | Mapeamento de subdomínios, histórico de IP e análise de código-fonte | N/A |
+| 0.1 | 25/08/2026 | Herbert Molina | Reconhecimento inicial, Wappalyzer e identificação de stack | Herbert Molina |
+| 0.5 | 26/08/2026 | Herbert Molina | Mapeamento de subdomínios, histórico de IP e análise de código-fonte | Herbert Molina |
 | 1.0 | 27/08/2026 | Herbert Molina | Versão final com correlação de inteligência corporativa e cadeias de ataque | Herbert Molina |
 
 ---
@@ -33,7 +33,7 @@ Para profissionais de segurança: Sempre obtenha autorização por escrito (Regr
 
 ---
 
-## 📊 SUMÁRIO EXECUTIVO
+## SUMÁRIO EXECUTIVO
 
 ### Contexto
 Foi realizada uma investigação de segurança passiva em um site institucional de uma concessionária/revenda de veículos multimarcas. O objetivo foi mapear a superfície de ataque, identificar a pilha tecnológica e verificar a postura de segurança da infraestrutura de hospedagem e da aplicação web.
@@ -70,16 +70,16 @@ As vulnerabilidades identificadas, se exploradas, poderiam resultar em:
 
 ---
 
-##  1. OBJETIVOS E ESCOPO
+## OBJETIVOS E ESCOPO
 
-### 1.1 Objetivos da Investigação
+### Objetivos da Investigação
 - Mapear a superfície de ataque exposta publicamente.
 - Identificar a pilha tecnológica (frontend, backend, CDN).
 - Correlacionar versões de software com bases de dados de vulnerabilidades (CVEs).
 - Identificar vazamento de infraestrutura real por trás de proxies reversos (Cloudflare).
 - Avaliar a postura de segurança de sessões e painéis de login.
 
-### 1.2 Escopo da Investigação
+### Escopo da Investigação
 **Incluído:**
 - Domínio principal e subdomínios associados.
 - Registros DNS (A, AAAA, MX, TXT, NS, CNAME).
@@ -91,15 +91,15 @@ As vulnerabilidades identificadas, se exploradas, poderiam resultar em:
 - Acesso não autorizado a sistemas ou tentativa de autenticação.
 - Engenharia social ou varredura ativa de portas.
 
-### 1.3 Restrições Éticas
+### Restrições Éticas
 - Investigação 100% passiva (sem envio de pacotes maliciosos).
 - Anonimização completa de dados sensíveis, nomes de proprietários e CNPJs.
 
 ---
 
-## 🛠️ 2. METODOLOGIA
+## METODOLOGIA
 
-### 2.1 Abordagem
+### Abordagem
 A investigação seguiu o framework PTES (Penetration Testing Execution Standard) adaptado para OSINT passivo:
 1. Reconhecimento Passivo: Coleta de informações sem interação direta.
 2. Análise de Superfície de Ataque: Mapeamento de subdomínios e histórico de IPs.
@@ -107,7 +107,7 @@ A investigação seguiu o framework PTES (Penetration Testing Execution Standard
 4. Análise de Risco: Avaliação de impacto e probabilidade.
 5. Documentação: Elaboração de relatório técnico.
 
-### 2.2 Ferramentas Utilizadas
+### Ferramentas Utilizadas
 | Ferramenta | Categoria | Uso Específico |
 |---|---|---|
 | Wappalyzer | Identificação de Tecnologias | Detecção de Laravel, jQuery, PHP, Cloudflare |
@@ -117,41 +117,41 @@ A investigação seguiu o framework PTES (Penetration Testing Execution Standard
 | Have I Been Pwned | Vazamento de Credenciais | Verificação de emails corporativos em breaches |
 | NVD (NIST) | Base de Vulnerabilidades | Correlação de versões do jQuery com CVEs |
 
-### 2.3 Processo de Anonimização
+### Processo de Anonimização
 | Dado Original | Substituição |
 |---|---|
-| Nome do domínio real | k2multimarcas.com.br |
+| Nome do domínio real | dominio.com.br |
 | Endereços IP reais | XX.XX.XX.XX |
 | Nome do proprietário | [REDACTED] |
 | CNPJs relacionados | [REDACTED] |
 
 ---
 
-## 🏗️ 3. MAPEAMENTO DE INFRAESTRUTURA
+## MAPEAMENTO DE INFRAESTRUTURA
 
-### 3.1 Informações de Registro e Inteligência Corporativa
+### Informações de Registro e Inteligência Corporativa
 - **Proprietário Registrante:** [REDACTED] (Pessoa Física).
-- **Contato Técnico:** contato@carrobauru.com.br (Email identificado em vazamento de dados em 2024).
+- **Contato Técnico:** contato@carxxxxx.com.br (Email identificado em vazamento de dados em 2024).
 - **Vínculo Corporativo:** Investigação passiva indicou forte correlação com um CNPJ de automecânica localizado na mesma região, com numeração sequencial, sugerindo um grupo de empresas de propriedade do mesmo indivíduo.
 
-### 3.2 Arquitetura de Rede e Vazamento de IP
+### Arquitetura de Rede e Vazamento de IP
 A infraestrutura utiliza uma arquitetura híbrida com proteção de borda, mas com falhas de configuração que expõem a origem:
 
 - **Proteção de Borda:** Cloudflare (CDN/WAF).
 - **Hospedagem Real (Origem):** Kinghost / Uni5 (AS28299).
 - **Histórico:** O domínio utilizou IPs diretos da Cyberweb/Uni5 (ex: 187.1.136.141) até meados de 2023, antes da migração para o Cloudflare.
 
-### 3.3 Subdomínios Identificados (Vazamento de Origem)
+### Subdomínios Identificados (Vazamento de Origem)
 Enquanto o domínio principal é protegido pelo Cloudflare, subdomínios de infraestrutura de email apontam diretamente para os IPs reais do provedor de hospedagem:
 
 | Subdomínio | Registro | Destino Real (IP) | Provedor | Risco |
 |---|---|---|---|---|
-| webmail.k2multimarcas.com.br | CNAME | 191.6.220.62 | Uni5/Kinghost | 🟠 Alto |
-| mail.k2multimarcas.com.br | CNAME | 191.6.220.100, 191.6.220.99 | Uni5/Kinghost | 🟠 Alto |
-| imap.k2multimarcas.com.br | CNAME | 191.6.220.7, 191.6.220.6 | Uni5/Kinghost | 🟠 Alto |
-| autodiscover.k2multimarcas.com.br| CNAME | 191.6.215.156 | Uni5/Kinghost | 🟡 Médio |
+| webmail.dominio.com.br | CNAME | 191.6.220.62 | Uni5/Kinghost | 🟠 Alto |
+| mail.dominio.com.br | CNAME | 191.6.220.100, 191.6.220.99 | Uni5/Kinghost | 🟠 Alto |
+| imap.dominio.com.br | CNAME | 191.6.220.7, 191.6.220.6 | Uni5/Kinghost | 🟠 Alto |
+| autodiscover.dominio.com.br| CNAME | 191.6.215.156 | Uni5/Kinghost | 🟡 Médio |
 
-### 3.4 Tecnologias Identificadas
+### Tecnologias Identificadas
 Via Análise de Cabeçalhos HTTP e Wappalyzer:
 
 | Componente | Tecnologia | Versão | Status de Segurança |
@@ -165,9 +165,9 @@ Via Análise de Cabeçalhos HTTP e Wappalyzer:
 
 ---
 
-## ⚠️ 4. VULNERABILIDADES E ACHADOS IDENTIFICADOS
+## VULNERABILIDADES E ACHADOS IDENTIFICADOS
 
-### 4.1 🔴 [CRÍTICO] Biblioteca Frontend Desatualizada (jQuery 3.5.1)
+### 🔴 [CRÍTICO] Biblioteca Frontend Desatualizada (jQuery 3.5.1)
 **Classificação:** 🔴 CRÍTICO | **CVSS Score:** 7.5 (Alto)  
 **Vetor de Ataque:** Network / Low Complexity / No Authentication  
 **CWE:** CWE-79 (Cross-site Scripting)
@@ -180,10 +180,10 @@ A aplicação utiliza a versão 3.5.1 do jQuery, lançada em 2020. Esta versão 
 - Pode levar ao roubo de cookies de sessão (se não protegidos), redirecionamento para sites de phishing ou defacement do site.
 
 **Conformidade Afetada:**
-- 🇧🇷 LGPD: Violação do Art. 46 (Falha na adoção de medidas técnicas aptas a proteger dados pessoais).
+-  LGPD: Violação do Art. 46 (Falha na adoção de medidas técnicas aptas a proteger dados pessoais).
 -  OWASP Top 10 (2021): A03:2021 – Injection / A05:2021 – Security Misconfiguration.
 
-**🔗 Cadeia de Ataque Hipotética (Kill Chain):**
+** Cadeia de Ataque Hipotética (Kill Chain):**
 1. Reconhecimento: Atacante identifica a versão do jQuery via Wappalyzer ou análise de cabeçalhos de scripts.
 2. Armação: Cria um payload XSS específico para as CVEs do jQuery 3.5.1.
 3. Entrega: Injeta o payload em um campo de entrada do site (ex: formulário de contato ou busca) que reflete a entrada sem sanitização adequada.
@@ -194,7 +194,7 @@ A aplicação utiliza a versão 3.5.1 do jQuery, lançada em 2020. Esta versão 
 
 ---
 
-### 4.2  [ALTO] Painel Administrativo (/admin) Exposto Publicamente
+### [ALTO] Painel Administrativo (/admin) Exposto Publicamente
 **Classificação:** 🟠 ALTO | **CVSS Score:** 7.0  
 **Vetor de Ataque:** Network / Low Complexity / Requires Authentication  
 **CWE:** CWE-306 (Missing Authentication for Critical Function)
@@ -207,12 +207,12 @@ O painel de administração do sistema (desenvolvido em Laravel, utilizando o te
 - O uso de templates administrativos gratuitos e populares aumenta o risco, pois suas estruturas são bem conhecidas por atacantes.
 
 **Conformidade Afetada:**
-- 🇷 LGPD: Violação do princípio da prevenção (Art. 6º, VII).
-- 🌐 OWASP Top 10 (2021): A07:2021 – Identification and Authentication Failures.
+-  LGPD: Violação do princípio da prevenção (Art. 6º, VII).
+-  OWASP Top 10 (2021): A07:2021 – Identification and Authentication Failures.
 
-**🔗 Cadeia de Ataque Hipotética (Kill Chain):**
-1. Reconhecimento: Atacante acessa k2multimarcas.com.br/admin e confirma a página de login.
-2. Armação: Utiliza o email corporativo vazado (contato@carrobauru.com.br) como alvo de um ataque de Credential Stuffing, testando senhas de vazamentos anteriores.
+** Cadeia de Ataque Hipotética (Kill Chain):**
+1. Reconhecimento: Atacante acessa dominio.com.br/admin e confirma a página de login.
+2. Armação: Utiliza o email corporativo vazado (contato@carroxxxx.com.br) como alvo de um ataque de Credential Stuffing, testando senhas de vazamentos anteriores.
 3. Exploração: Devido à possível reutilização de senhas pelo proprietário em diferentes negócios (concessionária e automecânica), o login é bem-sucedido.
 4. Impacto Final: O atacante assume o controle do CMS, podendo alterar informações de veículos, preços, ou inserir scripts maliciosos para capturar dados de clientes que preenchem a ficha de financiamento.
 
@@ -222,7 +222,7 @@ O painel de administração do sistema (desenvolvido em Laravel, utilizando o te
 
 ---
 
-### 4.3 🟠 [ALTO] Vazamento de IP Real de Origem via Subdomínios
+### 🟠 [ALTO] Vazamento de IP Real de Origem via Subdomínios
 **Classificação:** 🟠 ALTO | **CVSS Score:** 6.5  
 **Vetor de Ataque:** Network / Low Complexity  
 **CWE:** CWE-200 (Exposure of Sensitive Information)
@@ -235,21 +235,21 @@ Embora o domínio principal utilize o Cloudflare para ocultar o IP do servidor d
 - Facilita ataques de Negação de Serviço (DoS) diretos ou exploração de vulnerabilidades no servidor Apache que estariam bloqueadas pelo WAF.
 
 **Conformidade Afetada:**
-- 🌐 OWASP Top 10 (2021): A05:2021 – Security Misconfiguration.
-- ☁️ Cloudflare Best Practices: Falha na regra de "Authenticated Origin Pulls" ou roteamento inadequado de subdomínios.
+-  OWASP Top 10 (2021): A05:2021 – Security Misconfiguration.
+-  Cloudflare Best Practices: Falha na regra de "Authenticated Origin Pulls" ou roteamento inadequado de subdomínios.
 
 **Recomendações:**  
 - Curto Prazo: Migrar os registros DNS dos subdomínios de email para passar pelo proxy do Cloudflare (nuvem laranja ativada), ou garantir que o firewall do servidor de origem (Kinghost) bloqueie qualquer tráfego que não venha dos IPs do Cloudflare.
 
 ---
 
-### 4.4 🟡 [MÉDIO] Risco de Credential Stuffing (Email Corporativo Vazado)
+### 🟡 [MÉDIO] Risco de Credential Stuffing (Email Corporativo Vazado)
 **Classificação:** 🟡 MÉDIO | **CVSS Score:** 5.3  
 **Vetor de Ataque:** Network / Low Complexity  
 **CWE:** CWE-522 (Insufficiently Protected Credentials)
 
 **Descrição:**  
-O endereço de email de contato identificado (contato@carrobauru.com.br) foi encontrado em bases de dados de vazamentos públicos (Have I Been Pwned, 2024). A correlação de inteligência indica que este email está vinculado ao mesmo proprietário do domínio principal.
+O endereço de email de contato identificado (contato@carxxxxx.com.br) foi encontrado em bases de dados de vazamentos públicos (Have I Been Pwned, 2024). A correlação de inteligência indica que este email está vinculado ao mesmo proprietário do domínio principal.
 
 **Impacto:**  
 - Aumenta drasticamente a probabilidade de sucesso de ataques de Credential Stuffing contra o painel /admin ou contas de email, devido à alta probabilidade de reutilização de senhas entre os diferentes negócios do proprietário.
@@ -260,7 +260,7 @@ O endereço de email de contato identificado (contato@carrobauru.com.br) foi enc
 
 ---
 
-### 4.5 🟢 [BAIXO/INFO] Configuração de Cookie de Sessão (Mitigado por HSTS)
+### 🟢 [BAIXO/INFO] Configuração de Cookie de Sessão (Mitigado por HSTS)
 **Classificação:** 🟢 BAIXO | **CVSS Score:** 3.7  
 **Vetor de Ataque:** Network / High Complexity  
 **CWE:** CWE-614 (Sensitive Cookie in HTTPS Session Without 'Secure' Attribute)
@@ -276,9 +276,9 @@ A ausência da flag Secure é uma falha de configuração. Porém, a presença d
 
 ---
 
-##  5. ANÁLISE DE RISCO
+## ANÁLISE DE RISCO
 
-### 5.1 Matriz de Risco
+### Matriz de Risco
 | Vulnerabilidade / Achado | Probabilidade | Impacto | Nível de Risco |
 |---|---|---|---|
 | jQuery 3.5.1 Vulnerável | Alta | Alto |  Crítico |
@@ -287,32 +287,32 @@ A ausência da flag Secure é uma falha de configuração. Porém, a presença d
 | Email Corporativo Vazado | Alta | Médio | 🟡 Médio |
 | Cookie sem flag Secure (HSTS Ativo) | Baixa | Baixo | 🟢 Baixo |
 
-### 5.2 Análise de Causa Raiz
+### Análise de Causa Raiz
 - Técnicos: Uso de dependências frontend desatualizadas; configuração de DNS que expõe a infraestrutura de origem apesar do uso de CDN.
 - Processuais: Falta de revisão de segurança antes da publicação do painel administrativo; ausência de política de senhas e MFA para o proprietário que gerencia múltiplos negócios.
 - Organizacionais: Pequenas empresas frequentemente priorizam a funcionalidade e o custo (hospedagem compartilhada) em detrimento de configurações de segurança robustas (hardening).
 
 ---
 
-## ️ 6. RECOMENDAÇÕES
+## ️RECOMENDAÇÕES
 
-### 6.1 Prioridade Imediata (0-7 dias)
+### Prioridade Imediata (0-7 dias)
 1. Atualização de Dependências: Atualizar o jQuery para a versão 3.7.1 ou superior para mitigar as vulnerabilidades de XSS.
 2. Proteção do Painel Admin: Implementar MFA (Autenticação Multifator) e/ou restrição de acesso por IP para a rota /admin.
 3. Higiene de Credenciais: Alterar imediatamente as senhas associadas ao email corporativo identificado e ativar MFA na conta de email.
 
-### 6.2 Prioridade Curto Prazo (7-30 dias)
+### Prioridade Curto Prazo (7-30 dias)
 1. Ocultação da Origem: Revisar a configuração de DNS para garantir que subdomínios críticos não exponham o IP real do servidor Kinghost/Uni5, ou configurar o firewall do servidor para aceitar tráfego apenas da Cloudflare.
 2. Hardening de Sessão: Configurar o ambiente Laravel para emitir cookies de sessão com as flags Secure e HttpOnly.
 3. Implementar Rate Limiting: Configurar proteção contra força bruta no formulário de login do Laravel.
 
-### 6.3 Prioridade Médio/Longo Prazo (30+ dias)
+### Prioridade Médio/Longo Prazo (30+ dias)
 1. Auditoria de Código: Realizar uma revisão nas implementações do template Laravel gratuito para garantir que não há backdoors ou configurações inseguras padrão.
 2. Conscientização: Treinar o proprietário/equipe sobre os riscos de reutilização de senhas entre diferentes empresas do mesmo grupo.
 
 ---
 
-## 📚 7. LIÇÕES APRENDIDAS
+## LIÇÕES APRENDIDAS
 
 1. CDN não é bala de prata: O uso do Cloudflare protege o domínio principal, mas a configuração incorreta de subdomínios (como os de email) pode vazar o IP real do servidor, anulando a proteção de borda.
 2. Dependências Frontend são críticas: Mesmo em aplicações backend robustas como Laravel, bibliotecas frontend desatualizadas (jQuery) abrem vetores de ataque significativos (XSS).
@@ -321,7 +321,7 @@ A ausência da flag Secure é uma falha de configuração. Porém, a presença d
 
 ---
 
-##  8. CONCLUSÃO
+## CONCLUSÃO
 
 Esta investigação demonstrou que, embora a aplicação utilize tecnologias backend modernas (Laravel, PHP 8.2) e proteção de borda (Cloudflare), falhas de configuração e manutenção deixam a superfície de ataque exposta. 
 
@@ -331,7 +331,7 @@ Recomenda-se a aplicação imediata das correções de prioridade crítica para 
 
 ---
 
-## 📎 9. APÊNDICES
+## APÊNDICES
 
 ### Apêndice A: Glossário de Termos Técnicos
 - XSS (Cross-Site Scripting): Injeção de scripts maliciosos em páginas web confiáveis.
