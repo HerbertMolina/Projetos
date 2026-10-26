@@ -12,7 +12,7 @@
 
 ---
 
-## ⚖️ AVISO ÉTICO E LEGAL
+## AVISO ÉTICO E LEGAL
 
 Este documento foi elaborado **exclusivamente para fins educacionais** e para demonstrar a mentalidade ofensiva (Red Teaming) com o objetivo de fortalecer a defesa de infraestruturas corporativas. **Nenhuma das técnicas, comandos ou payloads descritos aqui deve ser executada contra o alvo ou qualquer outro sistema sem autorização explícita, formal e por escrito do gestor responsável.**
 
@@ -20,7 +20,7 @@ A execução não autorizada configura crime previsto no Art. 154-A do Código P
 
 ---
 
-## 🔍 1. O QUE ESTÁ FALTANDO? (Lacunas de Inteligência)
+## O QUE ESTÁ FALTANDO? (Lacunas de Inteligência)
 
 Com base nos dados coletados até agora sobre a infraestrutura do grupo, um atacante experiente (especialmente focado em roubo de dados ou ransomware) buscaria ativamente as seguintes peças adicionais para refinar o ataque:
 
@@ -34,11 +34,11 @@ Com base nos dados coletados até agora sobre a infraestrutura do grupo, um atac
 
 ---
 
-## ⚔️ 2. COMO UM ATACANTE EXPLORARIA CADA VULNERABILIDADE
+## COMO UM ATACANTE EXPLORARIA CADA VULNERABILIDADE
 
 Abaixo está a lógica passo a passo de como os dados já coletados seriam *weaponizados* (transformados em vetores de ataque) contra este grupo empresarial.
 
-### 2.1 Bypass de Middleware no Next.js (CVE-2025-29927) - CRÍTICO
+### Bypass de Middleware no Next.js (CVE-2025-29927) - CRÍTICO
 
 **O Dado:** Versão 14.0.1 do Next.js vulnerável a bypass de autorização via cabeçalho `x-middleware-subrequest`.
 
@@ -56,7 +56,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     - **Vazamento em Massa:** Exposição de dados de clientes, e-mails e possivelmente hashes de senha.
     - **Elevação de Privilégio:** O atacante pode acessar funções administrativas sem ter uma conta válida.
 
-### 2.2 Ambientes QA Expostos (.qa) - ALTO/CRÍTICO
+### Ambientes QA Expostos (.qa) - ALTO/CRÍTICO
 
 **O Dado:** Múltiplos subdomínios (`elanco.qa`, `cronoupper.qa`, etc.) acessíveis publicamente, alguns rodando IIS.
 
@@ -72,7 +72,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     - **Pivô para Produção:** A senha descoberta no QA é a mesma do banco de dados principal. O atacante "pula" do ambiente de teste para o ambiente real.
     - **Violação de NDA:** Vazamento de nomes de clientes/projetos (ex: "syngenta", "elanco") que deveriam ser confidenciais, gerando processos por quebra de contrato.
 
-### 2.3 Exposição Direta da Instância EC2 (WAF Bypass) - ALTO
+### Exposição Direta da Instância EC2 (WAF Bypass) - ALTO
 
 **O Dado:** O IP real do servidor (ex: via subdomínios de e-mail ou histórico DNS) é conhecido e não está protegido pelo Cloudflare.
 
@@ -90,7 +90,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
     - **Negação de Serviço (DoS):** O atacante pode derrubar o servidor de origem com tráfego malicioso, tornando o site inacessível, mesmo com o Cloudflare ativo.
     - **Exploração Direta:** Acesso a vulnerabilidades do sistema operacional ou do servidor web sem filtros.
 
-### 2.4 Configuração do Supabase (Risco Latente) - MÉDIO/ALTO
+### Configuração do Supabase (Risco Latente) - MÉDIO/ALTO
 
 **O Dado:** Endpoint do Supabase identificado. Embora exija chave, a segurança real depende das políticas de RLS (Row Level Security).
 
@@ -111,7 +111,7 @@ Abaixo está a lógica passo a passo de como os dados já coletados seriam *weap
 
 ---
 
-## 🔗 3. CADEIA DE ATAQUE HIPOTÉTICA (KILL CHAIN)
+## CADEIA DE ATAQUE HIPOTÉTICA (KILL CHAIN)
 
 Como um atacante sofisticado (ex: grupo focado em extorsão de dados) combinaria essas falhas para um comprometimento total do grupo:
 
@@ -171,9 +171,9 @@ OPÇÃO 3 - FRAUDE FINANCEIRA:
 
 ---
 
-## 📉 4. IMPACTO REAL NO GRUPO EMPRESARIAL
+## IMPACTO REAL NO GRUPO EMPRESARIAL
 
-### 4.1 Impacto Operacional e Reputacional
+### Impacto Operacional e Reputacional
 
 | Cenário | Consequência para o Negócio |
 | --- | --- |
@@ -181,7 +181,7 @@ OPÇÃO 3 - FRAUDE FINANCEIRA:
 | **Violação de NDA (Ambientes QA)** | Clientes B2B (cujos nomes aparecem nos subdomínios .qa) rompem contratos e exigem indenizações por exposição de projetos confidenciais. |
 | **Site Fora do Ar (DoS/Deface)** | Paralisação das vendas online e do canal de comunicação principal. Recuperação de reputação leva meses. |
 
-### 4.2 Impacto Financeiro e Legal
+### Impacto Financeiro e Legal
 
 | Tipo de Impacto | Estimativa / Consequência |
 | --- | --- |
@@ -192,7 +192,7 @@ OPÇÃO 3 - FRAUDE FINANCEIRA:
 
 ---
 
-## 🛡️ 5. COMO SE PROTEGER (Resposta Defensiva)
+## COMO SE PROTEGER (Resposta Defensiva)
 
 ### Prioridade Imediata (0-24 horas) - "Estancar o Sangramento"
 
@@ -220,7 +220,7 @@ OPÇÃO 3 - FRAUDE FINANCEIRA:
 
 ---
 
-## 📊 6. MATRIZ DE PROBABILIDADE VS IMPACTO
+## MATRIZ DE PROBABILIDADE VS IMPACTO
 
 | Vetor de Ataque | Probabilidade | Impacto | Prioridade |
 | --- | --- | --- | --- |
@@ -232,7 +232,7 @@ OPÇÃO 3 - FRAUDE FINANCEIRA:
 
 ---
 
-## 🧠 7. PERSPECTIVA DO ATACANTE
+## PERSPECTIVA DO ATACANTE
 
 ### O Que um Atacante Real Faria Contra Esta Empresa
 
@@ -252,7 +252,7 @@ A arquitetura já tem boas bases (Cloudflare, Supabase com autenticação). A ma
 
 ---
 
-## 📚 8. RECURSOS PARA DEFENSORES
+## RECURSOS PARA DEFENSORES
 
 ### Para a Equipe de Desenvolvimento:
 
