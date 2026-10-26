@@ -146,10 +146,10 @@ Enquanto o domínio principal é protegido pelo Cloudflare, subdomínios de infr
 
 | Subdomínio | Registro | Destino Real (IP) | Provedor | Risco |
 |---|---|---|---|---|
-| webmail.dominio.com.br | CNAME | 191.6.220.62 | Uni5/Kinghost | 🟠 Alto |
-| mail.dominio.com.br | CNAME | 191.6.220.100, 191.6.220.99 | Uni5/Kinghost | 🟠 Alto |
-| imap.dominio.com.br | CNAME | 191.6.220.7, 191.6.220.6 | Uni5/Kinghost | 🟠 Alto |
-| autodiscover.dominio.com.br| CNAME | 191.6.215.156 | Uni5/Kinghost | 🟡 Médio |
+| webmail.dominio.com.br | CNAME | 1.x.x.62 | Uni5/Kinghost | 🟠 Alto |
+| mail.dominio.com.br | CNAME | 191.x.x.100, 191.x.x.99 | Uni5/Kinghost | 🟠 Alto |
+| imap.dominio.com.br | CNAME | 191.x.x.7, 191.x.x.6 | Uni5/Kinghost | 🟠 Alto |
+| autodiscover.dominio.com.br| CNAME | 191.x.x.156 | Uni5/Kinghost | 🟡 Médio |
 
 ### Tecnologias Identificadas
 Via Análise de Cabeçalhos HTTP e Wappalyzer:
@@ -228,7 +228,7 @@ O painel de administração do sistema (desenvolvido em Laravel, utilizando o te
 **CWE:** CWE-200 (Exposure of Sensitive Information)
 
 **Descrição:**  
-Embora o domínio principal utilize o Cloudflare para ocultar o IP do servidor de origem, os subdomínios de infraestrutura de email (webmail, mail, imap) possuem registros CNAME que resolvem diretamente para os IPs do provedor Kinghost/Uni5 (191.6.220.x).
+Embora o domínio principal utilize o Cloudflare para ocultar o IP do servidor de origem, os subdomínios de infraestrutura de email (webmail, mail, imap) possuem registros CNAME que resolvem diretamente para os IPs do provedor Kinghost/Uni5 (191.x.x.x).
 
 **Impacto:**  
 - Um atacante pode ignorar completamente a proteção do Cloudflare (WAF, DDoS protection) e atacar o servidor de origem diretamente pelo IP descoberto.
