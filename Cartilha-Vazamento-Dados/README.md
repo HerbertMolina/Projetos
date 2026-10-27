@@ -18,33 +18,33 @@ A ideia central é mostrar que uma pessoa pode ser vítima de um vazamento sem t
 
 Traduzir conceitos de cibersegurança para situações do cotidiano, ajudando o público a:
 
-•entender o que é um vazamento de dados;
+• entender o que é um vazamento de dados;
 
-•diferenciar vazamento de invasão de conta;
+• diferenciar vazamento de invasão de conta;
 
-•reconhecer possíveis golpes e tentativas de fraude;
+• reconhecer possíveis golpes e tentativas de fraude;
 
-•identificar sinais reais de que uma conta pode ter sido invadida;
+• identificar sinais reais de que uma conta pode ter sido invadida;
 
-•saber quais medidas tomar depois de um incidente;
+• saber quais medidas tomar depois de um incidente;
 
-•adotar hábitos simples de proteção digital.
+• adotar hábitos simples de proteção digital.
 
 
 
 **Público-alvo:**
 
-•Usuários comuns da internet;
+• Usuários comuns da internet;
 
-•pessoas com pouca familiaridade com tecnologia;
+• pessoas com pouca familiaridade com tecnologia;
 
-•famílias e grupos de amigos;
+• famílias e grupos de amigos;
 
-•equipes que precisam de uma introdução à segurança digital;
+• equipes que precisam de uma introdução à segurança digital;
 
-•pessoas que receberam alertas sobre dados expostos;
+• pessoas que receberam alertas sobre dados expostos;
 
-•projetos educativos e conteúdos para redes sociais.
+• projetos educativos e conteúdos para redes sociais.
 
 
 
