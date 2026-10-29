@@ -1,4 +1,6 @@
-# 🛡 Projetos Cibersegurança
+<img width="1230" height="1278" alt="Guardião Cibernético Herbert" src="https://github.com/user-attachments/assets/8ae9cdcd-8229-438b-9e88-321ce28a3088" />  
+
+# Projetos Cibersegurança
 
 Bem-vindo ao meu portfólio de projetos em Segurança da Informação.
 
@@ -8,7 +10,7 @@ Cada projeto representa uma oportunidade de aprofundar conhecimentos, explorar t
 
 ---
 
-# 🎯 Objetivo
+# Objetivo
 
 Construir um portfólio técnico que demonstre minhas habilidades em Segurança da Informação.
 
@@ -16,7 +18,7 @@ Além da utilização de ferramentas, busco compreender os processos, metodologi
 
 ---
 
-# 🔬 Áreas de atuação
+# Áreas de atuação
 
 Os projetos podem abranger diferentes domínios da Segurança da Informação, incluindo:
 
@@ -34,12 +36,14 @@ Os projetos podem abranger diferentes domínios da Segurança da Informação, i
 * Active Directory Security
 * Bug Bounty
 * Network Security
+* Cybersecurity Researcher
 
 ---
 
-# 🧪 Tipos de projetos
+# Tipos de projetos
 
 * Laboratórios do TryHackMe
+* Investigações
 * Ambientes locais de treinamento (Home Lab)
 * Avaliações de segurança em aplicações web
 * Mapeamento de superfície de ataque
@@ -51,7 +55,7 @@ Os projetos podem abranger diferentes domínios da Segurança da Informação, i
 
 ---
 
-# 🖥 Ambientes utilizados
+# Ambientes utilizados
 
 Os projetos podem ser realizados em diferentes tipos de ambiente, incluindo:
 
@@ -62,12 +66,13 @@ Os projetos podem ser realizados em diferentes tipos de ambiente, incluindo:
 * Ambientes de Capture The Flag (CTF)
 * Plataformas de treinamento em Cibersegurança
 * Cenários autorizados para pesquisa e aprendizado
+* Ambientes Reais com auditorias
 
 ---
 
-# 🛠 Ferramentas
+# 🛠 Ferramentas e Serviços
 
-Algumas das ferramentas frequentemente utilizadas:
+Algumas das ferramentas e serviços frequentemente utilizadas:
 
 * Burp Suite
 * Nmap
@@ -75,6 +80,11 @@ Algumas das ferramentas frequentemente utilizadas:
 * Gobuster
 * Amass
 * Subfinder
+* ViewDNS
+* OSINT-Framework
+* MITRE-ATTACK
+* Pentest-Tool
+* Nessus
 * httpx
 * Nuclei
 * Shodan
@@ -90,13 +100,13 @@ Algumas das ferramentas frequentemente utilizadas:
 
 ---
 
-# 📚 Metodologias
+# Metodologias
 
 Sempre que aplicável, os projetos seguem referências consolidadas na área de Segurança da Informação.
 
 ---
 
-# 📂 Estrutura dos projetos
+# Estrutura dos projetos
 
 Cada projeto pode conter:
 
@@ -113,7 +123,7 @@ Cada projeto pode conter:
 
 ---
 
-# 🚀 Aprendizado contínuo
+# Aprendizado contínuo
 
 A Cibersegurança é uma área em constante evolução. Por isso, este repositório é atualizado continuamente
 
@@ -123,4 +133,7 @@ A Cibersegurança é uma área em constante evolução. Por isso, este repositó
 
 Todos os projetos publicados foram desenvolvidos exclusivamente em ambientes controlados, laboratórios, plataformas de treinamento ou cenários autorizados, com finalidade educacional, pesquisa e desenvolvimento profissional.
 
-Nenhuma atividade foi realizada contra sistemas sem autorização.
+
+
+<img width="308" height="321" alt="só-H" src="https://github.com/user-attachments/assets/5dd41afa-c7e0-4a36-b8ca-da0eabd52da5" />
+
