@@ -78,7 +78,7 @@ A investigação seguiu o framework de Reconhecimento Passivo, utilizando:
 
 ## MAPEAMENTO DE INFRAESTRUTURA
 
-### 4.1 Pilha Tecnológica Identificada
+### Pilha Tecnológica Identificada
 
 | Componente | Tecnologia | Versão | Status |
 | --- | --- | --- | --- |
@@ -304,3 +304,13 @@ As vulnerabilidades identificadas não são falhas complexas de "zero-day", mas 
 A investigação passiva demonstrou que, embora o site utilize tecnologias modernas (PHP 8.3, Elementor), a infraestrutura subjacente apresenta falhas críticas de configuração. A exposição direta do banco de dados MariaDB à internet, combinada com a facilidade de enumeração de usuários, cria um vetor de ataque direto e de alta probabilidade de sucesso.
 
 A boa notícia é que todas as vulnerabilidades identificadas podem ser remediadas com configurações de firewall e plugins de segurança, sem a necessidade de reescrever o código do site. Recomenda-se a aplicação imediata das correções de prioridade crítica.
+
+---
+---
+
+**Fim do Relatório**
+
+**Contato do Autor:** Herbert Molina  
+**Email:** herbertluizmolinaperfil@gmail.com  
+**LinkedIn:** linkedin.com/in/herbert-molina  
+
