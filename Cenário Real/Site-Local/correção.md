@@ -134,19 +134,6 @@ Cada item de correção segue uma estrutura padronizada:
 
 ---
 
-## PRÓXIMOS PASSOS E PROPOSTA DE VALOR
-
-Para garantir que essas correções sejam implementadas de forma segura, documentada e sem interromper a prestação de serviços públicos, apresentamos dois caminhos:
-
-**Opção A: Execução Interna Supervisionada**
-A equipe de TI interna utiliza este relatório como um roteiro de tarefas. Nossa consultoria fica disponível para validar as configurações aplicadas e realizar uma varredura de validação (re-teste) após 30 dias para emitir o "Certificado de Conformidade".
-
-**Opção B: Consultoria de Correção e Blindagem (Recomendada)**
-Nossa equipe assume a execução técnica das configurações de firewall, restrição de acesso, aplicação de patches em ambiente controlado e hardening (blindagem) dos servidores. 
-Ao final, entregamos:
-1. Relatório de Conformidade Técnica atestando a resolução das falhas.
-2. Documentação das novas regras de firewall e configurações aplicadas.
-3. Sessão de treinamento de 2 horas para a equipe interna sobre manutenção preventiva.
 
 Este relatório serve como base formal para a abertura de processo de contratação ou empenho de recursos.
 
