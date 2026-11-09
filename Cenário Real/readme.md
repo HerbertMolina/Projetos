@@ -1,1 +1,3 @@
-### test
+### 
+trabalhos manuais, verificação de serviços separadamente....
+para uma saída mais robusta antes de ser editada para ser introduzida no relatório real.
