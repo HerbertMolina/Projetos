@@ -1,6 +1,7 @@
 # RELATÓRIO DE CORREÇÃO E MITIGAÇÃO PRÁTICA
-**Projeto:** Mapeamento e Blindagem de Superfície de Ataque - Gestão Pública Municipal  
-**Autor:** Herbert Molina    
+**Projeto:** Mapeamento e Blindagem de Superfície de Ataque - Ambiente Web (WordPress)  
+**Autor:** Herbert Molina  
+**Data:** 04 de Novembro de 2026  
 **Classificação:** Confidencial (Uso Interno e Tomada de Decisão)  
 
 ---
@@ -11,131 +12,140 @@ Este relatório foi desenvolvido para traduzir vulnerabilidades técnicas comple
 
 Cada item de correção segue uma estrutura padronizada:
 - **O Problema:** Explicação da falha em linguagem clara, sem jargões excessivos.
-- **Cenário de Ataque Simplificado:** Narrativa realista de como um invasor exploraria essa falha, baseada em modelagem de ameaças (Threat Modeling).
+- **Cenário de Ataque Simplificado:** Narrativa realista de como um invasor exploraria essa falha, baseada em modelagem de ameaças.
 - **A Solução Recomendada:** A estratégia de defesa a ser adotada.
 - **Passo a Passo Prático:** Instruções objetivas para a aplicação da correção.
 - **Perfil de Execução:** Nível de conhecimento necessário para realizar a tarefa.
 
 ---
 
-## VULNERABILIDADES CRÍTICAS  
-*Estes itens representam risco iminente de paralisação total dos serviços públicos, sequestro de dados (ransomware) ou multas severas da LGPD.*
+## VULNERABILIDADES CRÍTICAS (Ação Imediata: 0 a 7 dias)
+*Estes itens representam risco iminente de comprometimento total do site, vazamento de dados de clientes (LGPD) e destruição da reputação local do negócio.*
 
-### VULNERABILIDADE: Painel de Controle de Virtualização (vCenter) Exposto na Internet
-**O Problema:** O sistema VMware vCenter, que é o "cérebro" que gerencia todos os servidores virtuais do município, está acessível publicamente na internet através de um subdomínio específico.
+### VULNERABILIDADE: Banco de Dados MariaDB Exposto na Internet (Porta 3306)
+**O Problema:** O serviço de banco de dados que armazena todas as informações do site (usuários, senhas, dados de clientes, configurações) está configurado para aceitar conexões vindas de qualquer lugar da internet, não apenas do próprio servidor.
 
-**Cenário de Ataque Simplificado:** Um grupo de ransomware focado em setor público varre a internet e encontra a tela de login do vCenter. Eles testam credenciais padrão de fábrica (como "administrator" e "vmware") ou usam senhas vazadas de outros órgãos. Ao conseguir acesso, eles não precisam hackear cada sistema individualmente. Eles clonam a máquina virtual do banco de dados para roubar dados offline e, em seguida, criptografam todos os servidores de uma vez, paralisando a prefeitura e exigindo resgate.
+**Cenário de Ataque Simplificado:** Um invasor utiliza ferramentas automatizadas que varrem a internet procurando pela porta 3306 aberta. Ao encontrar o servidor, ele inicia um ataque de força bruta contra o usuário "root" ou "admin" do banco de dados. Se a senha for fraca ou padrão, ele obtém acesso total. A partir daí, ele pode baixar uma cópia completa do banco de dados (violando a LGPD) ou criar um novo usuário administrador no WordPress, assumindo o controle do site sem precisar da senha original.
 
-**A Solução Recomendada:** Remover completamente o acesso público a este painel e restringi-lo exclusivamente à rede interna administrativa ou via conexão segura (VPN).
+**A Solução Recomendada:** Bloquear imediatamente o acesso externo à porta do banco de dados, restringindo as conexões apenas ao próprio servidor (localhost).
 
 **Passo a Passo Prático:**
-- Acessar o firewall de borda da instituição.
-- Localizar a regra de NAT ou acesso que libera a porta 443 (HTTPS) para o IP do servidor vCenter a partir de "Qualquer Origem" (Any).
-- Alterar essa regra para permitir tráfego apenas a partir dos endereços IP internos da rede da prefeitura.
-- Configurar um serviço de VPN (como OpenVPN ou a VPN nativa do firewall) para que administradores remotos se conectem primeiro à VPN e, só então, acessem o vCenter.
+- Acessar o painel de controle do servidor (cPanel, Plesk ou firewall dedicado).
+- Localizar a configuração de "Remote MySQL" ou regras de firewall de rede.
+- Remover qualquer entrada que permita acesso a partir de "%" (qualquer host) ou endereços IP externos.
+- Garantir que a única conexão permitida seja a partir de "127.0.0.1" ou "localhost".
 
-**Perfil de Execução:** Administrador de Redes ou empresa terceirizada de TI (Nível: Intermediário).
+**Perfil de Execução:** Administrador de Sistemas ou Suporte da Hospedagem (Nível: Intermediário).
 
 ---
 
-### VULNERABILIDADE: Execução Remota de Código (RCE) no Sistema de Gestão (Conam)
-**O Problema:** O sistema principal de gestão (utilizado para NFS-e e protocolo) está em uma versão desatualizada que possui uma falha de segurança pública e documentada, permitindo que comandos sejam enviados ao servidor sem necessidade de senha.
+### VULNERABILIDADE: Enumeração de Usuários via API REST do WordPress
+**O Problema:** O WordPress possui uma funcionalidade padrão (API REST) que, quando acessada por um endereço específico, revela publicamente uma lista com os nomes de usuário (slugs), IDs e avatares de todos os administradores e editores do site.
 
-**Cenário de Ataque Simplificado:** O invasor identifica a versão do sistema e utiliza um script automático disponível publicamente na internet. Ele envia um arquivo malicioso para uma função de upload do sistema. O servidor executa esse arquivo, criando uma "web shell". A partir desse momento, o invasor tem controle total do servidor, podendo paralisar a emissão de notas fiscais (NFS-e), gerando caos econômico local, e usar esse servidor como ponte para atacar a rede interna.
+**Cenário de Ataque Simplificado:** O invasor não precisa adivinhar o nome de login do administrador. Ele acessa o endpoint público da API e obtém o nome exato (por exemplo, "joao.silva"). Com essa informação, ele direciona um ataque de força bruta apenas para esse usuário específico, aumentando drasticamente as chances de sucesso. Alternativamente, ele usa esse nome para enviar um e-mail de phishing altamente personalizado (Spear Phishing), fingindo ser o suporte do site, fazendo com que o próprio administrador entregue sua senha voluntariamente.
 
-**A Solução Recomendada:** Atualização imediata do software (aplicação de patch) fornecida pelo fabricante, isolando o sistema temporariamente se a atualização não puder ser feita no mesmo dia.
+**A Solução Recomendada:** Desabilitar a listagem pública de usuários na API REST para visitantes não autenticados.
 
 **Passo a Passo Prático:**
-- Entrar em contato urgente com o suporte do fornecedor do sistema e solicitar o boletim de segurança e o pacote de atualização que corrige a vulnerabilidade específica.
-- Solicitar à equipe de TI que teste a atualização em um ambiente de "homologação" (cópia de teste) para garantir que não haverá interrupção do serviço.
-- Agendar a aplicação da atualização em horário de baixo movimento (ex: madrugada).
-- Enquanto a atualização não ocorre, configurar o Firewall de Aplicação Web (WAF) para bloquear padrões de tráfego malicioso conhecidos contra essa falha.
+- Instalar e ativar um plugin de segurança consolidado (como Wordfence, iThemes Security ou Solid Security).
+- Nas configurações do plugin, localizar a opção relacionada à "API REST" ou "Proteção de Usuários".
+- Ativar a configuração que desabilita a descoberta de usuários (frequentemente chamada de "Disable REST API for non-logged-in users" ou "Ocultar nomes de usuário").
+- Alternativamente, adicionar um filtro específico no arquivo `functions.php` do tema ativo para bloquear esse endpoint.
 
-**Perfil de Execução:** Fornecedor do Software ou Analista de Sistemas com acesso administrativo (Nível: Intermediário).
+**Perfil de Execução:** Desenvolvedor WordPress ou Webmaster (Nível: Básico a Intermediário).
 
 ---
 
-### VULNERABILIDADE: Painéis de Administração de Banco de Dados e Hospedagem Expostos (phpMyAdmin e cPanel)
-**O Problema:** As ferramentas que controlam diretamente os bancos de dados e a hospedagem dos sites estão com as "portas abertas" para a internet, sem restrições de origem.
+### VULNERABILIDADE: Divulgação de Erros de Banco de Dados e Risco de Injeção SQL
+**O Problema:** O site está configurado para exibir mensagens de erro detalhadas do banco de dados quando uma entrada inválida é processada (como no campo de busca), revelando a estrutura interna do sistema.
 
-**Cenário de Ataque Simplificado:** Ferramentas automatizadas de invasores varrem a internet 24 horas por dia testando senhas fracas nesses endereços. Ao acertar a senha do phpMyAdmin, o invasor executa comandos para exportar todos os dados de contribuintes (CPF, endereço, dívidas) para um arquivo e baixá-los. No cPanel, o invasor pode interceptar e-mails do gabinete, modificar o site da prefeitura ou alterar registros de DNS para aplicar golpes em fornecedores de licitações, desviando pagamentos.
+**Cenário de Ataque Simplificado:** O invasor insere um caractere especial (como uma aspa simples) no campo de busca do site. O site "quebra" e exibe um erro técnico. Usando ferramentas automatizadas (como sqlmap), o invasor explora essa falha de "Injeção SQL às Cegas" (Blind SQLi). Mesmo sem ver os dados na tela, a ferramenta faz perguntas ao banco de dados (verdadeiro/falso) e, pouco a pouco, extrai informações confidenciais, como hashes de senhas e dados de clientes, sem nunca precisar fazer login.
 
-**A Solução Recomendada:** Restringir o acesso a esses painéis por lista de permissão de IP (Whitelist) e ativar a verificação em duas etapas (MFA) obrigatória.
+**A Solução Recomendada:** Desativar a exibição de erros de depuração em ambiente de produção e garantir que o código do site sanitize todas as entradas de dados.
 
 **Passo a Passo Prático:**
-- No cPanel, acessar a seção de Segurança ou Bloqueio de IP.
-- Adicionar uma regra para bloquear todo o tráfego de acesso, exceto o endereço IP público fixo do escritório da prefeitura ou da equipe de TI autorizada.
-- Ativar a Autenticação de Dois Fatores (MFA) no cPanel, vinculando-a ao aplicativo autenticador no celular do administrador.
-- Para o phpMyAdmin, a melhor prática é removê-lo do subdomínio público. O acesso deve ser feito apenas via túnel SSH ou VPN a partir de uma máquina interna.
+- Acessar os arquivos do site via Gerenciador de Arquivos ou FTP.
+- Abrir o arquivo `wp-config.php` na raiz do site.
+- Localizar as linhas `define('WP_DEBUG', true);` e `define('WP_DEBUG_DISPLAY', true);`.
+- Alterar ambos os valores para `false`.
+- Solicitar ao desenvolvedor do tema ou plugin de busca que revise o código, garantindo o uso de funções de preparação de consultas do WordPress (como `$wpdb->prepare`) para evitar a injeção de código.
 
-**Perfil de Execução:** Desenvolvedor Web ou Administrador de Sistemas (Nível: Básico a Intermediário).
+**Perfil de Execução:** Desenvolvedor WordPress (Nível: Intermediário).
 
 ---
 
-### VULNERABILIDADE: Sistema de Protocolo com Múltiplas Vulnerabilidades Acumuladas
-**O Problema:** O sistema de protocolo municipal apresenta centenas de vulnerabilidades conhecidas catalogadas em suas portas de comunicação, indicando um software severamente desatualizado e sem manutenção.
+## VULNERABILIDADES ALTAS (Ação em Curto Prazo: 7 a 30 dias)
+*Estes itens facilitam a escalada de um ataque ou expõem vetores de entrada secundários que devem ser fechados.*
 
-**Cenário de Ataque Simplificado:** Devido à quantidade massiva de falhas, o invasor não precisa nem de uma técnica sofisticada. Um script automatizado (bot) testa as 57 falhas críticas simultaneamente. Ao encontrar uma brecha de injeção de SQL ou execução de código, o bot assume o controle do sistema, podendo apagar, alterar ou sequestrar todos os documentos e processos administrativos oficiais do município.
+### VULNERABILIDADE: Painéis Administrativos Padrão e FTP Expostos sem MFA
+**O Problema:** As interfaces de gerenciamento da hospedagem (cPanel, Webmail, Webdisk) e o serviço de transferência de arquivos (FTP, porta 21) estão acessíveis publicamente na internet, sem proteção adicional além de uma senha simples.
 
-**A Solução Recomendada:** Isolamento imediato do sistema da internet pública e planejamento de migração ou atualização profunda do software.
+**Cenário de Ataque Simplificado:** O invasor foca no acesso FTP ou cPanel. Como muitos usuários reutilizam senhas ou usam senhas fracas, o invasor consegue acesso. Uma vez dentro do cPanel, ele não precisa hackear o WordPress. Ele simplesmente faz o upload de um arquivo malicioso (webshell) ou edita o arquivo `index.php` do site. O resultado imediato é que todos os visitantes do site são redirecionados para páginas de phishing ou anúncios maliciosos, destruindo a reputação do negócio local e fazendo com que o Google blackliste o domínio.
+
+**A Solução Recomendada:** Restringir o acesso a esses painéis por endereço IP de confiança e implementar Autenticação de Múltiplos Fatores (MFA/2FA) obrigatória.
 
 **Passo a Passo Prático:**
-- Configurar o firewall para bloquear o acesso externo (portas 80 e 443) ao IP deste servidor específico.
-- Tornar o sistema acessível apenas via VPN para servidores internos que necessitem de integração.
-- Realizar um inventário com o fornecedor para avaliar a viabilidade de atualização ou a necessidade de substituição do sistema por um mais moderno e seguro.
+- No cPanel, acessar a ferramenta "Gerenciador de IPs" ou "Bloqueio de IP".
+- Configurar o sistema para permitir acesso às portas do cPanel e Webmail apenas a partir do endereço IP fixo do escritório ou da equipe de TI.
+- Na seção de Segurança do cPanel, localizar a opção "Autenticação de Dois Fatores" (Two-Factor Authentication) e ativá-la, vinculando-a a um aplicativo autenticador no celular.
+- Desativar o acesso FTP se o Gerenciador de Arquivos do cPanel ou SFTP (mais seguro) forem suficientes para a operação.
 
-**Perfil de Execução:** Administrador de Redes / Gestor de TI (Nível: Intermediário).
+**Perfil de Execução:** Administrador de Sistemas ou Webmaster (Nível: Básico).
 
 ---
 
-## VULNERABILIDADES ALTAS 
-*Estes itens facilitam a escalada de um ataque ou expõem dados sensíveis, devendo ser tratados logo após as correções críticas.*
-
-### VULNERABILIDADE: Sistema de Gestão de TI (GLPI) Acessível Publicamente
-**O Problema:** O sistema de helpdesk e inventário de TI está exposto na internet.
-**Cenário de Ataque Simplificado:** O invasor acessa o GLPI com uma senha padrão. Dentro do sistema, ele não ataca o servidor diretamente; ele lê os "chamados de suporte". Frequentemente, técnicos anotam senhas de servidores ou detalhes da rede interna nesses chamados. Com essas informações, o invasor desenha o mapa completo da rede e descobre como acessar os sistemas mais protegidos.
-**Solução e Passo a Passo:** Restringir o acesso à rede interna via firewall. Se o acesso externo for absolutamente necessário, implementar VPN e MFA. Revisar todos os chamados antigos em busca de senhas anotadas em texto claro e apagá-las.
-
-### VULNERABILIDADE: Vazamento de Emails Corporativos e Risco de Phishing
-**O Problema:** Ferramentas de inteligência revelaram 75 endereços de email corporativos válidos, expondo a estrutura de funcionários da TI e do gabinete.
-**Cenário de Ataque Simplificado:** O invasor cria um email falso, aparentemente vindo da diretoria ou do fornecedor do sistema Conam, enviado para um funcionário de TI. O email diz: "Urgente: Atualização de segurança necessária, clique aqui". Ao clicar, o funcionário digita sua senha em uma página falsa. O invasor captura essa senha e a usa para acessar os sistemas reais, pois muitos funcionários reutilizam a mesma senha em vários lugares.
-**Solução e Passo a Passo:** Implementar filtros anti-phishing avançados no servidor de email. Realizar um treinamento obrigatório de conscientização em segurança para todos os funcionários, com foco em identificar links suspeitos. Forçar a troca de senhas de todos os funcionários listados.
-
-### VULNERABILIDADE: Ausência de Segmentação de Rede e Centralização de Serviços
-**O Problema:** Todos os serviços críticos (site, banco de dados, email, DNS) estão hospedados no mesmo ambiente de rede, sem barreiras internas.
-**Cenário de Ataque Simplificado:** O invasor consegue invadir o site público da prefeitura (que tem menor segurança). Como não há segmentação, a partir desse servidor web invadido, ele consegue "enxergar" e atacar diretamente o servidor de banco de dados interno, que deveria estar isolado. É um efeito dominó.
-**Solução e Passo a Passo:** Implementar VLANs (Redes Locais Virtuais) no switch principal. Criar regras de firewall interno que permitam que o servidor web fale com o banco de dados apenas na porta específica necessária, bloqueando qualquer outro tipo de comunicação.
+## VULNERABILIDADES MÉDIAS E BAIXAS (Ação em Médio Prazo: 30 a 90 dias)
+*Itens que, isoladamente, representam risco menor, mas que em conjunto degradam a postura de segurança e facilitam ataques automatizados.*
 
 ### VULNERABILIDADE: Ausência de Headers de Segurança HTTP
-**O Problema:** O site principal não possui configurações de segurança no cabeçalho que orientam o navegador a se proteger contra ataques comuns.
-**Cenário de Ataque Simplificado:** Um invasor insere um código malicioso em um formulário de contato do site. Como não há uma política de segurança de conteúdo (CSP) ativa, o navegador de um cidadão que visita o site executa esse código, roubando a sessão de login do usuário ou redirecionando-o para um site falso.
-**Solução e Passo a Passo:** O administrador do servidor web (Apache/Nginx) deve editar o arquivo de configuração ou o arquivo .htaccess, adicionando as linhas de cabeçalho de segurança recomendadas pelo OWASP (como Strict-Transport-Security, X-Frame-Options e X-Content-Type-Options).
+**O Problema:** O servidor web não envia instruções de segurança aos navegadores dos visitantes, deixando o site vulnerável a manipulações do lado do cliente.
+
+**Cenário de Ataque Simplificado:** Um invasor convence um visitante a acessar o site através de um link manipulado. Como não há uma política de segurança de conteúdo (CSP) ou proteção contra clickjacking (X-Frame-Options), o navegador do visitante carrega o site dentro de um quadro invisível (iframe) controlado pelo invasor. Quando o visitante clica para interagir com o site, ele está, na verdade, clicando em botões controlados pelo invasor, podendo autorizar transações ou instalar extensões maliciosas sem perceber.
+
+**A Solução Recomendada:** Configurar o servidor web para enviar cabeçalhos de segurança HTTP modernos em todas as respostas.
+
+**Passo a Passo Prático:**
+- Acessar o arquivo `.htaccess` na raiz do site WordPress.
+- Adicionar as diretivas de cabeçalho recomendadas pelo OWASP no final do arquivo (incluindo Strict-Transport-Security, X-Content-Type-Options, X-Frame-Options e Content-Security-Policy).
+- Testar a configuração em ferramentas como o Mozilla Observatory para garantir que não haja erros de sintaxe que derrubem o site.
+
+**Perfil de Execução:** Desenvolvedor Web ou Administrador de Sistemas (Nível: Intermediário).
 
 ---
 
-## VULNERABILIDADES MÉDIAS E BAIXAS  
-*Itens que, isoladamente, representam risco menor, mas que em conjunto degradam a postura de segurança e a reputação da instituição.*
+### VULNERABILIDADE: Exposição de Metadados de Plugins e Configuração do robots.txt
+**O Problema:** Ferramentas de identificação revelam versões específicas de plugins (como Elementor e JetEngine), e o arquivo `robots.txt` expõe caminhos administrativos desnecessários.
 
-### VULNERABILIDADE: Possível Exposição de Arquivo de Configuração (.env)
-**O Problema:** O servidor responde de maneira incomum ao tentar acessar arquivos ocultos, sugerindo que um arquivo com credenciais de banco de dados pode existir na pasta pública.
-**Solução e Passo a Passo:** Verificar a existência do arquivo. Se existir, movê-lo imediatamente para uma pasta fora do diretório público do site (document root). Rotacionar (trocar) todas as senhas que estavam dentro desse arquivo, pois deve-se presumir que elas já foram comprometidas.
+**Cenário de Ataque Simplificado:** O invasor identifica que o site usa uma versão específica do Elementor. Ele consulta bancos de dados públicos de vulnerabilidades e descobre uma falha conhecida nessa versão exata. O arquivo `robots.txt`, que deveria apenas orientar motores de busca, acaba servindo como um "mapa" para o invasor, confirmando a existência de arquivos AJAX administrativos que ele pode tentar explorar automaticamente.
 
-### VULNERABILIDADE: Ausência de DNSSEC
-**O Problema:** Os registros de domínio não possuem assinatura criptográfica.
-**Solução e Passo a Passo:** Acessar o painel do registrador do domínio (ex: Registro.br) e ativar a opção DNSSEC, seguindo as instruções para inserir os registros DS fornecidos pelo provedor de DNS. Isso impede que invasores redirecionem o tráfego do site da prefeitura para um site falso de forma silenciosa.
+**A Solução Recomendada:** Manter o ambiente rigorosamente atualizado e limpar configurações que expõem a estrutura interna do site.
 
-### VULNERABILIDADE: Configuração de Email (SPF, DKIM, DMARC) Ausente ou Fraca
-**O Problema:** O domínio não possui mecanismos que provem que os emails enviados são realmente legítimos.
-**Solução e Passo a Passo:** Acessar o painel de gerenciamento de DNS e adicionar os registros TXT adequados. Começar com um registro SPF listando os servidores autorizados. Em seguida, configurar o DKIM com o provedor de email. Por fim, implementar o DMARC com política de "quarantine" ou "reject" para bloquear emails falsos que tentam se passar pela prefeitura.
+**Passo a Passo Prático:**
+- Acessar o painel do WordPress e atualizar o núcleo (core), o tema e todos os plugins para as versões mais recentes.
+- Remover e desinstalar completamente qualquer plugin ou tema que não esteja em uso ativo.
+- Editar o arquivo `robots.txt` na raiz do site, removendo linhas `Allow` que apontam para `/wp-admin/` ou `/wp-includes/`, mantendo apenas as regras essenciais para indexação de conteúdo público.
 
-### VULNERABILIDADE: Subdomínios Órfãos ou Mal Configurados
-**O Problema:** Existem subdomínios apontando para serviços que não existem mais ou redirecionando de forma inadequada.
-**Solução e Passo a Passo:** Realizar uma auditoria semestral no DNS. Remover registros de subdomínios que não estão mais em uso para evitar a técnica de "Subdomain Takeover", onde um invasor registra um serviço externo e se apropria do subdomínio da prefeitura.
+**Perfil de Execução:** Webmaster ou Administrador do Site (Nível: Básico).
 
 ---
 
+## PRÓXIMOS PASSOS E PROPOSTA DE VALOR
 
-Este relatório serve como base formal para a abertura de processo de contratação ou empenho de recursos.
+Para um negócio que depende da confiança local e da disponibilidade contínua do seu canal digital, a segurança não pode ser tratada como um detalhe técnico. As falhas identificadas são de configuração, o que significa que podem ser resolvidas rapidamente sem a necessidade de reescrever o site.
+
+Apresentamos dois caminhos para a resolução:
+
+**Opção A: Execução Interna Supervisionada**
+A equipe interna ou o prestador de hospedagem atual utiliza este relatório como um roteiro de tarefas. Nossa consultoria fica disponível para validar as configurações aplicadas e realizar uma varredura de validação (re-teste) após a implementação para emitir o "Certificado de Conformidade".
+
+**Opção B: Consultoria de Correção e Blindagem (Recomendada)**
+Nossa equipe assume a execução técnica das configurações de firewall, restrição de acesso à API REST, aplicação de headers de segurança e hardening do ambiente WordPress.
+Ao final, entregamos:
+1. Relatório de Conformidade Técnica atestando o fechamento das brechas.
+2. Documentação das novas regras de segurança aplicadas.
+3. Sessão de treinamento de 1 hora para a equipe do negócio sobre boas práticas de senhas e identificação de phishing, mitigando o fator humano.
+
+Este relatório serve como base formal para a tomada de decisão, demonstrando a devida diligência na proteção dos dados dos clientes e na continuidade das operações, em conformidade com os princípios da LGPD.
 
 ---
 
@@ -144,5 +154,3 @@ Este relatório serve como base formal para a abertura de processo de contrataç
 **Contato do Autor:** Herbert Molina  
 **Email:** herbertluizmolinaperfil@gmail.com  
 **LinkedIn:** linkedin.com/in/herbert-molina  
-
----
