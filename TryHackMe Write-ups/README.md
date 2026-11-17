@@ -1,4 +1,6 @@
-# 🎯 TryHackMe Write-ups
+<img width="1230" height="803" alt="logo" src="https://github.com/user-attachments/assets/1e06e3b6-80d1-4977-8236-3d8a11db583e" />
+
+# TryHackMe Write-ups
 
 Bem-vindo à minha coleção de write-ups do TryHackMe.
 
@@ -8,7 +10,7 @@ O objetivo não é apenas registrar a solução de cada máquina, mas documentar
 
 ---
 
-# 🎓 Objetivos
+# Objetivos
 
 Os laboratórios publicados neste repositório têm como foco:
 
@@ -20,7 +22,7 @@ Os laboratórios publicados neste repositório têm como foco:
 
 ---
 
-# 🧠 Áreas abordadas
+# Áreas abordadas
 
 Os write-ups podem envolver temas como:
 
@@ -40,7 +42,7 @@ Os write-ups podem envolver temas como:
 
 ---
 
-# 📄 Estrutura dos Write-ups
+# Estrutura dos Write-ups
 
 Cada máquina segue, sempre que possível, uma estrutura padronizada contendo:
 
@@ -57,7 +59,7 @@ Cada máquina segue, sempre que possível, uma estrutura padronizada contendo:
 
 ---
 
-# 📂 Organização
+# Organização
 
 Cada laboratório possui sua própria pasta contendo:
 
@@ -68,7 +70,7 @@ Cada laboratório possui sua própria pasta contendo:
 
 ---
 
-# 📚 Objetivo do Portfólio
+# Objetivo do Portfólio
 
 Este material tem finalidade exclusivamente educacional e foi produzido em ambientes autorizados para treinamento e desenvolvimento profissional.
 
